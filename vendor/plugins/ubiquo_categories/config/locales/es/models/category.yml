@@ -1,0 +1,9 @@
+es:
+  activerecord:
+    models:
+      category: "Categoría"
+    attributes:
+      category:
+        locale: "Idioma"
+        name:  "Nombre" 
+        description:  "Descripción"

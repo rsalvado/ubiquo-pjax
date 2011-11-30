@@ -1,0 +1,11 @@
+es:
+  ubiquo:
+    helpmsg:
+      design:
+        page:
+          edit: "Aquí puedes configurar las opciones de la página. El nombre de la ruta, la sección y la categoria son campos que determinan la URL final de la página."
+          new: "Aquí puedes configurar las opciones de la página. El nombre de la ruta, la sección y la categoria son campos que determinan la URL final de la página."
+          index: "Aquí puedes ver, modificar y maquetar las páginas de la aplicación."
+        static_page:
+          index: "Aquí puedes ver,modificar y borrar las páginas estáticas de la aplicación"
+          new: "Aquí puedes crear nuevas páginas estáticas."

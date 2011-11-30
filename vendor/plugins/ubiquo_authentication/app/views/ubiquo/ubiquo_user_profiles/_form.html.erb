@@ -1,0 +1,52 @@
+<fieldset>
+  <legend><%= t("ubiquo.auth.user_data") %></legend>
+
+  <div class="form-item">
+    <%= form.label :name, UbiquoUser.human_attribute_name("name") %>
+    <%= form.text_field :name %>
+  </div>
+  <div class="form-item">
+    <%= form.label :surname, UbiquoUser.human_attribute_name("surname") %>
+    <%= form.text_field :surname %>
+  </div>
+  <% if Ubiquo.supported_locales.size > 1 %>
+    <div class="form-item">
+      <%= form.label :locale, UbiquoUser.human_attribute_name("locale") %>
+      <%= form.select(
+            :locale,
+            [[t("ubiquo.auth.default_locale"), nil]] + Ubiquo.supported_locales.map{|locale|
+              [t("ubiquo.auth.locale_name", :locale => locale), locale.to_s]
+            }
+            ) %>
+    </div>
+  <% else %>
+    <%= form.hidden_field :locale, :value => "" %>
+  <% end %>
+  <fieldset>
+    <legend><%= UbiquoUser.human_attribute_name("photo") %></legend>
+    <% if form.object.photo.original_filename -%>
+      <%= image_tag(url_for_file_attachment(form.object, :photo, :thumb)) %>
+    <% end %>
+    <div class="form-item">
+      <%= form.file_field :photo %>
+      <% if form.object.photo.original_filename -%>
+	<%= link_to t('ubiquo.auth.current_file'), form.object.photo.url %>
+      <% end %>
+    </div>
+  </fieldset>
+  </fieldset>
+  <fieldset>
+    <legend><%= t("ubiquo.auth.access_data") %></legend>
+    <div class="form-item">
+      <%= form.label :email, UbiquoUser.human_attribute_name("email") %>
+      <%= form.text_field :email %>
+    </div>
+    <div class="form-item">
+      <%= form.label :password, UbiquoUser.human_attribute_name("password") %>
+      <%= form.password_field :password %>
+    </div>
+    <div class="form-item">
+      <%= form.label :password_confirmation, UbiquoUser.human_attribute_name("password_confirmation") %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+  </fieldset>

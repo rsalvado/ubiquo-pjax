@@ -1,0 +1,31 @@
+--- 
+role_permissions_006: 
+  updated_at: 2008-07-25 08:32:13
+  role_id: "3"
+  permission_id: "3"
+  id: "6"
+  created_at: 2008-07-25 08:32:13
+role_permissions_007: 
+  updated_at: 2008-07-25 08:32:13
+  role_id: "3"
+  permission_id: "4"
+  id: "7"
+  created_at: 2008-07-25 08:32:13
+role_permissions_008: 
+  updated_at: 2008-07-25 08:32:20
+  role_id: "2"
+  permission_id: "3"
+  id: "8"
+  created_at: 2008-07-25 08:32:20
+role_permissions_009: 
+  updated_at: 2008-07-25 08:32:29
+  role_id: "1"
+  permission_id: "1"
+  id: "9"
+  created_at: 2008-07-25 08:32:29
+role_permissions_010: 
+  updated_at: 2008-07-25 08:32:29
+  role_id: "1"
+  permission_id: "2"
+  id: "10"
+  created_at: 2008-07-25 08:32:29

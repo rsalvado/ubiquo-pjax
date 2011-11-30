@@ -1,0 +1,18 @@
+ca:
+  activerecord:
+    models:
+      ubiquo_user: "usuari"
+      role: "rol"
+    attributes:
+      ubiquo_user:
+        login: "Login"
+        name: "Nom"
+        surname: "Cognoms"
+        password: "Contrasenya"
+        password_confirmation: "Confirmació de contrasenya"
+        is_admin: "Administrador"
+        is_active: "Actiu"
+        photo: "Foto"
+        locale: "Idioma"
+      role:
+        name: "Nom"

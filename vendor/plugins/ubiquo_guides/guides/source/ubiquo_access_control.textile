@@ -1,0 +1,163 @@
+h2. Ubiquo Access Control
+
+The ubiquo_access_control plugin provides an advanced way to manage
+permissions and roles inside Ubiquo.
+
+In general it includes the following features:
+
+* Visual interface to view, create, edit and delete roles
+* Easy User-Role relationship management
+* Operations to restrict access to concrete actions
+* Helpers to hide or show some content depending on the user
+permissions.
+* Automatically redirection to login if pretending to access to a
+unauthorized section.
+
+endprologue.
+
+h3. Creating a Permission
+
+Just open the permissions.yml fixture file from your bootstrap and add
+a new named fixture with that values:
+
+<erb>
+permission_key:
+  name: "The showed name of that permission"
+  key: permission_key
+</erb>
+
+Replace permission_key with your permission key and the name with the
+name of the new permission.
+
+The name field is what is showed to the user.
+
+The key field is used in the code to access to refer to that permission.
+
+h3. Creating a Role
+
+To create a role, or generally to manage that, just go to their
+section in Ubiquo. The management is like a simple scaffold. To create
+one just click in the 'create' link, insert their name and permissions
+that it will grant and submit.
+
+h3. Assign a Role to a User
+
+To assign a role to a ubiquo user go to edit the user. Down the form
+to the end and all roles list must appear. The checked roles will be
+added to the user.
+
+h3. Controlling access to an action
+
+When in a controller you need to control who get in the actions,
+simply add an access_control call on that controller.
+
+The controller must have something like that:
+
+<ruby>
+class ExampleController < UbiquoController
+
+  # .......
+  access_control ....
+  # .......
+end
+</ruby>
+
+The attribute of access_control is a hash. In the key value you can
+use a simple key with the name of the action to control, :DEFAULT to
+add the control to all actions or an array with the actions.
+
+<ruby>
+  access_control {
+    :DEFAULT => ...  # control all actions
+    :index => .... #control index action
+    [:new, :create] => .... #control new and create actions
+  }
+</ruby>
+
+The values of the hash are explained in the next three sections.
+
+h4. One permission
+
+It is used to force that the user have a permission to get in the
+desired actions. You only have to type the permission key here.
+
+<ruby>
+  access_control :DEFAULT => 'permission_key'
+  access_control :DEFAULT => :permission_key
+</ruby>
+
+h4. Many permissions
+
+It is used to force that the user have at least one permission of a
+list of permissions. You have to type the permissions key array here.
+
+<ruby>
+  access_control :DEFAULT => ['permission_key_1', 'permission_key_2']
+  access_control :DEFAULT => [:permission_key_1, :permission_key_2]
+  access_control :DEFAULT => %w{permission_key_1 permission_key_2}
+</ruby>
+
+h4. Only admins
+
+It is used to grant access only to the admins. You have to type nil.
+
+<ruby>
+  access_control :DEFAULT => nil
+</ruby>
+
+h3. Controlling simple execution
+
+This gives you the methods to prevent to some users to execute a piece
+of code. It's mostly used to show or hide parts of a view depending on
+your permissions or parts only for admins.
+
+It's used *exactly* like the values of the hash of access control (see
+their section).
+
+h4. If condition
+
+It's used with _permit?_ method:
+
+<ruby>
+  if permit?('permission_key')
+    do_something
+  end
+  do_something if permit?('permission_key')
+  do_something if permit?(nil)
+  do_something if permit?(['permission_key_1', 'permission_key_2'])
+</ruby>
+
+or in erb files:
+
+<erb>
+<p>
+  <% if permit?('permission_key') do %>
+    You have permission_key granted!
+  <% end %>
+</p>
+</erb>
+
+h4. Block condition
+
+It's the same that _if_ condition but yielding (or not) a block. It's
+used with restrict_to method:
+
+<ruby>
+  restrict_to('permission_key') do
+    do_something
+  end
+</ruby>
+
+or in erb files:
+
+<erb>
+<p>
+  <% restrict_to('permission_key') do %>
+    You have permission_key granted!
+  <% end %>
+</p>
+</erb>
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_access_control

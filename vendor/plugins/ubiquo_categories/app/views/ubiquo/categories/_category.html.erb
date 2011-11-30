@@ -1,0 +1,9 @@
+<div class="view_box preview">
+  <dl>
+    <dt><%= Category.human_attribute_name("name") %>:</dt>
+    <dd><%=h category.name %></dd>
+    <dt><%= Category.human_attribute_name("description") %>:</dt>
+    <dd><%=h category.description %></dd>
+    <%= uhook_category_partial @category -%>
+  </dl>
+</div>

@@ -1,0 +1,17 @@
+<%
+    navigator_top_1 = create_link_navigator(:id =>"general_configuration", :link_options => {}) do |navigator|
+      ubiquo_users_link(navigator)
+      roles_link(navigator)
+      ubiquo_activities_link(navigator) if Ubiquo::Plugin.registered.include?(:ubiquo_activity)
+    end
+%>
+<%= render_link_navigator(navigator_top_1) %>
+
+<%
+  navigator_top_2 = create_link_navigator(:id =>"accessibility", :link_options => {}) do |navigator|
+    toggle_superadmin_mode_link(navigator)
+    ubiquo_user_name_link(navigator)
+    logout_link(navigator)
+  end
+%>
+<%= render_link_navigator(navigator_top_2) %>

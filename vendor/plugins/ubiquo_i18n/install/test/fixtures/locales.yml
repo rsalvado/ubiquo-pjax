@@ -1,0 +1,17 @@
+---
+'ca':
+  iso_code: 'ca'
+  english_name: 'Catalan'
+  native_name: 'catal&agrave;'
+  is_active: true
+  is_default: true
+'en':
+  iso_code: 'en'
+  english_name: 'English'
+  native_name: 'English'
+  is_active: true
+'es':
+  iso_code: 'es'
+  english_name: 'Spanish'
+  native_name: 'espa&ntilde;ol'
+  is_active: true

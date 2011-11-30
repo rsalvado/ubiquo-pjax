@@ -1,0 +1,16 @@
+<%
+    navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+      navigator.add_link do |link|
+        link.text = (t("ubiquo.jobs.job_list"))
+        link.url = ubiquo_jobs_path    
+        link.highlights_on({:controller => "ubiquo/jobs", :action => 'index'})
+      end
+      
+      navigator.add_link do |link|
+        link.text = (t("ubiquo.jobs.job_history"))
+        link.url = history_ubiquo_jobs_path
+        link.highlights_on({:controller => "ubiquo/jobs", :action => 'history'})
+      end
+    end
+%>
+<%= render_link_navigator(navigator_section) %>

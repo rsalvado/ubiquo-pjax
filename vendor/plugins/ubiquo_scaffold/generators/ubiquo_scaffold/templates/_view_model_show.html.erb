@@ -1,0 +1,17 @@
+<div class="view_box preview">
+  <dl>
+  <%- if options[:translatable] -%>
+    <dt><%%= <%= class_name %>.human_attribute_name("locale") %>:</dt>
+    <dd><%%= Locale.find_by_iso_code(<%= singular_name %>.locale).native_name %></dd>
+  <%- end -%>
+  <%- if options[:versionable] -%>
+    <dt><%%= <%= class_name %>.human_attribute_name("version_number") %>:</dt>
+    <dd><%%=h <%= singular_name %>.version_number %> (<%%=h <%= singular_name %>.updated_at %>)</dd>
+  <%- end -%>
+  <%- for attribute in attributes -%>
+    <dt><%%= <%= class_name %>.human_attribute_name("<%= attribute.name %>") %>:</dt>
+    <dd><%%=h <%= singular_name %>.<%= attribute.name %> %></dd>
+  <%- end -%>
+  </dl>
+</div>
+

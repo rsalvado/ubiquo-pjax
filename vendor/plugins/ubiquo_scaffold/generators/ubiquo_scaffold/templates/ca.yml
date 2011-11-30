@@ -1,0 +1,21 @@
+ca:
+  ubiquo:
+    <%= singular_name %>:
+      title: "<%= plural_name.capitalize %>"
+      created: "Entitat <%= singular_name.capitalize %> creada amb èxit"
+      create_error: "Error al crear l'entitat <%= singular_name %>"
+      edited: "Entitat <%= singular_name.capitalize %> editada amb èxit"
+      edit_error: "Error a l'editar l'entitat <%= singular_name %>"
+      destroyed: "Entitat <%= singular_name.capitalize %> eliminada amb èxit"
+      destroy_error: "Error al eliminar l'entitat <%= singular_name %>"
+      index:
+        title: "Llistat de <%= plural_name %>"
+        help_message: "Aquí pots veure el llistat de <%= plural_name %>"
+        new: "Nou <%= singular_name.capitalize %>"
+        confirm_removal: "Estàs segur de voler eliminar aquesta entitat <%= singular_name %>?"
+      new:
+        help_message: "Aquí pots crear la nova entitat <%= singular_name %>"
+      edit:
+        help_message: "Aquí pots editar la nova entitat <%= singular_name %>"
+      empty_list_title: "Llistat de <%= plural_name %>"
+      empty_list_message: "Des d’aquest apartat pots veure una llista de tots els recursos existents. Podràs crear-los, editar-los o esborrar-los."

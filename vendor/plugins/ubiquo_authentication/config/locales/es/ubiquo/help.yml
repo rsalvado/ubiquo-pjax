@@ -1,0 +1,15 @@
+es:
+  ubiquo:
+    helpmsg:
+      authentication:
+        ubiquouserprofile:
+          edit: "Aquí puedes modificar tu información del usuario de ubiquo."
+        ubiquousers:
+          edit: "Aquí puedes modificar la información del usuario de ubiquo."
+          new: "Aquí puedes dar de alta nuevos usuarios de ubiquo."
+          index: "Aquí puedes ver el listado de usuarios de ubiquo. Puedes crear, editar, eliminar o modificar sus permisos."
+          permissions: "Aquí puedes asignar o modificar los roles asignados al usuario."
+        roles:
+          edit: "Aquí puede assignar los permisos para este rol. Un permiso pemite el acceso a un área de ubiquo. Un rol garantiza sus permisos a los usuarios a los que se asigna."
+          new: "Aquí puede establecer permisos para el nuevo rol."
+          index: "Aquí puede ver todos los roles disponibles en la aplicación."

@@ -1,0 +1,135 @@
+h2. Getting Started with Ubiquo
+
+This guide covers getting up and running Ubiquo. After reading it, you should be familiar with:
+
+* What is Ubiquo and what you can do with it
+* Installing Ubiquo and creating a new Ubiquo-based application
+
+endprologue.
+
+h3. This Guide Assumes
+
+This guide is designed for starters who want to know the basics and be able to build an Ubiquo application from scratch. It does not assume that you have any prior experience with Ubiquo. However, it does assume that you:
+
+* Have installed and know how to program using the "Ruby":http://www.ruby-lang.org/en/downloads language
+* In particular, have some experience with "Rails":http://rubyonrails.org/
+* Have all the environment ready to start a working Rails project, including a "DBMS":http://en.wikipedia.org/wiki/Database_management_system
+
+
+h3. What is Ubiquo?
+
+Ubiquo is a web development framework built in top of Ruby on Rails. It is designed to create web applications easily and really fast, providing a set of functionalities and goodies that include most of what you can need to meet the most usual requirements of web projects.
+
+There are several principles Ubiquo aims to respect:
+
+* Modular and extensible. Every major aspect in Ubiquo is a separate plugin, so you can add functionalities as you require them for your project, and not carry additional code that you don't need. You can also replace an Ubiquo functionality with your own plugin.
+* Built "the Rails way". This means that using Ubiquo won't make you leave some of the Rails principles, like DRY, REST or Convention Over Configuration. Instead, Ubiquo is built with those principles in mind and promotes them.
+
+
+h4. The Plugin Structure
+
+Ubiquo is organized as a series of Rails plugins. Most of them are self-contained, and some others may need another Ubiquo plugin to deliver the full functionality. The one that every other plugin needs to be installed is ubiquo_core, which includes all the basic features that other Ubiquo plugins can expect to be always available.
+
+
+h4. Feature list
+
+The following is a list of what kind of functionalities will you get with each available Ubiquo plugin, which as of today are, in alphabetical order:
+
+* ubiquo_access_control
+* ubiquo_authentication
+* ubiquo_core
+* ubiquo_i18n
+* ubiquo_media
+* ubiquo_scaffold
+* ubiquo_versions
+
+h5. Ubiquo access control
+
+This plugin provides a default access control mechanism for Ubiquo. It enables your app to use roles and permissions in views and controllers, so you can decide which users have access to which parts or actions of your application.
+
+h5. Ubiquo authentication
+
+This plugin adds basic support for users in ubiquo. This includes the following features:
+
+* Visual interface to create or edit users,
+* Login/logout and session capabilities,
+* User notifications/confirmations on creation
+* Reset form for forgotten passwords
+* "Superadmin mode" with a separate interface
+
+h5. Ubiquo core
+
+This plugin contains the basic common Ubiquo structure so that other plugins can be built on top of it. This includes:
+
+* Ubiquo::Config system
+* Core helpers
+* Ubiquo layout and styling elements
+* Main ruby/rails extensions
+* Navigation links and tabs system
+
+h5. Ubiquo i18n
+
+This plugin adds i18n support to Ubiquo, so that you can internationalize your application and get it in multiple languages in a simple but powerful way.
+
+h5. Ubiquo jobs
+
+The ubiquo_jobs plugin provides a simple way to create jobs and workers that will execute them.
+
+It aims to resolve the problem of executing code asynchronously. It can be used for all those tasks that don't need to be run while answering a request (or shouldn't, because are too heavy).
+
+It tries to be simple to use, but also is filled with a lot of useful features, among which:
+
+* Multiple local or remote workers
+* Transparent backend to allow integration with new backend types (default is DB storage)
+* Delayed execution until a planification time is reached
+* Job priorities and dependencies
+* Automatic handling for failed jobs
+
+h5. Ubiquo media
+
+This plugin provides a media management system for Ubiquo. Once installed, you will be able to:
+
+* Centralize and manage all the media files from the Ubiquo Media section
+* Easily enhance your models with a media selector
+* Use an AJAX asset searcher on forms
+* Organize your assets by type or visibility
+
+h5. Ubiquo scaffold
+
+This plugin provides scaffolds to easily create parts of the application that take advantage of the Ubiquo features. Currently, this plugin features two different scaffolds:
+
+ * ubiquo_model
+ * ubiquo_scaffold
+
+
+h5. Ubiquo versions
+
+The ubiquo_versions plugin provides a versioning system to record the state of your model instances and be able to display or revert the state of these to a previous state.
+
+
+h3. Creating a new Ubiquo application
+
+h4. Installing Ubiquo
+
+Ubiquo is easily installed as a ruby gem:
+
+<shell>
+$ gem install ubiquo
+$ ubiquo new_app
+</shell>
+
+NOTE: The gem provides some useful options to create your new ubiquo app, use ubiquo --help to see them.
+
+This will currently install all the available plugins. You now have a working rails application with ubiquo applied. When the installation is finished, configure the database if needed, and fire the server normally:
+
+<shell>
+$ cd new_app
+$ script/server
+</shell>
+
+And now visit http://localhost:3000. The welcome screen will tell you how to login to ubiquo. Now, to fill it with your own stuff, it's time to start using the "Ubiquo Scaffold guide":ubiquo_scaffold.html
+
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Agetting_started

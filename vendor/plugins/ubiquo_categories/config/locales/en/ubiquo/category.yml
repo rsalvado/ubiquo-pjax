@@ -1,0 +1,22 @@
+en:
+  ubiquo:
+    category:
+      title: "Categories for \"%{name}\""
+      created: "Category created succesfully"
+      create_error: "Error creating category"
+      edited: "Category updated succesfully"
+      edit_error: "Error updating category"
+      destroyed: "Category removed succesfully"
+      destroy_error: "Error removing category"
+      index:
+        title: "categories list"
+        help_message: "Here you can see the categories list."
+        new: "New Category"
+        confirm_removal: "Are you sure you want to remove this category?"
+      new:
+        help_message: "Here you can create a new category"
+      edit:
+        help_message: "Here you can edit a new category"
+      empty_list_title: "categories list"
+      empty_list_message: "You can see all records. You can create it, edit or delete."
+      any: Any

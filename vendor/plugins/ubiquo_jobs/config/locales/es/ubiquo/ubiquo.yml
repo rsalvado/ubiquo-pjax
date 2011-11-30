@@ -1,0 +1,36 @@
+es:
+  ubiquo:
+    "UbiquoJobs::Jobs::ActiveJob":
+      empty_list_title: "Tareas"
+      empty_list_message: "Aquí podrás ver la lista de tareas pendientes de ejecutar. Actualmente no hay tareas pendientes."
+    jobs:
+      tab_name: "Tareas"
+      tab_title: "Ir al listado de tareas"
+      job_removed: "Tarea eliminada"
+      cant_remove: 'Ha ocurrido un error eliminando la tarea'
+      job_edited: "La tarea ha sido editada"
+      cant_edit: 'Ha habido un error editando la tarea'
+      job_repeated: "Se ha planificado la tarea para ser repetida"
+      jobs: "Tareas"
+      job_output: "Respuesta del sistema"
+      job_error_channel: "Canal de error"
+      job_list: "Listado de tareas"
+      job_history: "Histórico de tareas"
+      creation_date: "data de creación"
+      text: "texto"
+      state:
+        waiting: "En espera"
+        instantiated: "Asignado"
+        started: "Iniciado"
+        finished: "Finalizado"
+        error: "Error"
+      priority:
+        high: "Alta prioridad"
+        medium: "Prioridad media"
+        low: "Baja prioridad"
+      repeat: "Repetir"
+      remove: "Eliminar"
+      read_output: "Ver la respuesta del sistema"
+      remove_confirmation: "¿Está seguro de que quiere eliminar esta tarea?"
+      repeat_confirmation: "¿Está seguro de que quiere repetir esta tarea?"
+      close: "cerrar"

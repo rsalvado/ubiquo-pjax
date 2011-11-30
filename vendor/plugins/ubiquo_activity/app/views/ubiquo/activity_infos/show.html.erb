@@ -1,0 +1,12 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+  <%= render :partial => "submenu" %>
+</h2>
+<%= render(:partial => "shared/ubiquo/feedback") %>
+
+<%= render :partial => 'activity_info', :object => @activity_info %>
+
+<p class="form_buttons">
+  <%= button_to_function t('ubiquo.edit'), "document.location.href='#{edit_ubiquo_activity_info_path(@activity_info)}'" %>
+  <%= button_to_function t('ubiquo.back_to_list'), "document.location.href='#{ubiquo_activity_infos_path}'" %>
+</p>

@@ -1,0 +1,13 @@
+ca:
+  activerecord:
+    models:
+      activity_info: "Activitat"
+    attributes:
+      activity_info:
+        controller: "Secció"
+        action: "Acció"
+        created_at: "Data"
+        status: "Estat"
+        user: "Usuari"
+        object: "Objecte"
+      

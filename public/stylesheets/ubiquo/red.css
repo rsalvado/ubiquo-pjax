@@ -1,0 +1,39 @@
+a {
+	color: #881B20;
+}
+.sidebar_box a.on {
+	background-color: #881B20;
+}
+#controls {
+  background: #6b1d21;
+}
+#header {
+  background: #aa2d33;
+  -moz-box-shadow: inset 0 -30px 50px #620c10;
+  -webkit-box-shadow: inset 0 -30px 90px #620c10;
+  box-shadow: inset 0 -30px 50px #620c10;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a82c32', endColorstr='#650d11');
+}
+#tabs li {
+  background-color: #AC2D31;
+  -moz-box-shadow: 0 -4px 9px #642225 inset;
+  -webkit-box-shadow: 0 -4px 9px #642225 inset;
+  box-shadow: 0 -4px 9px #642225 inset;
+}
+#tabs li.active {
+ -moz-box-shadow: none;
+ -webkit-box-shadow: none;
+ box-shadow: none;
+}
+#tabs li.active a, #tabs li.active span {
+	/*color: #881B20;*/
+}
+form h3 {
+	color: #B7383F;
+}
+#lightwindow_contents h3 {
+	color: #881B20;
+}
+#lightwindow_contents fieldset li h4 {
+	color: #881B20;
+}

@@ -1,0 +1,16 @@
+en:
+  ubiquo:
+    helpmsg:
+      authentication:
+        permissions: "Here you can edit ubiquo user roles."
+        ubiquouserprofile:
+          edit: "Here you can edit your ubiquo user information."
+        ubiquousers:
+          edit: "Here you can edit ubiquo user information."
+          new: "Here you can edit ubiquo user information."
+          index: "Here you can see a ubiquo users list. You can create, edit, remove ubiquo users or modify its permissions."
+          permissions: "Here you can edit ubiquo user roles."
+        roles:
+          edit: "Here you can set permissions for this role. A permission grant access to one single zone in ubiquo. A role grants some permissions on the ubiquo users that have it."
+          new: "Here you can set permissions for the new role"
+          index: "Here you can see all available roles for the application"

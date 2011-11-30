@@ -1,0 +1,305 @@
+h2. Ubiquo Categories
+
+The ubiquo_categories plugin provides a simple mechanism for organize
+and categorize the content of your website, adding a generic category
+system for your models and forms.
+
+The idea of the plugin is to make easy the typical case of news
+categorization, write post tags or choose from a items list one type of
+task.
+
+Addition to defining the structure of categories system, we needed to
+have helpers for views, filters, connect it with ubiquo_i18n
+mechanism... To do this, we consider building a plugin that accomplish
+all our requirements.
+
+The main features are:
+
+ * Define generic category sets or complete free sets to categorize your models.
+ * Use these categories with only two lines of code, one for the model and other for the views
+ * Provide a built-in filter to search categorized records
+
+endprologue.
+
+h3. CategorySet
+
+The purpose of CategorySet is group and order related categories. One
+example of CategorySet would be 'Colors' that could contains 'Red',
+'Blue', 'Green' categories.
+
+Then, you can use one or various sets to categorize your models.
+
+You can create a CategorySet from code:
+
+<ruby>
+CategorySet.create(:name => "Colors", :key => "colors", :is_editable
+=> false)
+</ruby>
+
+or you can use ubiquo forms to do this.
+
+h3. Category
+
+You can create Categories for one CategorySet from code:
+
+<ruby>
+set = CategorySet.find_by_key("colors")
+set.categories << "red"
+</ruby>
+
+Also, you can use ubiquo forms to create new categories or through
+the category selector (we view it in next section)
+
+
+h3. Categorize your models
+
+If you want to categorize your model with one CategorySet you need to use
+categorized_with statement.
+
+Your model must have something like that:
+
+<ruby>
+class Painting < ActiveRecord::Base
+  # ...
+  categorized_with :colors, :size => :many
+  # ...
+end
+</ruby>
+
+h4. categorized_with options
+
+categorized_with only needs a CategorySet key to work but it accepts
+some options to customize it's usage:
+
+h5. size
+
+By default categorized_with creates a 1-1 relation, but you can specify size. Examples:
+
+<ruby>
+class Painting < ActiveRecord::Base
+  # ...
+  categorized_with :painter # relation 1-1
+  categorized_with :colors, :size => :many # relation 1-*
+  categorized_with :styles, :size => 3 # relation 1-1..3
+  # ...
+end
+</ruby>
+
+h5. separator
+
+You can create and assign multiple categories, and it accepts an array
+or string with separator. View the example:
+
+<ruby>
+painting = Painting.first
+painting.colors << ["red", "green", "blue"]
+painting.colors << "orange##yellow##purple"
+painting.save
+</ruby>
+
+If you want other separator, you must specify it:
+
+<ruby>
+class Painting < ActiveRecord::Base
+  # ...
+  categorized_with :colors, :size => :many, :separator => "|"
+  # ...
+end
+</ruby>
+
+then, you can use it:
+
+<ruby>
+painting = Painting.first
+painting.colors << "orange|yellow|purple"
+painting.save
+</ruby>
+
+h5. from
+
+Maybe this is more ambiguous option, but can be very useful. Imagine
+that you want to have different CategorySets for very similar
+concepts. Would be ideal to access with the same key to differents collections.
+
+View an example:
+
+<ruby>
+class Book < ActiveRecord::Base
+  # ...
+  categorized_with :styles, :size => :many, :from => "book_styles"
+  # ...
+end
+
+class Painting < ActiveRecord::Base
+  # ...
+  categorized_with :styles, :size => :many, :from => "painting_styles"
+  # ...
+end
+
+CategorySet.create(:name => "Book Styles", :key => "book_styles")
+CategorySet.create(:name => "Painting Styles", :key => "painting_styles")
+
+book = Book.find_by_name("Confieso que he vivido")
+book.styles << ["biography", "poetry"]
+
+painting = Painting.find_by_name("Guernica")
+painting.styles << "cubism"
+</ruby>
+
+h4. Find models by category
+
+Sometimes you will need to find all the instances of a model which have a certain category.
+This can be done easily with a helper provided by the plugin. Imagine you have a Book model
+categorized by the Subject CategorySet. The you could use something like this:
+
+<ruby>
+science_books = Book.subject("Science")
+</ruby>
+
+This will find all the books that have "Science" in the category. You can pass more than one
+category to the method:
+
+<ruby>
+math_books = Book.subject("Algebra", "Calculus")
+</ruby>
+
+This helper is created dynamically for each categorization of the model and has this form:
+
+<ruby>
+Model.<relation_name>(<list of categories>)
+</ruby>
+
+h3. Categorize from views!
+
+The common case is that you need a selector for the form to choose options from
+your CategorySets. You have available a helper for your form_for
+called 'category_selector' and you can customize it easily.
+
+h4. category_selector
+
+<ruby>
+<% form_for @painting do |form| %>
+...
+<%= form.category_selector :styles %>
+...
+<% end %>
+</ruby>
+
+h5. type
+
+Now, if you don't indicate any type, the selector determine how to show
+it. There are three cases:
+ * Available categories for this CategorySet are less than 7 and you
+ only want choose one category: The type of selector is a select.
+ * Available categories for this CategorySet are less than 7 and you
+ want choose multiple categories: The type of selector is a multiple
+ checkboxes
+ * Available categories for this CategorySet are more than 6: The type
+ of selector is a autocomplete textfield
+
+Then, you can force type option using for example autocomplete:
+
+<ruby>
+<%= form.category_selector :styles, :type => 'autocomplete' %>
+</ruby>
+
+NOTE: As type, you can indicate **:checkbox**, **:select** or **:autocomplete**
+
+h5. name
+
+Automatically the value of selector fieldset has been get with
+human_attribute_name(set_key) but you can use your custom caption
+sending name param.
+
+<ruby>
+<%= form.category_selector :styles, :name => 'Selector example' %>
+</ruby>
+
+h5. autocomplete_style
+
+By default, autocomplete_style is :tag, but you can choose :tag or
+:list. Here are the examples:
+
+ * Tag
+
+!images/ubiquo_categories/selector-tag.png(Category selector with tag style)!
+
+ * List
+
+!images/ubiquo_categories/selector-list.png(Category selector with list style)!
+
+h5. html_options
+
+
+The category_selector helper prints a fieldset wrapper that contains
+labels, selects, checkboxes... With this param you can add
+html_options for fieldset and customize it appearance.
+
+
+h3. Filter your elements with category set filters
+
+There are available 'show_filters' and 'show_filter_info' helpers and you can add filters in your scaffolds searching your records by categories.
+
+An example of code:
+
+<ruby>
+../app/helpers/ubiquo/paintings_helper.rb
+
+...
+
+def painting_filters
+  filters_for 'Painting' do |f|
+    f.category :colors
+  end
+end
+
+...
+
+</ruby>
+
+By default, filter use t('ubiquo.category_sets.#{set_name}') to
+translate the filter 'h3' caption, but if you want change it, needs
+specify with caption option.
+
+Ex: f.category :colors, :caption => 'Colors filter example'
+
+
+h3. Technical specifications
+
+!images/ubiquo_categories/models.png(Models schema)!
+
+h4. Why ubiquo_categories and what we were looking for?
+
+At a technical level, we had to solve two common issues we faced many times developing our projects. Very often, we need to tag one model, describe it with some concepts, so we needed a tagging system. At the same time, we always need the models to have categories, types, styles, etc. These usually belongs to a closed set of possibilities, but sometimes it is something the end user can also manage. So far, we found that in every project we took a different decision: list of constant values in a hash, related models that can be managed... In the end, we were in the need for a categorization system.
+
+These tagging and categorizing issues, that at a functional level can be seen as different things, were exactly the same for us down to the implementation arena. That's why we ended joining these two features into a single plugin.
+
+On a more concrete level, we needed to define a model to group the categorization terms. This is the CategorySet. Any category belongs to a CategorySet, that means that we can have enterily different sets for the different concepts to use. For example for tags, it's as easy as creating a new CategorySet named Tags, another for Countries, Styles, Types, Colors... in the end, there are lots of things in the models that can be categorized.
+
+Now, the original model just needs a single line such as "categorized_with :countries" and we have the categories/tagging system we aimed.
+
+h4. Other plugins dependency
+
+The only dependency for this plugin is ubiquo_core.
+
+h4. Using it outside ubiquo (public part)
+
+By default, the category_selector helper is only in UbiquoController. If you want to use ubiquo_categories for your public forms, you can do it by including the following module:
+
+ApplicationController.send :helper, UbiquoCategories::Connectors::Base::current_connector::UbiquoHelpers::Helper
+
+The selector html code is inside a fieldset, you can change its appearance using css to adapt it to your website look&feel.
+
+h4. How to add the plugin to an existing project
+
+For now, ubiquo_categories it's only available in edge (master branch). If you have an already started edge Ubiquo project and you want to use this new plugin, you have to do the following:
+
+
+ * git clone git@github.com:gnuine/ubiquo_categories.git
+ * [Optional] If your project is using ubiquo_i18n for multilingual purposes, you can decide to use translatable categories. By default they aren't, to enable it you have to set the correct connector in the ubiquo config:
+
+in config/initializers/ubiquo_config.rb add
+Ubiquo::Config.context(:ubiquo_categories).set(:connector, :i18n)
+
+ * rake ubiquo:install
+ * rake db:migrate

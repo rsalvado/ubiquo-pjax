@@ -1,0 +1,21 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+  <%= render :partial => "submenu" %>
+</h2>
+<%= error_messages_for 'category_set' %>
+
+<% show_preview(CategorySet) do |category_set| %>
+  <%= render :partial => 'category_set', :object => category_set %>
+<% end %>
+
+<% form_for([:ubiquo, @category_set]) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+    <div class="form-item-submit">
+      <%= form.submit t('ubiquo.create'), :class => "bt-submit" %>
+      <%= button_to_function t('ubiquo.back_to_list'), "document.location.href='#{ubiquo_category_sets_path}'", :class => "bt-back" %>
+    </div>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= help_block_sidebar(t("ubiquo.category_set.new.help_message")) %>
+<% end %>

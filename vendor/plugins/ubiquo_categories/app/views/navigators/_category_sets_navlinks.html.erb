@@ -1,0 +1,10 @@
+<%
+    navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+      navigator.add_link do |link|
+        link.text = (t('ubiquo.category_set.index.title'))
+        link.url = ubiquo_category_sets_path    
+        link.highlights_on({:controller => "ubiquo/category_sets"})
+      end
+    end
+%>
+<%= render_link_navigator(navigator_section) %>

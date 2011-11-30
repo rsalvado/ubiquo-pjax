@@ -1,0 +1,29 @@
+<%= ubiquo_image_tag("ajax-loader.gif", :style => "display: none;", :id => "new_#{counter}_loader") %>
+<div id="new_<%= counter %>_form">
+  <%= error_messages_for 'asset' %>
+  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value =>  Rails.env.test? ? "" : form_authenticity_token) %>
+  <%= tag(:input, :type => "hidden", :name => "counter", :value => counter) %>
+  <%= tag(:input, :type => "hidden", :name => "field", :value => field) %>
+  <div class="form-item">
+    <%= label :asset, :name, Asset.human_attribute_name("name") %>
+    <%= text_field :asset, :name %>
+  </div>
+
+  <% if visibility.nil? -%>
+    <div class="form-item">
+      <%= label :asset, :is_protected, Asset.human_attribute_name("is_protected") %>
+      <%= check_box :asset, :is_protected %>
+    </div>
+  <% else -%>
+    <%= hidden_field :asset, :is_protected, :value => (visibility == "private").to_s %>
+  <% end -%>
+
+  <div class="form-item asset-upload-form-item">
+    <%= label :asset, :resource, Asset.human_attribute_name("resource") %>
+    <%= file_field :asset, :resource %>
+    <%= link_to_function t('ubiquo.save'), :class => 'bt-upload' do |page|
+          page << "$('new_#{counter}_loader').toggle();"
+          page << "send_as_form('new_#{counter}_form', '#{ubiquo_assets_url(:format => :js)}', 'POST');"
+        end %>
+  </div>
+</div>

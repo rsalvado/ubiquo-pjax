@@ -1,0 +1,345 @@
+---
+'af':
+  iso_code: 'af'
+  english_name: 'Afrikaans'
+  native_name: 'Afrikaans'
+'sq':
+  iso_code: 'sq'
+  english_name: 'Albanian'
+  native_name: 'shqip'
+'ar':
+  iso_code: 'ar'
+  english_name: 'Arabic'
+  native_name: '&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;'
+'eu':
+  iso_code: 'eu'
+  english_name: 'Basque'
+  native_name: 'euskera'
+'be':
+  iso_code: 'be'
+  english_name: 'Belarusian'
+  native_name: '&#1041;&#1077;&#1083;&#1072;&#1088;&#1091;&#1089;&#1082;&#1072;&#1103; &#1084;&#1086;&#1074;&#1072;'
+'bn':
+  iso_code: 'bn'
+  english_name: 'Bengali'
+  native_name: '&#2476;&#2494;&#2434;&#2482;&#2494;'
+'bg':
+  iso_code: 'bg'
+  english_name: 'Bulgarian'
+  native_name: '&#1073;&#1098;&#1083;&#1075;&#1072;&#1088;&#1089;&#1082;&#1080;'
+'ca':
+  iso_code: 'ca'
+  english_name: 'Catalan'
+  native_name: 'catal&agrave;'
+  is_active: true
+'zh_YUE':
+  iso_code: 'zh_YUE'
+  english_name: 'Chinese (Cantonese)'
+  native_name: '&#24291;&#26481;&#35441; [&#24191;&#19996;&#35805;]'
+'zh_CMN':
+  iso_code: 'zh_CMN'
+  english_name: 'Chinese (Mandarin)'
+  native_name: '&#26222;&#36890;&#35441; [&#26222;&#36890;&#35805;]'
+'zh_MIN-NAN':
+  iso_code: 'zh_MIN-NAN'
+  english_name: 'Chinese (Min Nan)'
+  native_name: '&#21488;&#35486;'
+'hr':
+  iso_code: 'hr'
+  english_name: 'Croatian'
+  native_name: 'Hrvatski'
+'cs':
+  iso_code: 'cs'
+  english_name: 'Czech'
+  native_name: '&#x010D;e&#353;tina'
+'cy':
+  iso_code: 'cy'
+  english_name: 'Welsh'
+  native_name: 'Welsh/Cymraeg'
+'da':
+  iso_code: 'da'
+  english_name: 'Danish'
+  native_name: 'dansk'
+'nl':
+  iso_code: 'nl'
+  english_name: 'Dutch'
+  native_name: 'Nederlands'
+'en':
+  iso_code: 'en'
+  english_name: 'English'
+  native_name: 'English'
+  is_active: true
+  is_default: true
+'eo':
+  iso_code: 'eo'
+  english_name: 'Esperanto'
+  native_name: 'Esperanto'
+'et':
+  iso_code: 'et'
+  english_name: 'Estonian'
+  native_name: 'eesti keel'
+'fo':
+  iso_code: 'fo'
+  english_name: 'Faroese'
+  native_name: 'F&oslash;royska'
+'fi':
+  iso_code: 'fi'
+  english_name: 'Finnish'
+  native_name: 'suomi'
+'fr':
+  iso_code: 'fr'
+  english_name: 'French'
+  native_name: 'fran&ccedil;ais'
+'gd':
+  iso_code: 'gd'
+  english_name: 'Gaelic'
+  native_name: 'Gaeilge'
+'gl':
+  iso_code: 'gl'
+  english_name: 'Galician'
+  native_name: 'Galego'
+'de':
+  iso_code: 'de'
+  english_name: 'German'
+  native_name: 'Deutsch'
+'el':
+  iso_code: 'el'
+  english_name: 'Greek'
+  native_name: '&#949;&#955;&#955;&#951;&#957;&#953;&#954;&#940;'
+'gu':
+  iso_code: 'gu'
+  english_name: 'Gujarati'
+  native_name: '&#2711;&#2753;&#2716;&#2736;&#2750;&#2724;&#2752;'
+'ha':
+  iso_code: 'ha'
+  english_name: 'Hausa'
+  native_name: '&#1581;&#1614;&#1608;&#1618;&#1587;&#1614;'
+'he':
+  iso_code: 'he'
+  english_name: 'Hebrew'
+  native_name: '&#1506;&#1489;&#1512;&#1497;&#1514;'
+'hi':
+  iso_code: 'hi'
+  english_name: 'Hindi'
+  native_name: '&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;'
+'hu':
+  iso_code: 'hu'
+  english_name: 'Hungarian'
+  native_name: 'magyar'
+'is':
+  iso_code: 'is'
+  english_name: 'Icelandic'
+  native_name: '&Iacute;slenska'
+'io':
+  iso_code: 'io'
+  english_name: 'Ido'
+  native_name: 'Ido'
+'id':
+  iso_code: 'id'
+  english_name: 'Indonesian'
+  native_name: 'Bahasa Indonesia'
+'ga':
+  iso_code: 'ga'
+  english_name: 'Irish'
+  native_name: 'Irish'
+'it':
+  iso_code: 'it'
+  english_name: 'Italian'
+  native_name: 'italiano'
+'ja':
+  iso_code: 'ja'
+  english_name: 'Japanese'
+  native_name: '&#26085;&#26412;&#35486;'
+'jv':
+  iso_code: 'jv'
+  english_name: 'Javanese'
+  native_name: 'basa Jawa'
+'ko':
+  iso_code: 'ko'
+  english_name: 'Korean'
+  native_name: '&#54620;&#44397;&#50612; [&#38867;&#22283;&#35486;]'
+'ku':
+  iso_code: 'ku'
+  english_name: 'Kurdish'
+  native_name: 'Kurd&iacute;'
+'lv':
+  iso_code: 'lv'
+  english_name: 'Latvian'
+  native_name: 'latvie&#353;u'
+'lt':
+  iso_code: 'lt'
+  english_name: 'Lithuanian'
+  native_name: 'lietuvi&#353;kai'
+'lmo':
+  iso_code: 'lmo'
+  english_name: 'Lombard'
+  native_name: 'Lombardo'
+'mk':
+  iso_code: 'mk'
+  english_name: 'Macedonian'
+  native_name: '&#1084;&#1072;&#1082;&#1077;&#1076;&#1086;&#1085;&#1089;&#1082;&#1080;'
+'mi':
+  iso_code: 'mi'
+  english_name: 'Maori'
+  native_name: 'Maori'
+'ms':
+  iso_code: 'ms'
+  english_name: 'Malay'
+  native_name: 'Bahasa melayu'
+'mt':
+  iso_code: 'mt'
+  english_name: 'Maltese'
+  native_name: 'Malti'
+'mr':
+  iso_code: 'mr'
+  english_name: 'Marathi'
+  native_name: '&#2350;&#2352;&#2366;&#2336;&#2368;'
+'ne':
+  iso_code: 'ne'
+  english_name: 'Nepali'
+  native_name: '&#2344;&#2375;&#2346;&#2366;&#2354;&#2368;'
+'no':
+  iso_code: 'no'
+  english_name: 'Norwegian'
+  native_name: 'Norsk'
+'om':
+  iso_code: 'om'
+  english_name: 'Oromo'
+  native_name: 'Afaan Oromo'
+'fa':
+  iso_code: 'fa'
+  english_name: 'Persian'
+  native_name: '&#1601;&#1575;&#1585;&#1587;&#1609;'
+'pl':
+  iso_code: 'pl'
+  english_name: 'Polish'
+  native_name: 'polski'
+'pt_PT':
+  iso_code: 'pt_PT'
+  english_name: 'Portuguese (Portugal)'
+  native_name: 'portugu&ecirc;s (Portugal)'
+'pt_BR':
+  iso_code: 'pt_BR'
+  english_name: 'Portuguese (Brazil)'
+  native_name: 'portugu&ecirc;s (Brazil)'
+'pa':
+  iso_code: 'pa'
+  english_name: 'Punjabi'
+  native_name: '&#2602;&#2672;&#2588;&#2622;&#2604;&#2624;'
+'qu':
+  iso_code: 'qu'
+  english_name: 'Quechua'
+  native_name: 'Quechua'
+'rm':
+  iso_code: 'rm'
+  english_name: 'Romansh'
+  native_name: 'rumantsch'
+'ro':
+  iso_code: 'ro'
+  english_name: 'Romanian'
+  native_name: 'rom&acirc;n'
+'ru':
+  iso_code: 'ru'
+  english_name: 'Russian'
+  native_name: '&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;'
+'sco':
+  iso_code: 'sco'
+  english_name: 'Scots'
+  native_name: 'Scoats leid, Lallans'
+'sr':
+  iso_code: 'sr'
+  english_name: 'Serbian'
+  native_name: '&#1089;&#1088;&#1087;&#1089;&#1082;&#1080;'
+'sk':
+  iso_code: 'sk'
+  english_name: 'Slovak'
+  native_name: 'sloven&#269;ina'
+'sl':
+  iso_code: 'sl'
+  english_name: 'Slovenian'
+  native_name: 'sloven&#353;&#269;ina'
+'es':
+  iso_code: 'es'
+  english_name: 'Spanish'
+  native_name: 'espa&ntilde;ol'
+  is_active: true
+'sv':
+  iso_code: 'sv'
+  english_name: 'Swedish'
+  native_name: 'Svenska'
+'tl':
+  iso_code: 'tl'
+  english_name: 'Tagalog'
+  native_name: 'Tagalog'
+'ta':
+  iso_code: 'ta'
+  english_name: 'Tamil'
+  native_name: '&#2980;&#2990;&#3007;&#2996;&#3021;'
+'te':
+  iso_code: 'te'
+  english_name: 'Telugu'
+  native_name: '&#3108;&#3142;&#3122;&#3137;&#3095;&#3137;'
+'to':
+  iso_code: 'to'
+  english_name: 'Tonga'
+  native_name: 'chiTonga'
+'ts':
+  iso_code: 'ts'
+  english_name: 'Tsonga'
+  native_name: 'xiTshonga'
+'tn':
+  iso_code: 'tn'
+  english_name: 'Tswana'
+  native_name: 'seTswana'
+'tr':
+  iso_code: 'tr'
+  english_name: 'Turkish'
+  native_name: 'T&uuml;rk&ccedil;e'
+'tk':
+  iso_code: 'tk'
+  english_name: 'Turkmen'
+  native_name: '&#1090;&#1199;&#1088;&#1082;m&#1077;&#1085;&#1095;&#1077;'
+'tw':
+  iso_code: 'tw'
+  english_name: 'Twi'
+  native_name: 'twi'
+'uk':
+  iso_code: 'uk'
+  english_name: 'Ukrainian'
+  native_name: '&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;'
+'ur':
+  iso_code: 'ur'
+  english_name: 'Urdu'
+  native_name: '&#1575;&#1585;&#1583;&#1608;'
+'uz':
+  iso_code: 'uz'
+  english_name: 'Uzbek'
+  native_name: '&#1118;&#1079;&#1073;&#1077;&#1082;'
+'ve':
+  iso_code: 've'
+  english_name: 'Venda'
+  native_name: 'tshiVen&#x1E13;a'
+'vi':
+  iso_code: 'vi'
+  english_name: 'Vietnamese'
+  native_name: 'ti&#7871;ng vi&#7879;t'
+'wa':
+  iso_code: 'wa'
+  english_name: 'Walloon'
+  native_name: 'walon'
+'wo':
+  iso_code: 'wo'
+  english_name: 'Wolof'
+  native_name: 'Wollof'
+'xh':
+  iso_code: 'xh'
+  english_name: 'Xhosa'
+  native_name: 'isiXhosa'
+'yi':
+  iso_code: 'yi'
+  english_name: 'Yiddish'
+  native_name: '&#1522;&#1460;&#1491;&#1497;&#1513;'
+'zu':
+  iso_code: 'zu'
+  english_name: 'Zulu'
+  native_name: 'isiZulu'

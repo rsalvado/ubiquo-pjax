@@ -1,0 +1,18 @@
+<div class="<%= @model.downcase %>-list generic-main-list">
+  <% unless @title.blank? %>
+    <h3 class="info-title"><%= @title %></h3>
+  <% end %>
+  <ul>
+    <% @elements.each do |element| -%>
+      <li id="element-<%= element.id %>">
+        <h4><%= list_element_title(element) %></h4>
+        <div class="content">
+          <% if @show_images -%>
+            <%= list_element_image(element) %>
+          <% end %>
+          <%= list_element_body(element) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

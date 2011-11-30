@@ -1,0 +1,10 @@
+--- 
+es: 
+  activerecord: 
+    attributes: 
+      article: 
+        description: description
+        published_at: "Fecha de publicación"
+        title: Título
+    models: 
+      article: Article

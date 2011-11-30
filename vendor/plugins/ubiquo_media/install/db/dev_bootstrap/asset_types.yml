@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+asset_types_003: 
+  id: 1
+  name: Video
+  key: video
+asset_types_006: 
+  id: 2
+  name: Document
+  key: doc
+asset_types_001: 
+  id: 3
+  name: Audio
+  key: audio
+asset_types_002:
+  id: 4
+  name: Other
+  key: other
+asset_types_004: 
+  id: 5
+  name: Image
+  key: image
+asset_types_005: 
+  id: 6
+  name: Flash
+  key: flash

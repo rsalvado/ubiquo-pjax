@@ -1,0 +1,404 @@
+h2. Ubiquo media
+
+This plugin provides a media management system for Ubiquo. Once installed, you will be able to:
+
+* Centralize and manage all the media files from the Ubiquo Media
+  section: Create, edit or delete new assets that will be available
+  throughout your app
+
+* Easily enhance your models with a media selector: Add a single line
+  to your model definition and it will be immediately able to store
+  assets, without migrations
+
+
+* Use an AJAX asset searcher on forms that will find assets as you
+  type them
+
+* Organize your assets by type or visibility: Restrict a model
+  attribute to just some types of assets (images, videos...) and decide
+  if the asset is public or private
+
+* Crop images and select diferent areas for each format
+
+endprologue.
+
+h3. Media attachments
+
+h4. Add media to a model
+
+In your model, add:
+
+<ruby>
+media_attachment :resources, :size => N, :types => %w{image}
+</ruby>
+
+For example:
+<ruby>
+class ExampleModel < ActiveRecord::Base
+  media_attachment :images, :size => 2, :types => %w{image}
+
+  # .......
+
+end
+</ruby>
+
+size and types options are optional. By default is sized 1 and any
+type.
+
+NOTE: You can use :many value with size option specifing that you want a undetermined number of assets.
+NOTE: For convention, the attribute name should be always plural no matter if it contains a single element (size option is 1). The media_attachment accessor always returns an array.
+
+h5. Minimum amount of assets
+
+media_attachments able to set the maximum amount of related assets.
+
+If you need to set the minimum, add something like this to your model:
+
+<ruby>
+validates_length_of(
+  :images_ids,
+  :minimum => 1
+  )
+</ruby>
+
+NOTE: You can add a custom error message adding a :message option to the validates_length_of
+
+h5. Media types
+
+The available types are in the AssetType model, you can get it
+running that in your script/console:
+
+<shell>
+$ script/console
+Loading development environment (Rails 2.3.2)
+>> pp AssetType.all.inject({}){|acc, at| acc[at.key] = at.name; acc}
+{"audio"=>"Audio",
+ "doc"=>"Document",
+ "image"=>"Image",
+ "video"=>"Video",
+ "other"=>"Other",
+ "flash"=>"Flash"}
+=> nil
+
+</shell>
+
+The types of the :type option of the media_attachment method are the
+keys of the hash printed in the script/console example.
+
+Also, if you want to use all types, you can set it to :ALL. It's an
+special value.
+
+
+h4. Insert media selector to their form
+
+In the ubiquo you have to add a media selector. To do that just call the helper:
+
+<erb>
+<% form_for ... do |form| %>
+  ....
+  <%= media_selector form, :images, :visibility => 'public' %>
+  ....
+<% end %>
+</erb>
+
+The first attribute is the form object.
+The second is the name of the media attachment.
+Visibility option can be 'public' or 'protected'.
+This visibility determines if the resource can be accessed from anywhere(public) or requires to login in Ubiquo(protected). Default is public.
+
+
+h4. Get the resource url
+
+To get the url of a resource you can use url_for_media_attachment helper.
+In that example there is a link to a resource:
+
+<erb>
+<%= link_to(
+             "a link to the first image",
+             url_for_media_attachment(object.images.first)
+           ) %>
+</erb>
+
+h4. Get the resource name
+
+When a resource is associated with something, that relation can be renamed.
+This name is unique for the relation.
+
+This is useful when a generic name is added when uploading the asset but in a relation it must be
+named with a different name.
+
+In that example there are a link to a resource showing their name:
+
+<erb>
+<%= link_to(
+             object.name_for_asset(:images, object.images.first),
+             url_for_media_attachment(object.images.first)
+           ) %>
+</erb>
+
+h4. Get the thumbnail url
+
+The url_for_media_attachment accepts an argument specifying a resource version. Versions are defined in
+the configuration. To see it just put that in script/console:
+
+<shell>
+$ script/console
+Loading development environment (Rails 2.3.2)
+>> Ubiquo::Config.context(:ubiquo_media).get(:media_styles_list)
+=> {:thumb=>"100x100>"}
+</shell>
+
+Then, to get this version url just type something like that:
+
+<erb>
+<%= link_to(
+             "a link to the first image thumbnail",
+             url_for_media_attachment(object.images.first, :thumb)
+           ) %>
+</erb>
+
+h3. Media selector
+
+When adding a media selectior initially you will see something like that:
+!images/ubiquo_media/initial.png(Media selector initial state)!
+
+Here, you can add new media or select existent.
+
+h4. Upload media
+
+If the 'add new media' option selected, a sub-form will appear.
+!images/ubiquo_media/adding.png(Media selector adding state)!
+
+Here you have to add a file and their name. When clicked in the
+'save' button, the file will be uploaded with AJAX and will be
+selected automatically
+
+h4. Select media
+
+If the 'select existent media' option selected, a list will appear.
+!images/ubiquo_media/selecting.png(Media selector selecting state)!
+
+Here you can search existent assets by their name and select it.
+
+h4. Rename selection
+
+When an asset is selected it has it's own name and a 'selection
+name'. This name is only for that relation and can be changed from the
+selected item view:
+!images/ubiquo_media/selected.png(Media selector selected state)!
+
+just click in 'change text' link.
+
+h3. Image styles
+
+When in your project you have spaces that have a defined size available for images
+it's useful to define a format for that gap. This way, when you upload an image, 
+a copy of that image is generated with the size defined.
+
+On config/initializers/ubiquo_config.rb do:
+<ruby>
+Ubiquo::Config.context(:ubiquo_media).get(:media_styles_list).merge!({
+    :vertical_banner => '60x200#',
+    :avatar => '70x70#',
+    :big => '640x480#',
+    :header => '992x148#'
+  }
+)
+</ruby>
+
+Then you can use that version in the application:
+
+<ruby>
+url_for_media_attachment(object.images.first, :vertical_banner)
+</ruby>
+
+INFO: Each format means more storage and processing time required for every image uploaded.
+
+h3. Ubiquo show helpers
+
+For show pages, there are a couple of helpers that can help you to brainlessly
+print a list of images and documents.
+
+h5. Images
+
+<ruby>
+ubiquo_show_media_attachment_images(
+      @instance,
+      :media_field,
+      'Images list'
+    )
+</ruby>
+
+h5. Documents
+
+<ruby>
+ubiquo_show_media_attachment_docs(
+      @instance,
+      :media_field,
+      'Documents list'
+    )
+</ruby>
+
+
+h3. Media processors
+
+h4. Add media processors
+
+Processors let you pass the uploaded image or file through n:Number Processors, returning the processed file/image. By default, Ubiquo has the :thumbnail processor. In order to add a new processor, for example one named "watermark", in config/initializers/ubiquo_config.rb you should add:
+
+<ruby>
+  default_media_processors = Ubiquo::Config.context(:ubiquo_media).get(:media_processors_list)
+  app_processors = [:watermark]
+
+  Ubiquo::Config.context(:ubiquo_media).set do |config|
+    config.media_processors_list = app_processors  + default_media_processors
+  end
+</ruby>
+
+h4. Add a watermark
+
+Continuing with the watermark example, in order to add that watermark functionality that corresponds to the processor, you should create the folder RAILS_ROOT/lib/paperclip_processors and add a file named "watermark.rb" to that folder with that code:
+
+<ruby>
+module Paperclip
+  class Watermark < Processor
+
+    class InstanceNotGiven < ArgumentError; end
+
+    def initialize(file, options = {},attachment = nil)
+      super
+      @file = file
+      @current_format   = File.extname(@file.path)
+      @basename         = File.basename(@file.path, @current_format)
+      @watermark        = Rails.root.join('/public/images/rails.png').to_s
+      @current_geometry   = Geometry.from_file file # This is pretty slow
+      @watermark_geometry = watermark_dimensions
+    end
+
+    def watermark_dimensions
+      return @watermark_dimensions if @watermark_dimensions
+      @watermark_dimensions = Geometry.from_file @watermark
+    end
+
+    def make
+      dst = Tempfile.new([@basename, @format].compact.join("."))
+      watermark = " \\(  #{@watermark} -extract #{@current_geometry.width.to_i}x#{@current_geometry.height.to_i}+#{@watermark_geometry.height.to_i / 2}+#{@watermark_geometry.width.to_i / 2} \\) "
+      command = "-gravity center " + watermark + File.expand_path(@file.path) + " " +File.expand_path(dst.path)
+      begin
+        success = Paperclip.run("composite", command.gsub(/\s+/, " "))
+      rescue PaperclipCommandLineError
+        raise PaperclipError, "There was an error processing the watermark for #{@basename}" if @whiny_thumbnails
+      end
+      dst
+    end
+  end
+end
+</ruby>
+
+This code was taken from "http://kairichardkoenig.de/2009/07/30/watermarking-images-with-paperclip-in-rails/":http://kairichardkoenig.de/2009/07/30/watermarking-images-with-paperclip-in-rails/
+
+
+h3. Use of different storage mode
+
+Ubiquo Media have support for two different storage systems: filesystem, that is the default mode which comes with plugin, and s3, taking advantage from s3 storage system, and allowing user to configure s3 interaction with few lines of additional configuration.
+
+h4. Configure project to use s3
+
+This is a step by step, recipe like tutorial, to use ubiquo media with s3 storage system
+
+1. Get s3 gem.
+    sudo gem install s3
+
+2. Edit config/initializers/ubiquo_config.rb and add the following lines
+<ruby>
+   Ubiquo::Config.context(:ubiquo_media).set do |config|
+    config.media_storage = :s3
+   end
+</ruby>
+3. Create a file called s3.yml under config/ folder
+
+4. Populate the previous file with the following content:
+<ruby>
+   ENVIRONMENT:
+     access_key_id: YOUR_ACCESS_KEY_ID
+     secret_access_key: YOUR_SECRET_ACCESS_KEY
+     bucket: YOUR_BUCKET 
+</ruby>
+5. Replace the previous upcase variables with your own data. Example:
+<ruby>
+   production:      
+     access_key_id: 1234567abcd
+     secret_access_key: abcdefghijk12345
+     bucket: a_bucke_name 
+</ruby>
+
+h3. Using an Apache-based upload progress bar
+
+There is a progress bar functionality available for apache based
+environments. In a few steps, we will see how it can be accomplished:
+
+# Install and activate drogus' apache-upload-progress-module from
+  https://github.com/drogus/apache-upload-progress-module. Installation
+  is well documented at source page
+# Activate progress bar through the config option
+<ruby>
+Ubiquo::Config.context(:ubiquo_media).set do |config|
+  config.progress_bar = true
+end
+</ruby>
+
+And that's all folks! Progress bar is ready to run for your media uploads
+
+
+
+h3. Crop and resize
+
+The images can be cropped or select the part of the image for each format or style defined. This feature is builtin by default so nothing special have to be done.
+
+The advanced form can be accessed form the assets tab and from any media selector.
+
+!images/ubiquo_media/advanced-link.png(Media selector with advanced link)!
+
+The "advanced" link brings a popup like that:
+
+!images/ubiquo_media/advancededit-popup-66.png(Advanced edit form)!
+
+h4. Localize format names
+
+Image formats are defined as usual in the application but we can localize the names. The formats will
+be shown in the "Predefined formats" tab:
+
+!images/ubiquo_media/advancededit-formats-66.png(Advanced edit predefined formats tab)!
+
+As you can see there appears the names of each format. These labels show the :humanize of the key by default but
+you can define them by defining the i18n key "ubiquo.media.styles.#{style}.name".
+<ruby>
+en:
+  ubiquo:
+    media:
+      styles:
+        vertical_banner:
+          name: Vertical banner
+        avatar:
+          name: Avatar
+        big_format:
+          name: Big format
+</ruby>
+
+h4. Keeping backups
+
+By default, the advanced edit form keeps a backup of the original uploaded file
+allowing to undo all changes done.
+
+INFO: The "Restore to uploaded file" is only available when editing from the Assets list.
+
+If you don't want this feature, you can disable the backups by configuration on initializers:
+
+<ruby>
+Ubiquo::Config.context(:ubiquo_media).set(:assets_default_keep_backup, false)
+</ruby>
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_media
+

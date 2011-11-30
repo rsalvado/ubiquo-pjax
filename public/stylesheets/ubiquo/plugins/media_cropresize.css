@@ -1,0 +1,347 @@
+#crop-resize-container {
+  margin: 0;
+  font-size: 1.35em;
+  font-family: "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+  padding: 0 0;
+  background: white;
+}
+
+#content #crop-resize-container form {
+  padding: 0;
+  background-color: white;
+  border: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0; }
+
+/* Overwritting global ubiquo styles */
+#crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content fieldset {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    margin: -2px 0 0;
+    padding: 0 0 0.5em;
+    text-align: center;
+}
+
+  #crop-resize-container #resize-title {
+    position: relative; }
+    #crop-resize-container #resize-title h3 {
+      font-size: 1.6em;
+      font-weight: bold;
+      background: #e6f1f0;
+      padding: 0.8em; 
+      color:black;
+    }
+    #crop-resize-container #resize-title p {
+      position: absolute;
+      right: 0;
+      top: 18px; }
+  #crop-resize-container #resize-content {
+    padding: 0 0.8em;
+  }
+  #crop-resize-container #resize-actions {
+      clear:both;
+  }
+  #crop-resize-container #resize-actions ul {
+    margin: 1.3em 0 1.4em 0;
+    padding: 0;
+    overflow: hidden; }
+    #crop-resize-container #resize-actions ul li:first-child {
+      background: url("../../../images/ubiquo/media/resize-actions-separator.png") no-repeat scroll right center;
+      padding: 0 1.2em 0 0; }
+    #crop-resize-container #resize-actions ul li {
+      float: left;
+      margin: 0 0em 0 0; }
+      #crop-resize-container #resize-actions ul li a {
+        display: block;
+        color: black;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-decoration: underline;
+        padding: 0.3em 1em 0.3em 0;
+        margin: 0 0 0 0.8em; }
+      #crop-resize-container #resize-actions ul li a.resize-highlighted-action {
+        padding-left: 1em;
+        background: #459890;
+        color: white;
+        text-decoration: none; }
+  #crop-resize-container .resize-box-info p {
+    background: url("../../../images/ubiquo/media/resize-box-info.png") no-repeat scroll left center;
+    padding: 1em 0 1em 2.2em;
+    font-size: 1.01em; }
+  #crop-resize-container .resize-box {
+    border: 2px solid #e1e1e1;
+    padding: 0.5em 1em 0 1em;
+    margin: 0 0 1em; }
+  #crop-resize-container .resize-box:after, #crop-resize-container .resize-box-content:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+
+    #crop-resize-container .resize-box .resize-box-title {
+      overflow: hidden;
+      padding: 0; }
+      #crop-resize-container .resize-box .resize-box-title img {
+        float: left;
+        margin: 0 2em 0 0; }
+      #crop-resize-container .resize-box .resize-box-title a {
+        color: black;
+        padding: 0 0 0 2em; }
+        #crop-resize-container .resize-box .resize-box-title a.resize-box-fold {
+          background: url("../../../images/ubiquo/media/resize-unfold.png") no-repeat scroll 0 0; }
+        #crop-resize-container .resize-box .resize-box-title a.resize-box-unfold {
+          background: url("../../../images/ubiquo/media/resize-fold.png") no-repeat scroll 0 0; }
+    #crop-resize-container .resize-box .resize-box-inactive {
+      color: #8c8c8c; }
+  #crop-resize-container .resize-box-content {
+    padding: 1em 0 1em 0; }
+  #crop-resize-container .resize-box-content-list {
+    max-height: 425px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1em 0 0 0;
+    margin: 0 0 20px 0; }
+    #crop-resize-container .resize-box-content-list ul li {
+      margin: 0 7px 14px 7px;
+      background: #878787;
+      float: left;
+      width: 177px;
+      height: 164px; }
+    #crop-resize-container .resize-box-content-list ul li a {
+        color:black;
+    }
+
+      #crop-resize-container .resize-box-content-list ul li .resize-box-detail-title {
+        padding: 0.2em;
+        background: #c4c4c4; }
+        #crop-resize-container .resize-box-content-list ul li .resize-box-detail-title strong {
+          display: block; }
+      #crop-resize-container .resize-box-content-list ul li img {
+        border: 1px solid #acadad;
+        max-height: 128px;
+        max-width: 177px;
+      }
+    #crop-resize-container .resize-box-content-list ul li div.resize-box-detail-image,
+    #crop-resize-container .resize-box-content-list ul li div.resize-box-detail-image *
+    {
+        text-align: center;
+        vertical-align: middle;
+        line-height: 131px;
+        font-size:0px;
+    }
+
+
+  #crop-resize-container .resize-box-content-left {
+    float: left;
+    width: 596px;
+    padding: 0.3em 0 0; }
+    #crop-resize-container .resize-box-content-left #resize-box-image-container {
+      width: 590px;
+      height: 442px;
+      text-align: center; }
+      #crop-resize-container .resize-box-content-left #resize-box-image-container img {
+        border: 2px solid #acadad; }
+  #crop-resize-container .resize-box-content-right {
+    padding: 0 0 0 1em;
+    overflow: hidden;
+    position: relative;
+    top: -16px; }
+    #crop-resize-container .resize-box-content-right .resize-box-widget {
+      overflow: hidden; }
+    #crop-resize-container .resize-box-content-right .info .resize-box-widget-title {
+      background: url("../../../images/ubiquo/media/resize-box-widget-info.png") no-repeat scroll left top; }
+    #crop-resize-container .resize-box-content-right .info dl {
+      overflow: hidden;
+      font-size: 0.75em; }
+      #crop-resize-container .resize-box-content-right .info dl dt {
+        float: left;
+        font-weight: bold;
+        margin: 0 0.2em 0.4em 0;
+        clear: left; }
+      #crop-resize-container .resize-box-content-right .info dl dd {
+        margin: 0 0 0.4em 0; }
+    #crop-resize-container .resize-box-content-right .alert {
+      border-color: #d93e3e; }
+      #crop-resize-container .resize-box-content-right .alert .resize-box-widget-title {
+        background: url("../../../images/ubiquo/media/resize-box-widget-alert.png") no-repeat scroll left top;
+        color: #d93e3e; }
+      #crop-resize-container .resize-box-content-right .alert .resize-box-related-actions {
+        margin: 0;
+        overflow: hidden; }
+        #crop-resize-container .resize-box-content-right .alert .resize-box-related-actions li {
+          float: left;
+          margin: 0 5px 5px 0; }
+          #crop-resize-container .resize-box-content-right .alert .resize-box-related-actions li a {
+            display: block;
+            background: #e6e6e6;
+            color: black;
+            border: 1px solid #acadad;
+            padding: 0.3em 0.8em;
+            -moz-border-radius: 10px 10px 10px 10px;
+            border-bottom-left-radius: 10px 10px;
+            border-bottom-right-radius: 10px 10px;
+            border-top-left-radius: 10px 10px;
+            border-top-right-radius: 10px 10px; }
+    #crop-resize-container .resize-box-content-right .alert .resize-box-related-actions li a.disabled {
+        cursor:default;
+        opacity: 0.3;
+    }
+
+    #crop-resize-container .resize-box-content-right .preview {
+      background: url("../../../images/ubiquo/media/resize-list-arrow.png") no-repeat scroll center center;
+      text-align: center; }
+      #crop-resize-container .resize-box-content-right .preview .resize-box-widget-title {
+        text-indent: -3000px;
+        position: absolute; }
+      #crop-resize-container .resize-box-content-right .preview .resize-box-widget-preview-left {
+        float: left;
+        padding-left: 0.7em;
+        margin-right: 5em; }
+      #crop-resize-container .resize-box-content-right .preview .resize-box-widget-preview-right {
+        float: right;
+        padding-right: 0.7em; }
+      #crop-resize-container .resize-box-content-right .preview .resize-box-widget-content h5 {
+        font-size: 1.08em;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: -3px 0 5px; }
+  #crop-resize-container .resize-box-widget {
+    border: 2px solid #acadad;
+    padding: 1em 1em;
+    margin: 0 0 10px 0; }
+    #crop-resize-container .resize-box-widget .resize-box-widget-title {
+      padding: 0 0 1em 2.5em; }
+      #crop-resize-container .resize-box-widget .resize-box-widget-title h4 {
+        font-weight: bold; }
+  #crop-resize-container .resize-box-save .resize-box-widget-title h4 {
+    text-indent: -3000px;
+    position: absolute; }
+  #crop-resize-container .resize-box-save ul {
+    text-align: center;
+    margin: 1em 0 0 0; }
+    #crop-resize-container .resize-box-save ul li {
+      margin: 0; }
+      #crop-resize-container .resize-box-save ul li input.resize-save-button {
+        background: url("../../../images/ubiquo/media/resize-save-action.png") no-repeat scroll 0 0;
+        padding: 4px 40px 4px 50px;
+        border: 1px solid #acadad;
+        font-size: 1.08em; 
+        width:auto;
+          }
+        #crop-resize-container .resize-box-save ul li input.resize-save-button:hover {
+          cursor: pointer; }
+      #crop-resize-container .resize-box-save ul li a {
+        color: black;
+        padding: 0.51em 0 0.51em 3.02em;
+        border: 1px solid #acadad;
+        display: inline-block; }
+        #crop-resize-container .resize-box-save ul li a span {
+          background: url("../../../images/ubiquo/media/resize-button-background.png") repeat-x scroll left center;
+          padding: 0.3em 2.9em 0.4em 0; }
+    #crop-resize-container .resize-box-save ul li.resize-save-as {
+      margin: 1em 0 4.2em 0; }
+      #crop-resize-container .resize-box-save ul li.resize-save-as a {
+        background: url("../../../images/ubiquo/media/resize-save-as-action.png") no-repeat scroll -14px 0; }
+      #crop-resize-container .resize-box-save ul li.resize-save-as .resize-box-save-as-content {
+        display: none; }
+    #crop-resize-container .resize-box-save ul li.resize-open-fold {
+      -moz-box-shadow: 0 2px 2px silver;
+      -webkit-box-shadow: 0 2px 2px silver;
+      box-shadow: 0 2px 2px silver;
+      margin-bottom: 0.5em;
+      background: #e6e6e6;
+      padding-bottom: 1.5em;
+      border: 1px solid #acadad;
+      -moz-border-radius: 10px 10px 10px 10px;
+      border-bottom-left-radius: 10px 10px;
+      border-bottom-right-radius: 10px 10px;
+      border-top-left-radius: 10px 10px;
+      border-top-right-radius: 10px 10px; }
+      #crop-resize-container .resize-box-save ul li.resize-open-fold a {
+        background: none;
+        border: none;
+        padding-bottom: 0; }
+        #crop-resize-container .resize-box-save ul li.resize-open-fold a span {
+          background: none; }
+      #crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content {
+        display: block;
+        text-align: center; }
+        #crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content p {
+          display: inline;
+          padding: 0; }
+          #crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content p input {
+            display: inline; }
+          #crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content p input.resize-form-name {
+            min-width: 193px;
+            width: 193px;
+            padding: 0.4em;
+            border: 1px solid #cacaca;
+            margin: 1em 0 -0.4em 0.5em; }
+        #crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content p.buttons button {
+          background-color:transparent;
+          border:0;
+          display:inline;
+          vertical-align:middle;
+        }
+        #crop-resize-container .resize-box-save ul li.resize-open-fold .resize-box-save-as-content label {
+          font-weight: bold;
+          font-size: 1em;
+          color: black; }
+  #crop-resize-container .resize-box, #crop-resize-container .resize-box-widget, #crop-resize-container .resize-box-save li a, #crop-resize-container .resize-box-save li .resize-save-button, #crop-resize-container #resize-actions .resize-highlighted-action, #crop-resize-container .resize-box-save .open {
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px; }
+  #crop-resize-container .resize-box-save li a span {
+    border-bottom-right-radius: 8px 8px;
+    border-top-right-radius: 8px 8px;
+    -moz-border-radius: 0 8px 8px 0; }
+  #crop-resize-container #resize-title h3 {
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    -moz-border-radius: 10px 10px 0 0; }
+
+/* overload */
+#ubiquo_lb {
+  padding: 0; }
+
+#crop-resize-container li
+{
+    font-size:1em;
+}
+#crop-resize-container .form-item-submit input
+{
+    font-size: 1em;
+}
+#crop-resize-container form input, #content form select {
+    display: inline;
+}
+.lightwindow.wide #crop-resize-container{
+    height:100%;
+}
+
+.lightwindow_contents #crop-resize-container input{
+    width:auto;
+}
+
+/*--- botons ---*/
+#crop-resize-container .form-item-submit input { /* list all buttons here */
+	display: block;
+	float: right;
+	width: 12em;
+	padding: .4em .7em .5em;
+	text-align: center;
+	font-weight: bold;
+	color: #000;
+	border: 1px solid #AAA;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+	border-radius: 9px;
+	cursor: pointer;
+	background: #d1d3d3 url(../../../images/ubiquo/bg-button.png) no-repeat left top;
+}

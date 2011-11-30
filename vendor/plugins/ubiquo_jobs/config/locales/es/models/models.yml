@@ -1,0 +1,19 @@
+es:
+  activerecord:
+    models:
+     ubiquo_jobs/jobs/active_job: tareas
+    attributes:
+      ubiquo_jobs/jobs/active_job:
+        runner: "Proceso"
+        command: "Comando"
+        tries: "Intentos"
+        priority: "Prioridad"
+        planified_at: "Planificado para"
+        started_at: "Iniciado"
+        ended_at: "Finalitzado"
+        state: "Estado"
+        name: "Nombre"
+        type: "Tipo"
+        created_at: "Creado"
+        updated_at: "Actualitzado"
+        notify_to: "Notificar a"

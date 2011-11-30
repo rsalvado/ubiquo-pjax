@@ -1,0 +1,8 @@
+<%= widget_header widget %>
+<% widget_form(page, widget) do |f| %>
+  <p>
+    <%= f.label :model, GenericHighlighted.human_attribute_name('model') %><br />
+    <%= f.select :model, options_for_select(::Ubiquo::Config.context(:ubiquo_design).get(:generic_models)) %>
+  </p>
+  <%= widget_submit %>
+<% end %>

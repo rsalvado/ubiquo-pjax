@@ -1,0 +1,36 @@
+en:
+  ubiquo:
+    "UbiquoJobs::Jobs::ActiveJob":
+      empty_list_title: "Jobs"
+      empty_list_message: "Here you can see the list of pending jobs. Right now there are no pending jobs."
+    jobs:
+      tab_name: Jobs
+      tab_title: "Go to the jobs list"
+      job_removed: "Job removed"
+      cant_remove: "Can't remove job"
+      job_edited: "Job successfully updated"
+      cant_edit: "Can't edit job"
+      job_repeated: "Job successfully planified to be repeated"
+      jobs: "Jobs"
+      job_output: "Job output"
+      job_error_channel: "Error output"
+      job_list: "Job list"
+      job_history: "Job history"
+      creation_date: "creation date"
+      text: "text"
+      state:
+        waiting: "Waiting"
+        instantiated: "Assigned"
+        started: "Started"
+        finished: "Finished"
+        error: "Error"
+      priority:
+        high: "High priority"
+        medium: "Medium priority"
+        low: "Low priority"
+      repeat: "Repeat"
+      remove: "Remove"
+      read_output: "Read system output"
+      remove_confirmation: "Are you sure that you want to remove this job?"
+      repeat_confirmation: "Are you sure that you want to repeat this job?"
+      close: "close"

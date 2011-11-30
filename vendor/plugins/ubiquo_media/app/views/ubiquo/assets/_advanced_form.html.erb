@@ -1,0 +1,113 @@
+<%
+  form_scope = "crop_resize_for_#{f.object.id}"
+  hide_styles = media_styles_croppable_list.size == 0
+%>
+<div class="crop_resize_form">
+<% if f.object.resource && f.object.resource.original_filename %>
+    <% if params[:target] %>
+      <%= hidden_field_tag "target", params[:target]  %>
+    <% end %>
+    <%= hidden_field_tag "crop_resize_save_as_new", "" %>
+    <%= hidden_field_tag("operation_type", "original") %>
+    <%= hidden_field_tag "asset_name", @asset.name, :id => "crop_resize_asset_name" %>
+    <div id="resize-actions">
+      <ul>
+        <li>
+          <a href="#" class="resize-highlighted-action" onclick="$('operation_type').value='original'; return false;" rel="#original_tab_contents_<%= form_scope %>"><%= t("ubiquo.media.crop") %></a>
+        </li>
+      <% unless hide_styles %>
+        <li >
+          <a href="#" onclick="$('operation_type').value='styles';return false;" rel="#styles_tab_content_<%= form_scope %>" ><%= t("ubiquo.media.formats") %></a>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+    <div class="tab_content_container">
+      <div id="original_tab_contents_<%= form_scope %>" class="resize-box tab-content">
+        <div class="resize-box-info">
+          <p>
+            <%= t("ubiquo.media.tips.main") %>
+          </p>
+        </div>
+        <%= render :partial => "cropper_form", :locals => {:f => f, :style => "original", :format => "", :show_current => false, :preview => false} %>
+      </div>
+      <% unless hide_styles %>
+        <div id="styles_tab_content_<%= form_scope %>" class="tab-content crop-resize-toggle-tabbed-styles" style="display:none;">
+          <div class="resize-box" id="resize_style_wrapper_<%=  form_scope %>_">
+            <div class="resize-box-title">
+              <h4>
+                <%= link_to( t("ubiquo.media.available_styles"), "#",
+                  :class => "resize-box-fold", :rel => "#resize_style_wrapper_#{form_scope}_ .resize-box-content") %>
+              </h4>
+            </div>
+            <div class="resize-box-content">
+              <div class="resize-box-content-list"> <!-- #ocultar per convertir la caixa en inactiva -->
+                <ul class="styles">
+                  <% media_styles_croppable_list.each do |style, format| %>
+                    <li>
+                        <% link_to( "#",:rel => "#resize_style_wrapper_#{form_scope}_#{style} .resize-box-content" ) do %>
+                      <div class="resize-box-detail-title">
+                        <strong><%= t("ubiquo.media.styles.#{style}.name", :default => style.to_s.humanize) %></strong>
+                        <span><%= [Paperclip::Geometry.parse(format)].map{|e|"#{e.width.to_i}x#{e.height.to_i}"}.first %></span>
+                      </div>
+                      <div class="resize-box-detail-image">
+                              <%=  image_tag(url_for_media_attachment(@asset, style.to_sym)) %>
+                      </div>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% media_styles_croppable_list.each do |style, format| %>
+            <div class="resize-box style_cropper" id="resize_style_wrapper_<%=  form_scope %>_<%= style %>">
+              <div class="resize-box-title">
+                <h4>
+                  <a href="#" class="resize-box-unfold" rel="#resize_style_wrapper_<%=  form_scope %>_<%= style %> .resize-box-content">
+                    <%= t("ubiquo.media.selected_format") %>
+                    <strong><%= t("ubiquo.media.styles.#{style}.name", :default => style.to_s.humanize) %></strong>
+                  </a>
+                </h4>
+              </div>
+              <%= render :partial => "cropper_form", :locals => {:f => f, :style => style, :format => format, :hidden => true } %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+      <% javascript_tag do %>
+      (function(){
+        Ubiquo.Media.CropResize.InitTabs = function(){
+            Ubiquo.Media.CropResize.TabbedContent.init( {
+                parent: $$(".crop_resize_form").first(),
+                tab_selector: "#resize-actions li a",
+                content_selector: ".tab-content",
+                tab_activation_statuses: [null,"resize-highlighted-action"]
+            });
+
+            var parent = $$(".crop-resize-toggle-tabbed-styles").first()
+            if( parent ){
+              Ubiquo.Media.CropResize.TabbedContent.init({
+                  parent: parent,
+                  tab_selector: ".resize-box-title a",
+                  content_selector: ".resize-box-content",
+                  tab_activation_statuses: ["resize-box-unfold","resize-box-fold"],
+                  other_selectors: [".resize-box-content-list .styles a"],
+                  all_content_can_be_hidden: true,
+                  tab_activation_callback: function(tab, ctx ){
+                      if( ctx["activated_on"].identify() != tab.identify() ){
+                          Effect.ScrollTo(tab.up(".resize-box"),{
+                              duration:0.3
+                          });
+                      }
+                  }
+              });
+            }
+        }
+        Ubiquo.Media.CropResize.InitTabs();
+        })();
+    <% end %>
+<% end %>
+</div>

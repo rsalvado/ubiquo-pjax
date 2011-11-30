@@ -1,0 +1,51 @@
+  <%= uhook_asset_form f %>
+	<div class="form-item">
+      <%= f.label :name, Asset.human_attribute_name("name") %>
+      <%= f.text_field :name %>
+	</div>
+	<div class="form-item">
+	  <%= f.label :description, Asset.human_attribute_name("description") %>
+	  <%= f.text_area :description, :cols => 70, :rows => 4, :class => 'not_full' %>
+	</div>
+	<fieldset>
+	  <legend><%= Asset.human_attribute_name("resource") %></legend>
+      <% if f.object.resource.original_filename -%>
+        <%= image_tag(thumbnail_url(f.object)) %>
+      <% end %>
+	  <div class="form-item">
+		<%= f.file_field :resource %>
+        <% if f.object.resource.original_filename -%>
+		  <%= link_to t('ubiquo.media.current_file'), f.object.resource.url %>
+        <% end %>
+	  </div>
+	</fieldset>
+  <p>
+    <% if f.object.new_record? && !Ubiquo::Config.context(:ubiquo_media).get(:force_visibility) -%>
+
+    <div class="form-item">
+      <%= f.label :is_protected, t("ubiquo.media.is_protected") %>
+      <%= f.check_box :is_protected, :class => "checkbox" %>
+    </div>
+    <% end %>
+  </p>
+
+<% if Ubiquo::Config.context(:ubiquo_media).get(:progress_bar).present? %>
+  <%= javascript_include_tag 'ubiquo/progress_bar' %>
+  <%= javascript_include_tag 'ubiquo/progress_upload' %>
+  <div id='progress' style='display: none;'>
+    <p id="uploading_container">
+      <%= t('ubiquo.media.file_upload_in_progress') %>
+    </p>
+    <div id='numeric_bar' style='width: 0%;'>
+      0%
+    </div>
+    <div id="progress_bar"></div>
+    <p id="processing_container" style="display:none;">
+      <%= t('ubiquo.media.file_upload_complete') %>
+    </p>
+  </div>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= help_block_sidebar(t("ubiquo.helpmsg.media.assets.form")) %>
+<% end %>

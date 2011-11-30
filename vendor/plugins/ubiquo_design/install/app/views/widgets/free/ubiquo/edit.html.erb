@@ -1,0 +1,6 @@
+<%= widget_header widget %>
+<% widget_form(page, widget) do |f| %>
+  <p><%= f.label :content, t('ubiquo.widgets.free.contents') %></p>
+  <%= f.text_area :content, :id => 'visual_editor' %>
+  <%= widget_submit %>
+<% end %>

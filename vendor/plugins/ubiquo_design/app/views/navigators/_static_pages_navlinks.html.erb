@@ -1,0 +1,10 @@
+<%
+    navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+      navigator.add_link do |link|
+        link.text = t("ubiquo.design.static_pages.title")
+        link.url = ubiquo_static_pages_path    
+        link.highlights_on(:controller => "ubiquo/static_pages")
+      end 
+    end
+%>
+<%= render_link_navigator(navigator_section) %>

@@ -1,0 +1,5 @@
+ca:
+  ubiquo:
+    helpmsg:
+      activity_info:
+        index: "Aquí pots veure una llista amb el registre de l'activitat dins d'ubiquo. Pots esborrar els registres però això no tindrà cap efecte sobre l'acció o l'objecte que s'ha enregistrat."

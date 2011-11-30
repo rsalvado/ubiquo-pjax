@@ -1,0 +1,22 @@
+ca:
+  ubiquo:
+    category:
+      title: "Categories de \"%{name}\""
+      created: "Categoria creada amb èxit"
+      create_error: "Error al crear la categoria"
+      edited: "Categoria editada amb èxit"
+      edit_error: "Error a l'editar la categoria"
+      destroyed: "Categoria eliminada amb èxit"
+      destroy_error: "Error al eliminar la categoria"
+      index:
+        title: "Llistat de categories"
+        help_message: "Aquí pots veure el llistat de categories"
+        new: "Nova categoria"
+        confirm_removal: "Estàs segur de voler eliminar aquesta categoria?"
+      new:
+        help_message: "Aquí pots crear la nova categoria"
+      edit:
+        help_message: "Aquí pots editar la nova categoria"
+      empty_list_title: "Llistat de categories"
+      empty_list_message: "Des d’aquest apartat pots veure una llista de totes les categories existents dins aquest conjunt. Podràs crear-ne, editar-ne o esborrar-ne."
+      any: Tots

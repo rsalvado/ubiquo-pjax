@@ -1,0 +1,10 @@
+<%%
+    navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+      navigator.add_link do |link|
+        link.text = (t('ubiquo.<%= singular_name %>.index.title'))
+        link.url = ubiquo_<%= plural_name %>_path    
+        link.highlights_on({:controller => "ubiquo/<%= plural_name %>"})
+      end
+    end
+%>
+<%%= render_link_navigator(navigator_section) %>

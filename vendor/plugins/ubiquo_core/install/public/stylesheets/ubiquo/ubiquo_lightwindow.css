@@ -1,0 +1,146 @@
+/*--- Lightwindow customizations for ubiquo ---*/
+	.ubiquo_lb {
+		position: relative;
+		padding: 0;
+	}
+		.lightwindow_contents {
+			background: none;
+			border: none;
+		}
+			.lightwindow_contents h3 {
+				margin-bottom: 1em;
+				font-size: 1.8em;
+			}
+			.lightwindow_contents a.close, a.lightwindow_action.close {
+				display: block;
+				position: absolute;
+				top: 10px;
+				right: 1em;
+				width: 19px;
+				height: 19px;
+				text-indent: -5000px;
+				background: url(../../images/ubiquo/close.jpg) no-repeat 0 0;
+			}
+			.lightwindow_contents input {
+				display: block;
+				width: 26em;
+			}
+			.lightwindow_contents h4, .lightwindow_contents p {
+				font-size: 1.1em;
+			}
+			.lightwindow_contents h4 {
+				font-weight: bold;
+			}
+			.lightwindow_contents fieldset ul.assets_list {
+				margin-top: .6em;
+			}
+			.lightwindow_contents fieldset li, .lightwindow_contents fieldset .assigned_text {
+				position: relative;
+			}
+			.lightwindow_contents fieldset li {
+				margin-bottom: .4em;
+				padding: 0 0 .4em;
+				font-size: 1em;
+				border-bottom: 1px solid #D5D9C2;
+			}
+				.spinner { /* hauria de ser genèric */}
+				.lightwindow_contents fieldset li a {
+					position: absolute;
+					top: 0;
+					right: 0;
+					font-size: 1.2em;
+				}
+				.lightwindow_contents .handle { /* hauria de ser genèric */
+					display: block;
+					position: static;
+					float: left;
+					width: 17px;
+					height: 17px;
+					text-indent: -5000px;
+					background: url(../../images/ubiquo/updownarrows.gif) no-repeat;
+					cursor: move;
+				}
+				.lightwindow_contents fieldset li a.view {
+					right: 6em;
+				}
+				.lightwindow_contents fieldset li h4 {
+					font-size: 1.2em;
+				}
+				.lightwindow_contents fieldset h4, .lightwindow_contents fieldset dt {
+					font-weight: bold;
+				}
+				.lightwindow_contents fieldset dl {
+					margin-top: .4em;
+				}
+				.lightwindow_contents fieldset dt, .lightwindow_contents fieldset dd {
+					display: inline;
+					margin-right: .4em;
+					font-size: 1.1em;
+				}
+				.lightwindow_contents fieldset dd input {
+					display: inline;
+				}
+			.lightwindow_contents .form_buttons {
+				margin-top: 1.5em;
+			}
+				.lightwindow_contents .form_buttons input {
+					width: 6em;
+				}
+	.lightwindow_stage .inferior {
+		height: 4em;
+		background: url(../../images/ubiquo/bg_lightwindow.png) no-repeat left bottom;
+	}
+
+/* Wide version used by crop/resize */
+
+.lightwindow.wide .ubiquo_lb {
+    padding:0px;
+    background: white;
+}
+.lightwindow .lightwindow_stage .inferior {
+    display:none;
+}
+.lightwindow.wide .lightwindow_contents {
+    border: 0px;
+}
+.lightwindow.wide .lightwindow_contents a.close {
+    background:none;
+    display:inline;
+    height:auto;
+    position:relative;
+    right:auto;
+    text-indent:inherit;
+    top:auto;
+    width:auto;
+}
+
+.lightwindow .lightwindow_container
+{
+  -moz-box-shadow: 0 0 40px black;
+  -webkit-box-shadow: 0 0 40px black;
+  box-shadow: 0 0 40px black;
+  background-color:white;
+}
+.lightwindow .lightwindow_container,
+.lightwindow .lightwindow_container .ubiquo_lb,
+.lightwindow .lightwindow_container .lightwindow_stage,
+.lightwindow .lightwindow_container .lightwindow_contents,
+.lightwindow .lightwindow_loading
+{
+  -moz-border-radius: 10px 10px 10px 10px;
+  border-bottom-left-radius: 10px 10px;
+  border-bottom-right-radius: 10px 10px;
+  border-top-left-radius: 10px 10px;
+  border-top-right-radius: 10px 10px;
+}
+.lightwindow .lightwindow_container .lightwindow_stage{
+    padding:20px;
+    background-color:white;
+}
+.lightwindow .lightwindow_title_bar{
+    display:none;
+    height:0px;
+}
+.lightwindow_title_bar{
+    height:0px;
+}

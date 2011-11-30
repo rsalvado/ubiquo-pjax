@@ -1,0 +1,13 @@
+<% if flash[:notice] %>
+	<p id="feedback_notice"><%= flash[:notice] %></p>
+	<script type="text/javascript">
+  	new Effect.Highlight('feedback_notice');
+	</script>
+<% elsif flash[:error] %>
+	<p id="feedback_error"><%= flash[:error] %></p>
+	<script type="text/javascript">
+  	new Effect.Shake('feedback_error');
+	</script>
+<% elsif flash[:warning] %>
+	<p id="feedback_warning"><%= flash[:warning] %></p>
+<% end %>

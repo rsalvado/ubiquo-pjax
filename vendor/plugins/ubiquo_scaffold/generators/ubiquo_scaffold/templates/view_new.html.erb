@@ -1,0 +1,24 @@
+<h1><%%= render :partial => 'title' %></h1>
+<h2>
+  <%%= render :partial => "submenu" %>
+</h2>
+<%%= error_messages_for '<%= singular_name %>' %>
+
+<%% show_preview(<%= class_name %><%= options[:versionable] ? ", :version => :all" : "" %>) do |<%= singular_name %>| %>
+  <%%= render :partial => '<%= singular_name %>', :object => <%= singular_name %> %>
+<%% end %>
+
+<%% ubiquo_form_for([:ubiquo, @<%= singular_name %>]) do |form| %>
+  <%%= render :partial => 'form', :locals => {:form => form} %>
+    <%% form.submit_group do %>
+      <%%= form.create_button %>
+      <%%= form.back_button %>
+    <%% end %>
+<%% end %>
+
+<%% content_for :sidebar do %>
+  <%- if options[:translatable] -%>
+  <%%= show_translations(@<%= singular_name %>) %>
+  <%- end -%>
+  <%%= help_block_sidebar(t("ubiquo.<%= singular_name %>.new.help_message")) %>
+<%% end %>

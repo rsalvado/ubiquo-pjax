@@ -1,0 +1,9 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+	<%= render :partial => 'submenu' %>
+</h2>
+<%= @template_content %>
+<% content_for :sidebar do %>
+	<h3><%= t('ubiquo.design.available_widgets') %></h3>
+	<%= render :partial => "widget_sidebar", :collection => @widgets %>
+<% end %>

@@ -1,0 +1,11 @@
+page.replace("share_options_#{@block.id}", block_actions(@page, @block))
+page.replace("block_#{@block.block_type}", block_type_holder(@page, @block.block_type, @block))
+
+page.replace_html("page_info", :partial => 'ubiquo/designs/pageinfo_sidebar',
+                               :locals => { :page => @page.reload })
+id, opts = sortable_block_type_holder_options(@block.block_type,
+                                              change_order_ubiquo_page_design_widgets_path(page),
+                                              @page.blocks.map(&:block_type))
+unless @block.shared_id
+  page.sortable(id, opts)
+end

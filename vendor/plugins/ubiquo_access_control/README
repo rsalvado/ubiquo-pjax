@@ -1,0 +1,44 @@
+UbiquoAccessControl
+===================
+
+This plugin provides a default access control mechanism for Ubiquo. It enables your app to use roles and permissions in views and controllers, so you can decide which users have access to which parts or actions of your application.
+
+
+= UbiquoUser and Roles
+
+A _ubiquo_user_ has login/password, active and admin flag attributes. Admin ubiquo users are allowed access to all pages and make CRUD operations on the whole data-model (no matter if they have roles are assigned for this task or not).
+
+A _role_ has a collection of permissions which grant access to certain parts of Ubiquo. A ubiquo user can have so many roles assigned as needed (many-to-many relationship). To add, delete or edit permissions you have to edit the fixture file ({{{db/dev_bootstrap/permissions.yml}}}).
+
+= Access control on controllers
+
+Access to the controllers (and its actions) can be restricted separately. On this example, a controller is restricted for ubiquo users with _show_ permission (that is, which have a role assigned containing this permission) for _show_ action, and _manage_ permission for all other actions:
+
+  class Ubiquo::ExampleController < UbiquoController
+    access_control :show => 'guest', :DEFAULT => "management"
+    ...
+  end
+
+Make sure that the !ApplicationController includes the access control library:
+
+  class ApplicationController < ActionController::Base
+    include AccessControl
+    ...
+  end
+
+= Access control on views
+
+On the views, the actions or navigation tabs for which the current ubiquo user have no rights shouldn't be visible. Use _permit?_ in your views to check if an ubiquo_user has one permission or not:
+
+  if permit?('show')
+    link_to(t('Show object'), ubiquo_object(object))
+  end
+
+You can also use _restrict_to_ with a block:
+
+  restrict_to('show') do
+    link_to(t('Show object'), ubiquo_object(object))
+  end
+
+
+Copyright (c) 2009 International Product Design S.L. - gnuine (http://www.gnuine.com)

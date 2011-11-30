@@ -1,0 +1,5 @@
+en:
+  ubiquo:
+    widgets:
+      <%= singular_name %>:
+        name: "<%= singular_name.humanize %>"

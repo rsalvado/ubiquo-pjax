@@ -1,0 +1,6 @@
+check process ubiquo_worker_1
+  with pidfile /APP_PATH/current/tmp/pids/ubiquo_worker_1.pid
+  start program = "/bin/sh -c 'cd /APP_PATH/current; RAILS_ENV=production rake ubiquo:worker:start[worker_1] & &> log/ubiquo_worker_1.log && echo $! > tmp/pids/ubiquo_worker_1.pid'" as uid capistrano and gid capistrano
+  stop program = "/bin/sh -c 'cd /APP_PATH/current && kill `cat tmp/pids/ubiquo_worker_1.pid` && rm -f tmp/pids/ubiquo_worker_1.pid; exit 0;'"
+  if totalmem is greater than 300 MB for 10 cycles then restart # eating up memory?
+  group ubiquo_workers

@@ -1,0 +1,13 @@
+UbiquoGuides
+============
+
+This plugin contains the ubiquo guides. We use code borrowed from Rails to generate the guides.
+
+
+Example
+=======
+
+You can generate the guides with the command rake ubiquo:guides. You will find the html output in guides/output.
+
+
+Copyright (c) 2009 gnuine, released under the MIT license

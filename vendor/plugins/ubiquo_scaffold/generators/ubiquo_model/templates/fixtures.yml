@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+<% unless attributes.empty? -%>
+<% %w{one two}.each do |name| %>
+<%= name %>:
+<% for attribute in attributes -%>
+  <%= attribute.name %>: <%= attribute.default %>
+<% end -%>
+<% if options[:versionable] || options[:translatable] -%>
+  content_id: 1
+<% end -%>
+<% if options[:translatable] -%>
+  locale: 'en_US'
+<% end -%>
+<% if options[:versionable] -%>
+  version_number: <%= @i ||= 0; (@i+=1).to_s %>
+  is_current_version: <%= (@i == 1).to_s %>
+  parent_version: one
+<% end -%>
+<% end -%>
+<% else -%>
+# one:
+#   column: value
+#
+# two:
+#   column: value
+<% end -%>

@@ -1,0 +1,208 @@
+h2. Ubiquo Jobs
+
+The ubiquo_jobs plugin provides a simple way to create jobs and workers that will execute them.
+
+It aims to resolve the problem of executing code asynchronously. It can be used for all those tasks that don't need to be run while answering a request (or shouldn't, because are too heavy).
+
+It tries to be simple to use, but also is filled with a lot of useful features, among which:
+
+* Multiple local or remote workers
+* Transparent backend to allow integration with new backend types (default is DB storage)
+* Delayed execution until a planification time is reached
+* Job priorities and dependencies
+* Automatic handling for failed jobs
+
+This guide will walk you through ubiquo_jobs internals and contains a tutorial to show you how to create new job types, planify jobs for execution and launch workers.
+
+endprologue.
+
+h3. Synopsis
+
+Sometimes, we need to spawn a process to do some task asynchronously, without blocking the usual flow of an application. Instead of just calling a method of our model, Ubiquo Jobs provides a way to run jobs automatically at a given time, taking the resources (workers) that we give it.
+
+As an example, here's how we'd create a job to mail a couple of users a happy new year mail.
+
+<ruby>
+class Ubiquo::ArticlesController < UbiquoController
+ def index
+    ...
+  MassMailer.run_async(:options => {
+    :recipients => ['one@one.one', 'two@two.two']
+    :subject => "Happy new year!"
+  },
+     :planified_at => DateTime.now.end_of_year,
+     :name => "New year's mail" ,
+     :priority => 1000)
+end
+</ruby>
+
+MassMailer is a subclass of +UbiquoJobs::Jobs::Base+, that's placed in +app/jobs+ directory, and overrides +do_job_work+. +do_job_work+ is the method that will be called when a worker take this job.
+
+h3. Creating job types
+
+For every different kind of work that you want to be done you need to create a new job type. This essentially means that you have to:
+
+* Create a subclass of +UbiquoJobs::Jobs::Base+
+* Override and implement the +do_job_work+ and place there the work that will be performed when the worker starts the job.
+
+The following is a very simple job example, that implements this basic schema that every Job must have
+
+<ruby>
+# An example job class
+# It simply calculates a Array.size, overriding do_job_work
+# Passes the required arguments using the options hash
+# Ex:
+#   ExampleJob.run_async(:options => {:set => [1,2]})
+# will execute
+#   [1,2].size
+# and store the result. To display the results use job.output_log
+
+class ExampleJob < UbiquoJobs::Jobs::Base
+
+  def do_job_work
+    set_property :result_output, self.options[:set].size
+    return 0
+  end
+
+end
+</ruby>
+
+h4. Parameters
+
+If your job needs to be parameterized, use the options hash when creating it to set the needed parameters for it.  All the parameters that you pass from the caller through the options hash will be retained until the job is run.
+
+<ruby>
+MassMailer.run_async(:options => {
+  :recipients => ['one@one.one', 'two@two.two']
+  :subject => t('app.mass_mailer.mail_subject')
+  :type => :one_time_mail
+})
+</ruby>
+
+You can use virtual attributes to get parameters, but keep in mind that every thing that is not stored inside options will likely be lost at runtime (when a worker executes your job), since for custom parameters only the options hash has the persistence guaranteed.
+
+h4. Naming and Job scheduling
+
+    Jobs can be scheduled to run at a given time. To configure a job for a concrete time, we must pass a parameter to run_async that will indicate the DateTime when this job should wake up.  We can also give it a name to make it easier to track when it's on waiting queue.
+
+<ruby>
+MassMailer.run_async(:options => {
+  :recipients => ['one@one.one', 'two@two.two']
+  :subject => "Happy new year!"
+  :type => :one_time_mail
+},
+   :planified_at => DateTime.now.end_of_year,
+   :name => "New year's mail" 	)
+</ruby>
+
+When a job is scheduled, it's added to the job queue (normally kept in
+the database), and we can manage it from the +Jobs+ tab in the
++superadmin mode+ page.
+
+In the +superadmin+ page, users (with appropiate rights) can see the
+progress of jobs, stop them and see the logs.
+
+Here we see an screenshot of a job that is waiting to publish an article on twitter
+
+!images/ubiquo_jobs/queued_job.png(Queued job)!
+
+h4. Priority
+
+There are three different priorities that will rule the resource management when there are more jobs than workers.
+
+We can set the priority when defining our jobs or change the priority of a given job from the Jobs list in +superadmin+ view. 
+
+To set a different priority from the default (low), we can set our own priority with a :priority parameter, being 1 the highest priority.
+
+Defaults are 10 for high, 100 for medium and 1000 for low priority (default).
+
+
+h4. Return code
+
+In +ExampleJob+ the last line is a +return 0+ statement. The Job Manager needs to know if the job has been executed correctly, and that, unless exceptions are raised, is something that every job must tell to the manager by returning an error code.
+
+The property result_output is where we can put a text that will be displayed in the jobs list telling how did the process go.  When a worker takes a job, it puts itself as the +runner+ of the job, 
+
+NOTE: This might change in the future to assume that everything went fine unless an exception is raised.
+
+h3. ActiveJob
+
+UbiquoJobs::Jobs::ActiveJob is the default implementation of jobs. If you know for sure that you will be using the ActiveJob implementation, you can freely use ActiveModel/ActiveRecord goodies in your job classes, including validations or callbacks.
+
+It's possible to implement different Job backend, putting them in files, for example.
+
+h4. Validations
+
+Validations will usually be done only on creation
+
+<ruby>
+  attr_accessor :parts, :file
+  validates_presence_of :parts, :file, :on => :create
+</ruby>
+
+h4. Callbacks
+
+You can use the usual lifecycle callbacks too
+
+<ruby>
+  attr_accessor :parts, :file
+  after_validation_on_create :store_options
+  def store_options
+    self.options = {:parts => parts * 20, :file => 'file://' + file}
+  end
+</ruby>
+
+NOTE: Take in mind that you will usually just _touch_ jobs on creation time, and then the handling is done automatically. For this reason, if your job needs some kind of parameter parsing, like in the above example, do it on creation to leave the job ready for execution.
+
+h3. Shell Jobs
+
+If the job type you want to create will primarily execute a shell command, you will probably want to use the ShellJob helpers to do this a no-brainer. The main difference if you are using ShellJob is that, instead of implementing the +do_task_work+ function, you need to override +set_command+. This is because what happens in execution time (command execution, and output/error handling) is automatically managed, so you just have to state the concrete command that will be run.
+
+<ruby>
+# An example shell job class
+# Overrides set_command method using the 'path' virtual attribute
+# Ex:
+#   ExampleShellJob.run_async(:path => '.')
+# will execute
+#   ls .
+
+class ExampleShellJob < UbiquoJobs::Jobs::Base
+
+  include UbiquoJobs::Helpers::ShellJob
+
+  attr_accessor :path
+
+  def set_command
+    self.command = 'ls ' + path
+  end
+
+end
+</ruby>
+
+NOTE: As you can see, we can use a virtual attribute here, since set_command is called in creation time.
+
+h3. Workers
+
+Now that we know how to create new job types, it's time to know how to execute them, The process that executes planified jobs is called a worker. Hence, all what is needed here is to start a worker.
+
+Think of a worker as a thread or process that will be given a procedure to run.  This procedure is one of the jobs that are in the job queue, so workers are just CPU power units not tied to a given task.
+
+To spawn a worker, there's a rake task for it.
+<code>
+rake ubiquo:worker:start[name,interval]
+</code>
+
+ZSH users note: http://scottw.com/zsh-rake-parameters
+NOTE: Every worker must have a unique and known id. This is because when a job is started, the Job Manager needs to identify which worker is doing it. In the case that a worker is killed while executing a job, starting a new worker with the same id will alert the Manager that the previous one did not finish the job, and will make this one again available to be executed.
+
+That's all - The worker will find available jobs (with the planification threshold overcame) and execute them immediately.
+
+To stop all the running workers use:
+
+<code>
+script/ubiquo_worker --stop
+</code>
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_jobs

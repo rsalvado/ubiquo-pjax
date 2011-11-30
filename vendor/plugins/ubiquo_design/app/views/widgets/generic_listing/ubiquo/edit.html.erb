@@ -1,0 +1,20 @@
+<%= widget_header widget %>
+<% widget_form(page, widget) do |f| %>
+  <p>
+    <%= f.label :model, GenericListing.human_attribute_name('model') %><br />
+    <%= f.select :model, options_for_select(::Ubiquo::Config.context(:ubiquo_design).get(:generic_models)) %>
+  </p>
+  <p>
+    <%= f.label :title, GenericListing.human_attribute_name('title') %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :per_page, GenericListing.human_attribute_name('per_page') %><br />
+    <%= f.text_field :per_page, :size => 3 %>
+  </p>
+  <p>
+    <%= f.label :show_images, GenericListing.human_attribute_name('show_images') %><br />
+    <%= f.check_box :show_images %>
+  </p>
+  <%= widget_submit %>
+<% end %>

@@ -1,0 +1,15 @@
+UbiquoAuthentication
+====================
+
+This plugin adds basic support for users in ubiquo. This includes the following features:
+
+* Visual interface to create or edit users,
+* Login/logout and session capabilities,
+* User notifications/confirmations on creation
+* Reset form for forgotten passwords
+* "Superadmin mode" with a separate interface
+
+You can also use the ubiquo:create_user task to create them easily from the console.
+
+
+Copyright (c) 2009 International Product Design S.L. - gnuine (http://www.gnuine.com)

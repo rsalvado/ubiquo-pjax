@@ -1,0 +1,98 @@
+es:
+  ubiquo:
+    asset:
+      empty_list_title: "Listado multimedia"
+      empty_list_message: "Desde este apartado podéis gestionar vuestro catálogo de elementos multimedia."
+    media:
+      file_upload_in_progress: "Subida de fichero en progreso"
+      file_upload_complete: "Subida completada. Procesando fichero..."
+      media: "Multimedia"
+      media_title: "Ir a multimedia"
+      media_list: "Listado multimedia"
+      asset_new: "Nuevo recurso"
+      confirm_asset_removal: "Estás seguro de querer eliminar este recurso?"
+      current_file: "Fichero actual"
+      use_commas: "(Utilice comas para separar las etiquetas)"
+      asset_created: "Recurso creado con éxito"
+      asset_create_error: "Error al crear el recurso"
+      asset_updated: "Recurso modificado con éxito"
+      asset_update_error: "Error modificando el recurso"
+      asset_removed: "Recurso eliminado con éxito"
+      asset_remove_error: "Error al eliminar el recurso"
+       # Helpers
+      text: "texto"
+      type: "tipo"
+      all: "-- Todos --"
+      creation: "creación"
+      visibility: "visibilidad"
+      public: "público"
+      private: "privado"
+      is_protected: "Es un fichero protegido?"
+      # Filters FIXME: (I think all of this should be in base)
+      filter_between: "entre %{date_start} y %{date_end}"
+      filter_from: "desde %{date_start}"
+      filter_until: "hasta %{date_end}"
+      filter_text: "texto %{string}"
+      # Media column
+      remove: "eliminar"
+      assigned_text: "texto asignado"
+      change_text: "cambiar texto"
+      save: "Guardar"
+      apply: "Aplicar"
+      back: "Volver"
+      save_as_new: "Guardar como nuevo elemento"
+      selected_media_element: "Elemento multimedia seleccionado"
+      selected_media_elements: "Elementos multimedia seleccionados"
+      search_results: "Resultados de la búsqueda"
+      footer_text: "El texto asignado se utiliza como pie de la imagen o como titulo para documentos"
+      media_item_new: "Añadir nuevo elemento multimedia"
+      select_existing_media_item: "Selecciona un elemento multimedia existente"
+      search_asset: "Buscar elemento multimedia"
+      no_assets_found: "No se han encontrado recursos"
+      asset_open: "abrir"
+      asset_select: "selecciona"
+      asset_next: "siguiente"
+      asset_previous: "anterior"
+      asset_view: "ver"
+      invalid_related_object_type: "Identificador invalido para el tipo seleccionado: %{type} %{id}"
+      invalid: "invalido"
+      type_filter: "Filtrar por tipo"
+      # Resize
+      crop_and_resize: "Redimensionar imagen"
+      advanced_edit: "Avanzado"
+      advanced: "avanzado"
+      asset_not_resizeable: "Tipo de elemento no redimensionable."
+      crop: "Recortar"
+      formats: "Formatos predeterminados"
+      selected_format: "Formato seleccionado:"
+      available_styles: "Formatos disponibles"
+      current_image: "Imagen actual"
+      asset_original_crop_error: "Error al recortar la imagen original: %s"
+      undo_changes: "Deshacer los cambios"
+      restore: "Restaurar a fichero original"
+      confirm_asset_restore: "Estás seguro de querer restaurar este recurso?"
+      preview: "Previsualización"
+      preview_not_available: "Previsualización no disponible"
+      affects_all_related_elements: "Este cambio afectará a todos los elementos relacionados"
+      confirm_continue: "¿Estas seguro?"
+      shared_asset_warning: "Aviso: los cambios que se realicen afectarán a los %{num} elementos que están asociados a este recurso."
+      keep_backup: "Mantener copia de recuperación previa a los cambios"
+      image_details: "Editando imagen:"
+      filename: "Fichero"
+      geometry: "Medidas"
+      filesize: "Peso"
+      undo_buttons: "Versiones anteriores"
+      new_image: "nueva"
+      paperclip:
+        resize_and_crop:
+          error_no_style_matched: "Ningun estilo coincide con el formato: %s"
+      tips:
+        main: Aquí puedes recortar la imagen original. Haz clic en la imagen y modifica las medidas de la caja punteada para obtener una nueva porción.
+    asset_type:
+      names:
+        flash: 'Flash'
+        doc: 'Documento'
+        audio: 'Audio' 
+        other: 'Otros'
+        video: 'Video' 
+        image: 'Imagen'

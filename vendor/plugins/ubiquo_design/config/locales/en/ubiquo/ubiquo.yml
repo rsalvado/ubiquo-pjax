@@ -1,0 +1,104 @@
+en:
+  ubiquo:
+    page:
+      empty_list_title: "Design"
+      empty_list_message: "Here you can see, modify and design the application pages."
+      no_parent: "None"
+    design:
+      metatags: "Metatags"
+      design: "Design"
+      design_title: "Go to page design"
+      pages: "Pages"
+      new_page: "New page"
+      no_name: "(No name)"
+      name: "name"
+      page_url_example: "Absolute URL: "
+      confirm_page_removal: "Are you sure you want to remove this page?"
+      section: "Section"
+      situation: "Situation"
+      static_pages:
+        title: "Static pages"
+        new: "New static page"
+        page_info: "Page info"
+        widget_info: "Page content"
+        widget_title: "Static Section"
+        save_and_publish: "Save & publish"
+        create_and_publish: "Create & publish"
+      status:
+        unpublished: "Unpublished"
+        published: "Published"
+        pending_publish: "Changes pending publish"
+      page_template: "Page template"
+      page_created: "Page created succesfully"
+      page_create_error: "Error creating page"
+      page_edited: "Page updated succesfully"
+      page_edit_error: "Error updating page"
+      page_removed: "Page removed succesfully"
+      page_remove_error: "Error removing page"
+      # Filters
+      filter_name: "Name"
+      # Unknown
+      use_frontpage_block: "Use frontpage block"
+      # Widgets
+      widget_translate: "translate"
+      widget_removal: "remove"
+      confirm_widget_removal: "Are you sure you want to remove this widget?"
+      widget_move: "move"
+      widget_edit: "edit"
+      widget_saving: "Saving ..."
+      widget_save: "Save"
+      widget_cancel: "Cancel"
+      widget_click_to_edit: "Click to edit"
+      widget_loading: "Loading ..."
+      widget_error: "Widget must be configured in order to publish this page"
+      widget_categories: "Widget categories"
+      # End widgets
+      page_info: "Page information"
+      available_widgets: "Available widgets"
+      all_widgets: "All widgets"
+      open: "open"
+      published: "Published"
+      pending_publish: "Pending publish"
+      non_published: "Not published"
+      preview: "Preview"
+      publish: "Publish"
+      publish_changes: "Publish changes"
+      unpublish: "Unpublish"
+      move: "move"
+      # Widgets
+      editing_widget: "Editing widget {{name}}"
+      close_widget: "Close"
+      save: "Save"
+      page_published: "Page published succesfully"
+      page_publish_error: "Error publishing the page"
+      page_unpublished: "Page unpublished successfully"
+      page_unpublish_error: "Error unpublishing the page"
+      block_error: "Is not possible to assign this bloc as a default block because block types doesn't match"
+      stop_share_block: "Stop sharing the block"
+      share_block: "Share this block"
+      use_shared_block: "Using a shared block"
+      select_available_shared_blocks: "Select an available block"
+      stop_use_shared_block: "Stop using the block '{{key}}'"
+      replace_block_confirm: "Are sure to replace the contents of the block?"
+      stop_share_block_confirm: "Are sure to stop sharing the block?"
+    widget_groups:
+      sidebar: Sidebar block
+      main: Main block
+      top: Top block
+    widgets:
+      free:
+        name: Free content
+        contents: "Content"
+      generic_detail:
+        name: Generic detail
+      generic_listing:
+        name: Generic list
+      generic_highlighted:
+        name: Generic highlighted
+      static_section:
+        name: "Static section"
+        title: "Title"
+        summary: "Summary"
+        body: "Body"
+        image: "Image"
+        docs: "Related documents"

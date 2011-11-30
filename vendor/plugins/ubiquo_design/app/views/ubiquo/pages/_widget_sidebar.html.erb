@@ -1,0 +1,11 @@
+<div id="widget_<%= widget_sidebar.id %>" class="widget_sidebar widget">
+  <a href="#"><div class="creu"><%= t('ubiquo.design.move') %></div></a>
+  <div class="wrap1">
+    <div class="wrap2">
+      <div class="wrap3">
+	<p class="nom"><%= widget_sidebar.name %></p>
+      </div>
+    </div>
+  </div>   
+</div>
+<%= draggable_element "widget_#{widget_sidebar.id}", :handle => "'creu'", :revert => true %>

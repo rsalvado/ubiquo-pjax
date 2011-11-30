@@ -1,0 +1,60 @@
+<%= render :partial => "ubiquo/asset_relations/media_javascript.html.erb" %>
+<div id="media_selector_<%= counter %>" class="media_selector">
+  <div class="selected-assets">
+    <fieldset>
+      <div class="list_caption">
+      <%= hidden_field_tag "#{object_name}[#{field}_attributes][][asset_id]", nil  %>
+      </div>
+      <ul class="items-list" id="relations_list_<%= counter %>">
+      </ul>
+    </fieldset>
+  </div>
+  <div class="select-assets">
+    <fieldset>
+      <legend><%= t('ubiquo.media.media_item_new') %></legend>
+      <div class="add" id="add_<%= counter%>">
+	<%= render :partial => 'ubiquo/asset_relations/asset_form.html.erb',
+	    :locals => {
+              :field => field,
+              :counter => counter,
+              :types => field_options[:asset_types],
+              :visibility => visibility } %>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend><%= t('ubiquo.media.select_existing_media_item') %></legend>
+      <div class="search-block" id="search_<%= counter%>">
+	<%= render :partial => 'ubiquo/asset_relations/asset_search.html.erb',
+	    :locals => {
+              :counter => counter,
+              :field => field,
+              :types => field_options[:asset_types],
+              :visibility => visibility } %>
+      </div>
+      <div id="asset_search_results_<%= counter %>" class="search-results">
+      </div>
+    </fieldset>
+  </div>
+</div>
+<% javascript_tag do %>
+  media_fields.add_field('<%= counter %>', '<%= field %>', <%= field_options[:size].to_i %>, '<%= object_name %>');
+
+  <% asset_relations.each do |ar| %>
+    <% next if ar.marked_for_destruction? %>
+    media_fields.add_element(
+      '<%= field %>',
+      <%= ar.id.to_json %>,
+      <%= ar.asset_id %>,
+      <%= ar.name.to_json %>,
+      <%= counter %>,
+      <%= thumbnail_url(ar.asset).to_json %>,
+      <%= view_asset_link(ar.asset).to_json %>,
+      <%= ar.asset.name.to_json %>,
+      <%= {:advanced_form => advanced_asset_form_for(ar.asset)}.to_json %>
+    );
+  <% end %>
+
+  document.observe("dom:loaded", function() {
+    Ubiquo.Forms.createTabs('#media_selector_<%= counter %> .select-assets','legend');
+  });
+<% end %>

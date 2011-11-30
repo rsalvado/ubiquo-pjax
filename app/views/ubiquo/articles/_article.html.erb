@@ -1,0 +1,11 @@
+<div class="view_box preview">
+  <dl>
+    <dt><%= Article.human_attribute_name("title") %>:</dt>
+    <dd><%=h article.title %></dd>
+    <dt><%= Article.human_attribute_name("description") %>:</dt>
+    <dd><%=h article.description %></dd>
+    <dt><%= Article.human_attribute_name("published_at") %>:</dt>
+    <dd><%=h article.published_at %></dd>
+  </dl>
+</div>
+

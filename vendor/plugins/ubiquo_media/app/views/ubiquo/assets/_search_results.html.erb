@@ -1,0 +1,48 @@
+<% if assets.blank? %>
+  <p class="message"><%= t('ubiquo.media.no_assets_found') %></p>
+<% else %>
+  <ul class='items-list'>
+    <h3><%= t('ubiquo.media.search_results') %>:</h3>
+    <% assets.each do |asset| %>
+      <li class="item">
+  	<h4><%= h asset.name %></h4>
+        <% select_function = "media_fields.add_element('#{field}', null, #{asset.id}, #{asset.name.to_json},"+
+             "#{counter}, #{thumbnail_url(asset).to_json},"+
+             "#{view_asset_link(asset).to_json},null,"+
+             "{advanced_form:#{advanced_asset_form_for(asset).to_json}});"
+        %>
+        <div><%= image_tag(thumbnail_url(asset), :onclick => select_function) %></div>
+        <ul class="actions">
+          <li>
+            <%= link_to(t('ubiquo.media.asset_open'),
+                        asset.resource.url, :class => 'bt-open', :popup => true) %>
+          </li>
+          <li>
+          <%= link_to_function(t('ubiquo.media.asset_select'), select_function,
+                :class=> 'bt-select') %>
+          </li>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<%
+  options = {
+    :text => search_text,
+    :before => "Element.show(\"search_spinner_#{counter}\")",
+    :success => "Element.hide(\"search_spinner_#{counter}\")",
+    :failure => "Element.hide(\"search_spinner_#{counter}\")",
+    :with => "'field=#{field}&counter=#{counter}&asset_type_id=' + $('asset_type_id_#{counter}').value + '&text=' + $('asset_search_string_#{counter}').value",
+    :method => :get,
+  }
+%>
+<div class="assets_paginator">
+  <% unless paginator_url[:previous].nil? %>
+      &lt; <%= link_to_remote t('ubiquo.media.asset_previous'), options.merge(:url => paginator_url[:previous]) %>
+  <% end %>
+
+  <% unless paginator_url[:next].nil? %>
+      <%= link_to_remote t('ubiquo.media.asset_next'), options.merge(:url => paginator_url[:next]) %> &gt;
+  <% end %>
+</div>
+

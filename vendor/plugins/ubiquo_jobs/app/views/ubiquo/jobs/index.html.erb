@@ -1,0 +1,35 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+  <%= render :partial => 'submenu' %>
+</h2>
+<%= render :partial => "shared/ubiquo/feedback" %>
+
+<div style="clear:both"></div>
+<%= show_filter_info %>
+
+<%= stylesheet_link_tag 'ubiquo_jobs.css' %>
+<%= render :partial => "shared/ubiquo/lists/standard",
+           :locals => {
+             :name => UbiquoJobs.manager.job_class.to_s,
+             :headers => [:name, :state, :planified_at, :created_at] +
+               (permit?({:admin => true}) ? [:priority] : []),
+             :rows => @jobs.collect { |job|
+               {
+                 :id => job.id,
+                 :columns => [
+                   job.name,
+                   state_name(job.state),
+                   short_date(job.planified_at),
+                   short_date(job.created_at),
+                 ] + (permit?({:admin => true}) ? [render(:partial => "priority_editor", :locals => {:job => job})] : []),
+                 :actions=> job_actions(job)
+               }
+             },
+             :pages => @jobs_pages, } %>
+
+
+<% content_for :sidebar do %>
+  <%= show_filters %>
+
+  <%= help_block_sidebar(t("ubiquo.helpmsg.jobs.index")) %>
+<% end %>

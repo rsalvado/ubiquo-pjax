@@ -1,0 +1,48 @@
+/* Pàgina principal llistat */
+.empty_list {
+	clear: both;
+}
+
+.balloon_wrapper { 
+    width: 60%;
+    margin: 4em auto;
+}
+
+.balloon_content {
+    
+}
+
+img.list_example {
+	float: left;
+	margin-right: 5%;
+	width: 49.5%;
+	max-width: 37em;
+}
+
+#balloon_list {
+	position: relative;
+	float: left;
+	width: 45%;
+	text-align: center;	
+}
+   #balloon_list a.new {
+     width: 14em;
+     margin: 2em auto; 
+   }
+
+  #balloon_list h4 {
+  	font-size: 2.8em;
+  	font-weight: bold;
+  	margin-bottom: .3em;
+  }
+
+  #balloon_list p {
+  	font-size: 2.4em;
+  	line-height: 1.5;
+  }
+
+/*-------------- Clearfix --------------*/
+.balloon_content:after
+{ 
+	content: "."; display: block; height: 0; clear: both; visibility: hidden;
+}

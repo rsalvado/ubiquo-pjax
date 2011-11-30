@@ -1,0 +1,68 @@
+<% 
+=begin
+
+example:
+  def item_list(collection, pages, options = {}, &block)
+    concat render(:partial => "shared/ubiquo/lists/boxes", :locals => {
+          :name => 'item',
+          :rows => collection.collect do |item| 
+            {
+              :id => item.id, 
+              :content => capture(item, &block),
+              :actions => item_actions(item)
+            }
+          end,
+          :pages => pages
+        })
+  end
+
+parameters:
+ :name         - The name of the model listed
+ :rows         - An Array with each row of the list. Each row is a Hash:
+    :id        - The id of this element
+    :content   - The content of the row
+    :actions   - An Array with the actions for this element
+ :pages        - Pagination for this list.
+
+optionals:
+ :model        - A Model name constant or string. 
+ :hide_actions - Set to true to hide actions (default: false)
+ :link_to_new  - A new action link
+ :table_id     - An html id for list table
+ 
+=end
+%>
+<%
+hide_actions ||= false
+model ||= name.classify
+model = model.to_s.constantize
+link_to_new ||= ""
+table_id ||= name.pluralize + "-list"
+%>
+<% if rows.size > 0 %>
+  <% content_for :sidebar do %>
+	<%= link_to_new %>
+  <% end %>
+  <ul id="<%= table_id %>" class="box_list">
+    <% rows.each do |row| %>
+      <li id="<%= name %>_<%= row[:id] %>" class="box <%= cycle('even', 'odd') %>">
+        <%= row[:content] %>
+        
+        <% unless hide_actions %>
+          <div class="actions">
+            <%= row[:actions].delete_if{|r|r.blank?}.join(" | ") %>       
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <% if !pages.nil? %>
+    <%= render :partial => "shared/ubiquo/pagination", :locals => { :item_pages => pages } %>
+  <% end %>
+
+<% else %>
+  <%= render :partial => "shared/ubiquo/lists/empty", 
+             :locals => { :name => name,
+                          :link_to_new => link_to_new,
+                          :model => model } %>
+ <% end %>

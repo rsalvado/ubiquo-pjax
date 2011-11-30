@@ -1,0 +1,28 @@
+<%= widget_header widget %>
+<% widget_form(page, widget) do |f| %>
+  <p>
+    <%= f.label :title, t('ubiquo.widgets.static_section.title') %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :summary, t('ubiquo.widgets.static_section.summary') %>
+    <%= f.text_area :summary, :rows => 2, :class => 'visual_editor' %>
+  </p>
+  <p>
+    <%= f.label :body, t('ubiquo.widgets.static_section.body') %>
+    <%= f.text_area :body, :rows => 30, :class => 'visual_editor' %>
+  </p>
+  <% if f.object.respond_to?(:image) %>
+  <p>
+    <%= f.label :image, t('ubiquo.widgets.static_section.image') %>
+    <%= media_selector f, :image %>
+  </p>
+  <% end %>
+  <% if f.object.respond_to?(:docs) %>
+  <p>
+    <%= f.label :docs, t('ubiquo.widgets.static_section.docs') %>
+    <%= media_selector f, :docs %>
+  </p>
+  <% end %>
+  <%= widget_submit %>
+<% end %>

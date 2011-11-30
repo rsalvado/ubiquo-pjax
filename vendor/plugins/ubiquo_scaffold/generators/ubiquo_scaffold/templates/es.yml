@@ -1,0 +1,21 @@
+es:
+  ubiquo:
+    <%= singular_name %>:
+      title: "<%= plural_name.capitalize %>"
+      created: "Entidad <%= singular_name.capitalize %> creada con éxito"
+      create_error: "Error al crear la entidad <%= singular_name %>"
+      edited: "Entidad <%= singular_name.capitalize %> editada con éxito"
+      edit_error: "Error al editar la entidad <%= singular_name %>"
+      destroyed: "Entidad <%= singular_name.capitalize %> eliminada con éxito"
+      destroy_error: "Error al eliminar la entidad <%= singular_name %>"
+      index:
+        title: "Listado de <%= plural_name %>"
+        help_message: "Aquí puedes ver el listado de <%= plural_name %>"
+        new: "Nuevo <%= singular_name.capitalize %>"
+        confirm_removal: "Estás seguro de querer eliminar esta entidad <%= singular_name %>?"
+      new:
+        help_message: "Aquí puedes crear una nueva entidad <%= singular_name %>"
+      edit:
+        help_message: "Aquí puedes editar la entidad <%= singular_name %>"
+      empty_list_title: "Listado de <%= plural_name %>"
+      empty_list_message: "Desde este apartado puedes ver una lista de todos los recursos existentes. Podras crear nuevos, editar o borrarlos."

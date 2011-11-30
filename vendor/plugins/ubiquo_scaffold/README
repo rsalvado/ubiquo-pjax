@@ -1,0 +1,32 @@
+UbiquoScaffold
+==============
+
+This plugin provides scaffolds to easily create parts of the application that take advantage of the Ubiquo features. Currently, this plugin features two different scaffolds:
+
+= ubiquo_model
+
+Stubs out a new model. Similar to rails' "model" scaffold, but adds a searcher function to the model to be easily connected with Ubiquo filters.
+
+= ubiquo_scaffold
+
+Creates code to handle resources on an application. This is the counterpart of rails' builtin "scaffold". It creates an ubiquo_model, route, ubiquo controller and views.
+
+Example
+=======
+
+As an example, let's create a scaffold for a _Book_ model:
+
+  script/generate ubiquo_scaffold book title:string published_at:datetime author_id:integer
+  rake db:migrate
+
+REST resources for this model will be created automatically. Check it out:
+
+  map.namespace :ubiquo do |ubiquo|
+     ubiquo.resources :books
+     ...
+  end
+
+Therefore, you can now go to ubiquo/books and start managing books through this new Ubiquo section.
+
+
+Copyright (c) 2009 International Product Design S.L. - gnuine (http://www.gnuine.com)

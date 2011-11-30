@@ -1,0 +1,6 @@
+es:
+  ubiquo:
+    helpmsg:
+      jobs:
+        index: "Aquí puedes ver una lista de tareas pendientes de ejecutar."
+        history: "Aquí puedes ver una lista de las tareas ya finalizadas."

@@ -1,0 +1,7 @@
+en:
+  ubiquo:
+    helpmsg:
+      media:
+        assets:
+          index: "Here you can see a list with all existing assets. You can create, edit and remove."
+          form: "Here you can set media attributes."

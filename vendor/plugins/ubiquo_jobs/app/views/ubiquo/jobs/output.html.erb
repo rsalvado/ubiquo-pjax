@@ -1,0 +1,12 @@
+<%= stylesheet_link_tag 'ubiquo_jobs.css' %>
+<div id="lightwindow_contents">
+  <h3><%= t("ubiquo.jobs.job_output") %></h3>
+  <a rel="deactivate" class="close lightwindow_action" href="#"><%= t("ubiquo.jobs.close") %></a>
+  <br/>
+  <div id="system_output">
+    <textarea rows="5" readonly="readonly"><%= @job.output_log %></textarea>
+    <br/>
+    <h4><%= t("ubiquo.jobs.job_error_channel") %></h4>
+    <textarea rows="5" readonly="readonly"><%= @job.error_log %></textarea>
+  </div>
+</div>

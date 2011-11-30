@@ -1,0 +1,22 @@
+--- 
+es: 
+  ubiquo: 
+    article: 
+      create_error: "Error al crear la entidad article"
+      created: "Entidad Article creada con éxito"
+      destroy_error: "Error al eliminar la entidad article"
+      destroyed: "Entidad Article eliminada con éxito"
+      edit: 
+        help_message: "Aquí puedes editar la entidad article"
+      edit_error: "Error al editar la entidad article"
+      edited: "Entidad Article editada con éxito"
+      empty_list_message: "Desde este apartado puedes ver una lista de todos los recursos existentes. Podras crear nuevos, editar o borrarlos."
+      empty_list_title: "Listado de articles"
+      index: 
+        confirm_removal: "Estás seguro de querer eliminar esta entidad article?"
+        help_message: "Aquí puedes ver el listado de articles"
+        new: "Nuevo Article"
+        title: "Listado de articles"
+      new: 
+        help_message: "Aquí puedes crear una nueva entidad article"
+      title: Articles

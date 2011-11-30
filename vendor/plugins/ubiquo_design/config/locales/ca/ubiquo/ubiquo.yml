@@ -1,0 +1,105 @@
+
+ca:
+  ubiquo:
+    page:
+      empty_list_title: "Maquetació"
+      empty_list_message: "Aquí pots veure, modificar i maquetar les pàgines de l'aplicació."
+      no_parent: "Cap"
+    design:
+      metatags: "Metatags"
+      design: "Maquetació"
+      design_title: "Anar a maquetació de pàgines"
+      pages: "Pàgines"
+      new_page: "Nova pàgina"
+      no_name: "(Sense nom)"
+      name: "nom"
+      page_url_example: "Adreça web: "
+      confirm_page_removal: "Estàs segur de voler eliminar aquesta pàgina?"
+      section: "Secció"
+      situation: "Situació"
+      static_pages:
+        title: "Pàgines estàtiques"
+        new: "Nova pàgina"
+        page_info: "Informació de la pàgina"
+        widget_info: "Contingut de la pàgina"
+        widget_title: "Secció estàtica"
+        save_and_publish: "Guardar i publicar"
+        create_and_publish: "Crear i publicar"
+      status:
+        unpublished: "No publicada"
+        published: "Publicada"
+        pending_publish: "Canvis pendents de publicar"
+      page_template: "Plantilla de pàgina"
+      page_created: "Pàgina creada correctament"
+      page_create_error: "Error al crear la pàgina"
+      page_edited: "Pàgina modificada correctament"
+      page_edit_error: "Error al modificar la pàgina"
+      page_removed: "Pàgina eliminada correctament"
+      page_remove_error: "Error a l'eliminar la pàgina"
+      # Filters
+      filter_name: "Nom"
+      # Unknown
+      use_frontpage_block: "Utilitza el bloc de la pàgina principal"
+      # Widgets
+      widget_translate: "traduir"
+      widget_removal: "eliminar"
+      confirm_widget_removal: "Estàs segur de voler eliminar aquest widget?"
+      widget_move: "moure"
+      widget_edit: "editar"
+      widget_saving: "Guardant ..."
+      widget_save: "Guardar"
+      widget_cancel: "Cancel·lar"
+      widget_click_to_edit: "Fes click per editar"
+      widget_loading: "Carregant ..."
+      widget_error: "El widget necessita ser configurat per poder publicar la pàgina"
+      widget_categories: "Categories de widgets"
+      # End widgets
+      page_info: "Informació de la pàgina"
+      available_widgets: "Widgets disponibles"
+      all_widgets: "Tots els widgets"
+      open: "obrir"
+      published: "Publicat"
+      pending_publish: "Pendent de publicació"
+      non_published: "No publicat"
+      preview: "Previsualitzar"
+      publish: "Publicar"
+      publish_changes: "Publicar canvis"
+      unpublish: "Despublicar"
+      move: "moure"
+      # Widgets
+      editing_widget: "Editant el widget %{name}"
+      close_widget: "Tancar"
+      save: "Guardar"
+      page_published: "Pàgina publicada correctament"
+      page_publish_error: "Error al publicar la pàgina"
+      page_unpublished: "Pàgina despublicada correctament"
+      page_unpublish_error: "Error al despublicar la pàgina"
+      block_error: "No es pot assignar aquest bloc com bloc per defecte degut a que els tipos de bloc no coincideixen"
+      stop_share_block: "Deixar de compartir el bloc"
+      share_block: "Compartir aquest bloc"
+      use_shared_block: "Fer servir un bloc compartit"
+      select_available_shared_blocks: "Sel·lecciona un bloc disponible"
+      stop_use_shared_block: "Deixar de fer servir el bloc '{{key}}'"
+      replace_block_confirm: "Estàs segur de voler remplaçar el contingut del block?"
+      stop_share_block_confirm: "Estàs segur de voler deixar de compartir el block?"
+    widget_groups:
+      sidebar: Bloc lateral
+      main: Bloc principal
+      top: Capçalera
+    widgets:
+      free:
+        name: "Contingut lliure"
+        contents: "Contingut"
+      generic_detail:
+        name: Fitxa genèrica
+      generic_listing:
+        name: Llistat genèric
+      generic_highlighted:
+        name: Destacats genèrics
+      static_section:
+        name: "Secció estàtica"
+        title: "Títol"
+        summary: "Entradeta"
+        body: "Cos"
+        image: "Imatge"
+        docs: "Documents relacionats"

@@ -1,0 +1,75 @@
+<%
+=begin
+
+parameters:
+ :name         - The name of the model listed
+ :headers      - A Hash. The key is the field name of the model listed(for sorting). The value is the string to show.
+ :rows         - An Array with each row of the list. Each row is a Hash:
+    :id        - The id of this element
+    :columns   - An Array with the columns values of this element
+    :actions   - An Array with the actions for this element
+ :pages        - Pagination for this list.
+
+
+optionals:
+ :model                 - A Model name constant or string.
+ :hide_actions          - Set to true to hide actions (default: false)
+ :link_to_new           - A new action link
+ :table_id              - An html id for list table
+ :edit_on_row_click     - Use the new edit on row click style or the old one
+ :table_class           - The class attribute of the table
+
+=end
+
+model ||= name.classify
+model = model.to_s.constantize
+hide_actions ||= false
+link_to_new ||= ""
+table_id ||= name.pluralize + "-list"
+#We look for the configuration value if not provided
+edit_on_row_click = Ubiquo::Config.get(:edit_on_row_click) if edit_on_row_click.nil? 
+table_class ||=""
+table_class += " edit_on_row_click" if edit_on_row_click
+%>
+<% if rows.size > 0 %>
+  <% content_for :sidebar do %>
+	<%= link_to_new %>
+  <% end %>
+  <table id="<%= table_id %>" class="<%= table_class %>" width="100%" border="1" cellspacing="0" cellpadding="3">
+    <tr>
+      <% headers.each do |column| %>
+        <th><%= ubiquo_table_headerfy column, name %></th>
+      <% end %>
+      <% unless hide_actions %>
+        <th class="actions"><%= t('ubiquo.base.actions') %></th>
+      <% end %>
+      </tr>
+      <% rows.each do |row| %>
+        <tr class="<%= cycle('even', 'odd') %>" id="<%= name %>_<%= row[:id] %>">
+          <% row[:columns].each do |col| %>
+            <td>
+              <%=
+                 case col
+                   when ActiveSupport::TimeWithZone : l(col)
+                   when TrueClass, FalseClass : ubiquo_boolean_image(col)
+                   else col.to_s
+                 end %>
+            </td>
+          <% end %>
+          <% unless hide_actions %>
+            <td class="actions">
+              <%= row[:actions].delete_if{|r|r.blank?}.join(' ') %>
+            </td>
+          <% end %>
+        </tr>
+    <% end %>
+  </table>
+  <% if !pages.nil? %>
+    <%= render :partial => "shared/ubiquo/pagination", :locals => { :item_pages => pages } %>
+  <% end %>
+<% else %>
+  <%= render :partial => "shared/ubiquo/lists/empty",
+             :locals => { :name => name,
+                          :link_to_new => link_to_new,
+                          :model => model } %>
+<% end %>

@@ -1,0 +1,10 @@
+<%
+  navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+    navigator.add_link do |link|
+      link.text = (t("ubiquo.activity_info.activity_list"))
+      link.url = ubiquo_activity_infos_path
+      link.highlights_on({:controller => "ubiquo/activity_infos", :action => 'index'})
+    end
+  end
+%>
+<%= render_link_navigator(navigator_section) %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+
+one:
+  name: MyString
+  key: MyString
+  is_editable: true
+
+two:
+  name: MyString
+  key: MyString
+  is_editable: true
+
+cities:
+  name: Cities
+  key: cities
+  is_editable: true

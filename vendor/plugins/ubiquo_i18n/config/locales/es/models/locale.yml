@@ -1,0 +1,11 @@
+es:
+  activerecord:
+    models:
+      locale: "Idioma"
+    attributes:
+      locale:
+        iso_code: "Código ISO"
+        english_name: "Nombre inglés"
+        native_name: "Nombre nativo"
+        is_active: "Activo"
+        is_default: "Valor por defecto"

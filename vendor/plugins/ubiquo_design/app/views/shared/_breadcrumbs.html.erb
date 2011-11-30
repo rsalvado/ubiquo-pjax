@@ -1,0 +1,7 @@
+<p id="breadcrumbs">
+  <% breadcrumbs.each do |caption, url| %> 
+     <%= link_to_if(url, caption, url) %>
+     &gt;
+  <% end %> 
+  <strong><%= current %></strong>
+</p>

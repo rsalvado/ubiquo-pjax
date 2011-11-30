@@ -1,0 +1,7 @@
+ca:
+  ubiquo:
+    helpmsg:
+      media:
+        assets:
+          index: "Aquí pots veure una llista de tots els recursos existents. Pots crear-los, editar-los o esborrar-los."
+          form: "Aquí pots veure els atributs del recurs multimèdia."

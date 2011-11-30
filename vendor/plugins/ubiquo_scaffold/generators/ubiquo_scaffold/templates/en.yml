@@ -1,0 +1,21 @@
+en:
+  ubiquo:
+    <%= singular_name %>:
+      title: "<%= plural_name.capitalize %>"
+      created: "<%= singular_name.capitalize %> created succesfully"
+      create_error: "Error creating <%= singular_name %>"
+      edited: "<%= singular_name.capitalize %> updated succesfully"
+      edit_error: "Error updating <%= singular_name %>"
+      destroyed: "<%= singular_name.capitalize %> removed succesfully"
+      destroy_error: "Error removing <%= singular_name %>"
+      index:
+        title: "<%= plural_name.capitalize %> list"
+        help_message: "Here you can see the <%= plural_name %> list."
+        new: "New <%= singular_name.capitalize %>"
+        confirm_removal: "Are you sure you want to remove this <%= singular_name %>?"
+      new:
+        help_message: "Here you can create a new <%= singular_name %>"
+      edit:
+        help_message: "Here you can edit a new <%= singular_name %>"
+      empty_list_title: "<%= plural_name.capitalize %> list"
+      empty_list_message: "Here you can see all the records and create, edit or delete them."

@@ -1,0 +1,17 @@
+<fieldset>
+  <legend><%= t('ubiquo.auth.role_new') %></legend>
+  <div class="form-item">
+    <%= form.label :name, Role.human_attribute_name("name") %>
+    <%= form.text_field :name %>
+  </div>
+  <% fields_for 'permission' do |pf| %>
+  <% @permissions.each do |permission| %>
+  <div class="form-item">
+    <label for="<%= "permission_#{permission.key}"%>"><%= permission.name %></label>
+    <%= check_box_tag("permissions[]", permission.key,
+    @role.has_permission?(permission),{:id=>"permission_#{permission.key}",
+    :class => "checkbox"}) %>
+  </div>
+  <% end %>
+  <% end %>
+</fieldset>

@@ -1,0 +1,98 @@
+en:
+  ubiquo:
+    asset:
+      empty_list_title: "Multimedia list"
+      empty_list_message: "In this section you can manage your assets catalog."
+    media:
+      file_upload_in_progress: "File upload in progress"
+      file_upload_complete: "Upload complete. Processing file..."
+      media: "Multimedia"
+      media_title: "Go to multimedia"
+      media_list: "Multimedia list"
+      asset_new: "New asset"
+      confirm_asset_removal: "Are you sure you want to remove this asset?"
+      current_file: "Current file"
+      use_commas: "(Use comas between tags)"
+      asset_created: "Asset created succesfully"
+      asset_create_error: "Error creating asset"
+      asset_updated: "Asset updated succesfully"
+      asset_update_error: "Error updating asset"
+      asset_removed: "Asset removed succesfully"
+      asset_remove_error: "Error removing asset"
+       # Helpers
+      text: "text"
+      type: "type"
+      all: "-- All --"
+      creation: "creation"
+      visibility: "visibility"
+      public: "public"
+      private: "private"
+      is_protected: "Is a protected file?"
+      # Filters FIXME: (I think all of this should be in base)
+      filter_between: "between %{date_start} and %{date_end}"
+      filter_from: "from %{date_start}"
+      filter_until: "to %{date_end}"
+      filter_text: "text %{string}"
+      # Media column
+      remove: "remove"
+      assigned_text: "assigned text"
+      change_text: "change text"
+      save: "Save"
+      apply: "Apply"
+      back: "Return"
+      save_as_new: "Save as new asset"
+      selected_media_element: "Selected asset"
+      selected_media_elements: "Selected assets"
+      search_results: "Search results"
+      footer_text: "Assigned text is used as a footer for the image or as a title for documents"
+      media_item_new: "Add new asset"
+      select_existing_media_item: "Select existing asset"
+      search_asset: "Search asset"
+      no_assets_found: "No assets found"
+      asset_open: "Open"
+      asset_select: "Select"
+      asset_next: "next"
+      asset_previous: "previous"
+      asset_view: "view"
+      invalid_related_object_type: "Invalid identifier for the selected type: %{type} %{id}"
+      invalid: "invalid"
+      type_filter: "Filter by type"
+      # Resize
+      crop_and_resize: "Resize image"
+      advanced: "advanced"
+      advanced_edit: "Advanced"
+      asset_not_resizeable: "Asset type not resizable."
+      crop: "Crop"
+      formats: "Predefined formats"
+      selected_format: "Selected format:"
+      available_styles: "Available formats"
+      current_image: "Current image"
+      asset_original_crop_error: "Error occurred when cropping original image: %s"
+      undo_changes: "Undo changes"
+      restore: "Restore to uploaded file"
+      confirm_asset_restore: "Are you sure you want to restore this asset?"
+      preview: "Preview"
+      preview_not_available: "Preview not available"
+      affects_all_related_elements: "This change will affect to all related elements"
+      confirm_continue: "Are you sure?"
+      shared_asset_warning: "Warning: this asset is related to %s elements. Changes will affect all of them."
+      keep_backup: "Keep backup before changes"
+      image_details: "Editing image:"
+      filename: "File"
+      geometry: "Dimensions"
+      filesize: "Size"
+      undo_buttons: "Previous versions"
+      new_image: "new"
+      paperclip:
+        resize_and_crop:
+          error_no_style_matched: "No style matched the options: %s"
+      tips:
+        main: Here you can crop the original image. Click on it and change the size of the dotted box to get a piece of the picture.
+    asset_type:
+      names:
+        flash: 'Flash'
+        doc: 'Document'
+        audio: 'Audio' 
+        other: 'Other'
+        video: 'Video' 
+        image: 'Image'

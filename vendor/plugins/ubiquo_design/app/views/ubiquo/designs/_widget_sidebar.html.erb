@@ -1,0 +1,24 @@
+<li id="widget_<%= widget_sidebar %>___<%= group_name %>" class="widget">
+  <div class="wrap">
+    <a href="#" class="move" onclick="return false;"><%= t('ubiquo.design.move') %></a>
+    <h4><%= Widget.default_name_for widget_sidebar %></h4>
+  </div>   
+</li>
+<script type="text/javascript">
+  document.observe("dom:loaded", function() {
+		explorerScrollPositioner('relative');
+		new Draggable('<%= "widget_#{widget_sidebar}___#{group_name}"%>', {
+	    revert: true,
+			ghosting: (isIE7()) ? false : true, 
+			onStart: function() {
+        explorerScrollPositioner('static');
+				showAllowedBlocks('<%= widget_sidebar %>');
+			},
+			onEnd: function(draggable) {
+				explorerScrollPositioner('relative');
+				hideAllowedBlocks('<%= widget_sidebar %>');
+                                draggable.element.style.position="relative";
+			}
+	  });
+});
+</script>

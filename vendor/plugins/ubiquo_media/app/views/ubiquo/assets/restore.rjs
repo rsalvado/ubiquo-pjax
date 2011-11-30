@@ -1,0 +1,5 @@
+if params[:target]
+  render :partial => "update_target"
+end
+
+page.redirect_to(advanced_edit_ubiquo_asset_path(@asset, :target => params[:target]))

@@ -1,0 +1,115 @@
+h2. Ubiquo Versions
+
+The ubiquo_versions plugin provides the capability to track versions from a model instance.
+
+What "track versions" here means is the recording of the state of the instance before any change in its attributes, to be able to show a history or to revert to a previous version.
+
+Some of the main features of this versioning implementation are:
+
+* Single table for model
+* Explicit versioning
+
+
+
+This guide will walk you through ubiquo_versions internals and show you how to create a versioned model.
+
+endprologue.
+
+Instead of having another table to store the old versions for each model, we store all the required information in the same model table. This approach is similar to the one used in i18n, and leads to bigger tables, but also provides the simplicity to treat every version as a model instance.
+
+Since versioning is usually a feature that is used only in determinated circumstances (e.g. when restoring an old version of something), the system is built in a way that using versions is explicit, and if no versioning info is used e.g. in searches, we get the usual, unversioned behaviour.
+
+
+h3. Creating versionable models
+
+In this example we will create an Article model, which will be defined as versionable
+
+h4. Scaffolding
+
+If you are going to start a fresh new model, the easiest and quickiest way to create a versionable model is using the ubiquo_model scaffold:
+
+<shell>
+$ script/generate ubiquo_model Article title:string description:string --versionable
+</shell>
+
+NOTE: If the above is new for you, see the "Ubiquo Scaffold guide":ubiquo_scaffold.html
+
+This will make the necessary changes in the model and migration to create an Article model which is defined as versionable. You could also have used ubiquo_scaffold, if you need a full scaffold, and the created controller and views would have been also filled with the particular ubiquo_versions goodies.
+
+h4. Manual creation
+
+If you don't want to use scaffolding, e.g. because the model file that you want to make versionable already exists, these are the changes that you'll need to do:
+
+h5. Migrations
+
+This is how the migration to create a table of a versioned model looks like:
+
+<ruby>
+    create_table :articles, :versionable => true do |t|
+      t.string :title
+      t.string :description
+      ...
+    end
+</ruby>
+
+As you can see, the only special thing here is that a versionable option is added, and will result in adding some versionable special meaning fields to the articles table. The rest of the attributes are created as usual.
+
+h5. Models
+
+On models, we can flag a model as versionable just adding the following line:
+
+<ruby>
+class Article < ActiveRecord::Base
+
+  versionable
+</ruby>
+
+
+h4. Using versionable models
+
+So now that we have the Article model, it's time to use it.
+
+<ruby>
+Article.create(:title => 'title', :description => 'desc', :locale => 'en')
+Article.first.update_attribute :title, 'new_title'
+</ruby>
+
+The above code will generate two rows in the 'articles' table. The differences between them is that the original article (the one created first) is marked as the current_version, and its title is 'new_title'. The other row is marked as a version of this article, and keeps the previous title, 'title'.
+
+But don't get it wrong, these extra rows will not disturb us when doing our usual finds and operations:
+
+<ruby>
+Article.count # this returns 1
+</ruby>
+
+What if we really want to count or find all the articles including all the old versions? We just use a parameter to the desired method:
+
+<ruby>
+Article.count :version => :all
+Article.all :version => :all
+</ruby>
+
+
+h4. versions() method
+
+The versions() method is an instance method that allows us to get a history of all the versions that a current instance (article, in this example) have. It is implemented as a named scope, so you can chain it with other filtering methods.
+
+<ruby>
+Article.first.versions
+# returns all the versions from the first article
+</ruby>
+
+h4. restore() method
+
+You can use the restore() method to take back an instance to a previous state. It works as follows:
+
+<ruby>
+versions = Article.first.versions
+Article.first.restore(versions.first.id)
+</ruby>
+
+This restores Article.first to the first of its versions. Each instance in a versionable model has an id, which is the argument that restore() expects.
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_versions

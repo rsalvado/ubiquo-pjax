@@ -1,0 +1,12 @@
+es:
+  ubiquo:
+    i18n:
+      translations: "Traducciones"
+      translations_title: "Ir a la administración de traducciones"
+      locale_uniqueness_per_entity: "La entitat %{model} ya dispone de traducción en %{object_locale}"
+      locales_help_message: "Aqui puedes administrar las traducciones disponibles."
+      locales_updated: "Traducciones actualizadas"
+      select_default_locale_error: "Debes marcar como valor por defecto una traducción activa."
+    locale:
+      empty_list_title: "Listado de traducciones"
+      empty_list_message: "Desde este apartado puedes ver una lista de todas las traducciones disponibles. Puedes gestionar cuales estarán activas o cual es la traducción por defecto."

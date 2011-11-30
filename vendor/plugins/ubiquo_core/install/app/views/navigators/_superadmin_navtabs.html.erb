@@ -1,0 +1,14 @@
+<%
+  navigator_left = create_tab_navigator(:id => "contents_tabnav", :tab_options => {}) do |navigator|
+    superadmin_home_tab(navigator) if respond_to?(:superadmin_home_tab)
+    superadmin_jobs_tab(navigator) if respond_to?(:superadmin_jobs_tab)
+    superadmin_locales_tab(navigator) if respond_to?(:superadmin_locales_tab)
+  end
+  %>
+<%= render_tab_navigator(navigator_left) %>
+
+<% 
+   navigator_right = create_tab_navigator(:id => "general_tabnav") do |navigator|
+   end
+   %>
+<%= render_tab_navigator(navigator_right) %>

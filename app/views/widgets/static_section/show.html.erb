@@ -1,0 +1,22 @@
+<div class="static-section">
+  <h2><%= @static_section.title %></h2>
+  <%- if @image.present? -%>
+  <div class="image">
+    <%= image_tag(url_for_media_attachment(@image, :thumb),
+                  :alt => @static_section.name_for_asset(:image, @image),
+                  :title => @static_section.name_for_asset(:image, @image)) %>
+  </div>
+  <%- end -%>
+  <p class="summary"><%= @static_section.summary %></p>
+  <p class="body"><%= @static_section.body %></p>
+  <%- if @docs.present? -%>
+  <ul class="docs">
+    <%- @docs.each do |doc| -%>
+    <li>
+      <%= link_to(@static_section.name_for_asset(:docs, doc),
+                  url_for_media_attachment(doc)) %>
+    </li>
+    <%- end -%>
+  </ul>
+  <%- end -%>
+</div>

@@ -1,0 +1,105 @@
+
+es:
+  ubiquo:
+    page:
+      empty_list_title: "Maquetación"
+      empty_list_message: "Aquí puede ver, modificar y maquetar las páginas de la aplicación."
+      no_parent: "Ninguna"
+    design:
+      metatags: "Metatags"
+      design: "Maquetación"
+      design_title: "Ir a maquetación de páginas"
+      pages: "Páginas"
+      new_page: "Nueva página"
+      no_name: "(Sin nombre)"
+      name: "nombre"
+      page_url_example: "Dirección web: "
+      confirm_page_removal: "Estás seguro de querer eliminar esta página?"
+      section: "Sección"
+      situation: "Situación"
+      static_pages:
+        title: "Páginas estáticas"
+        new: "Nueva página"
+        page_info: "Información de la página"
+        widget_info: "Contenido de la página"
+        widget_title: "Sección estática"
+        save_and_publish: "Guardar y publicar"
+        create_and_publish: "Crear y publicar"
+      status:
+        unpublished: "No publicada"
+        published: "Publicada"
+        pending_publish: "Cambios pendientes de publicar"
+      page_template: "Plantilla de página"
+      page_created: "Página creada con éxito"
+      page_create_error: "Error al crear la página"
+      page_edited: "Página modificada con éxito"
+      page_edit_error: "Error al modificar la página"
+      page_removed: "Página eliminada con éxito"
+      page_remove_error: "Error al eliminar la página"
+      # Filters
+      filter_name: "Nombre"
+      # Unknown
+      use_frontpage_block: "Utiliza el bloque de la página principal"
+      # Widgets
+      widget_translate: "traducir"
+      widget_removal: "eliminar"
+      confirm_widget_removal: "Estás seguro de que quieres eliminar este widget?"
+      widget_move: "mover"
+      widget_edit: "editar"
+      widget_saving: "Guardando ..."
+      widget_save: "Guardar"
+      widget_cancel: "Cancelar"
+      widget_click_to_edit: "Haz click para editar"
+      widget_loading: "Cargando ..."
+      widget_error: "El widget necesita ser configurado para poder publicar la página"
+      widget_categories: "Categorías de widgets"
+      # End widgets
+      page_info: "Información de la página"
+      available_widgets: "Widgets disponibles"
+      all_widgets: "Todos los widgets"
+      open: "abrir"
+      published: "Publicado"
+      pending_publish: "Pendiente de publicación"
+      non_published: "No publicado"
+      preview: "Previsualizar"
+      publish: "Publicar"
+      publish_changes: "Publicar cambios"
+      unpublish: "Despublicar"
+      move: "mover"
+      # Widgets
+      editing_widget: "Editando el widget %{name}"
+      close_widget: "Cerrar"
+      save: "Guardar"
+      page_published: "Página publicada correctamente"
+      page_publish_error: "Error al publicar la página"
+      page_unpublished: "Página despublicada correctamente"
+      page_unpublish_error: "Error al despublicar la página"
+      block_error: "No se puede asignar este bloque como bloque por defecto porque los tipos de bloque no coinciden"
+      stop_share_block: "Dejar de compartir el bloque"
+      share_block: "Compartir este bloque"
+      use_shared_block: "Utilizar un bloque compartido"
+      select_available_shared_blocks: "Selecciona un bloque disponible"
+      stop_use_shared_block: "Dejar de utilizar el bloque '{{key}}'"
+      replace_block_confirm: "¿Estas seguro de remplazar el contenido del bloque?"
+      stop_share_block_confirm: "¿Estas seguro de dejar de compartir el bloque?"
+    widget_groups:
+      sidebar: Bloque lateral
+      main: Bloque principal
+      top: Cabecera
+    widgets:
+      free:
+        name: Contenido libre
+        contents: "Contenido"
+      generic_detail:
+        name: Ficha genérica
+      generic_listing:
+        name: Listado genérico
+      generic_highlighted:
+        name: Destacados genéricos
+      static_section:
+        name: "Sección estática"
+        title: "Título"
+        summary: "Entradilla"
+        body: "Cuerpo"
+        image: "Imagen"
+        docs: "Documentos relacionados"

@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  options: "--- \n:content: content example\n"
+  name: "name"
+  block_id: 11000
+  type: Free
+  position: 1
+  version: 0
+
+two:
+  options: "--- \n:content: content example2\n"
+  name: "name"
+  block_id: 11001
+  type: Free
+  position: 2
+  version: 0
+three:
+  options: "--- \n:content: content example3\n"
+  name: "name"
+  block_id: 11006
+  type: Free
+  position: 1
+  version: 0
+  

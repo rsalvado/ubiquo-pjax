@@ -1,0 +1,13 @@
+ca:
+  activerecord:
+    models:
+      asset: recurs
+    attributes:
+      asset:
+        name: "Nom"
+        description: "Descripció"
+        resource: "Recurs"
+        asset_type_id: "Tipus de recurs"
+    errors:
+      messages:
+        not_enough_assets: no té tots els elements multimèdia requerits

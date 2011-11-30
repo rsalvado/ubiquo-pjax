@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+video:
+  id: 100
+  name: MyNameVideo
+  description: MyText
+  asset_type_id: 1
+  type: "AssetPublic"
+  resource_file_name: video
+
+image:
+  id: 101
+  name: MyNameImage
+  description: MyText
+  asset_type_id: 2
+  type: "AssetPublic"
+  resource_file_name: image
+
+doc:
+  id: 102
+  name: MyString
+  description: MyText
+  asset_type_id: 3
+  type: "AssetPublic"
+  resource_file_name: doc
+
+audio:
+  id: 103
+  name: MyString
+  description: MyText
+  asset_type_id: 4
+  type: "AssetPublic"
+  resource_file_name: audio
+
+other:
+  id: 104
+  name: MyString
+  description: MyText
+  asset_type_id: 5
+  type: "AssetPublic"
+  resource_file_name: other

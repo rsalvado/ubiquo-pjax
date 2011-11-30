@@ -1,0 +1,14 @@
+es:
+  activerecord:
+    models:
+      asset: recurso
+    attributes:
+      asset:
+        name: "Nombre"
+        description: "Descripción"
+        resource: "Recurso"
+        asset_type_id: "Tipo de recurso"
+        is_protected: "Es un fichero protegido?"
+    errors:
+      messages:
+        not_enough_assets: no tiene los elementos suficientes

@@ -1,0 +1,34 @@
+require File.dirname(__FILE__) + '/../../test_helper'
+<% model_name = name.classify -%>
+
+class <%= model_name %>WidgetTest < ActionController::TestCase
+  tests PagesController
+
+  test "<%= name %> widget should get show" do
+    widget, page = create_widget(:<%= name %>)
+    get :show, :url => page.url_name
+    assert_response :success
+    #assert_equal widget_attributes[:title], assigns(:title), "Error on widget title"
+  end
+
+  test "<%= name %> widget view should be as expected" do
+    widget, page = create_widget(:<%= name %>)
+    get :show, :url => page.url_name
+    # Test the view here
+    # assert_select "div.xxx" do
+    # end
+  end
+
+  private
+
+  def widget_attributes
+    {
+      # attributes for widget here
+    }  
+  end
+  
+  def create_widget(type, options = {})
+    insert_widget_in_page(type, widget_attributes.merge(options))
+  end
+
+end

@@ -1,0 +1,12 @@
+es:
+  activerecord:
+    models:
+      activity_info: "Actividad"
+    attributes:
+      activity_info:
+        controller: "Sección"
+        action: "Acción"
+        created_at: "Fecha"
+        status: "Estado"
+        user: "Usuario"
+        object: "Objeto"

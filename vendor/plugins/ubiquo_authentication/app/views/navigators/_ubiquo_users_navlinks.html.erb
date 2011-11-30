@@ -1,0 +1,11 @@
+<%
+    navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+      navigator.add_link do |link|
+        link.text = (t("ubiquo.auth.users_list"))
+        link.url = ubiquo_ubiquo_users_path    
+        link.highlights_on({:controller => "ubiquo/ubiquo_users"})
+        link.highlights_on({:controller => "ubiquo/permissions"})
+      end
+    end
+%>
+<%= render_link_navigator(navigator_section) %>

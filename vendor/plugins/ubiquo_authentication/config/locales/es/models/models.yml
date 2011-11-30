@@ -1,0 +1,18 @@
+es:
+  activerecord:
+    models:
+      ubiquo_user: "usuario"
+      role: "rol"
+    attributes:
+      ubiquo_user:
+        login: "Login"
+        name: "Nombre"
+        surname: "Apellidos"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+        is_admin: "Administrador"
+        is_active: "Activo"
+        photo: "Foto"
+        locale: "Idioma"
+      role:
+        name: "Nombre"

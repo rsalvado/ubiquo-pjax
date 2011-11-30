@@ -1,0 +1,9 @@
+  <%= uhook_category_form form %>
+  <div class="form-item">
+    <%= form.label :name, Category.human_attribute_name("name") %>
+    <%= form.text_field :name %>
+  </div>
+  <div class="form-item">
+    <%= form.label :description, Category.human_attribute_name("description") %>
+    <%= form.text_area :description %>
+  </div>

@@ -1,0 +1,18 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+  <%= render :partial => "submenu" %>
+</h2>
+
+<%= error_messages_for 'ubiquo_user' %>
+
+<% form_for([:ubiquo, @ubiquo_user], :html => {:multipart => true}) do |form| %>
+	<%= render :partial => 'form', :locals => {:form => form} %>
+	  <div class="form-item-submit">
+	    <%= form.submit t("ubiquo.save"), :class => "bt-update" %>
+	    <%= button_to_function t("ubiquo.back_to_list"), "document.location.href='#{ubiquo_ubiquo_users_path}'", :class => "bt-back" %>
+	  </div>
+<% end %>
+
+<% content_for :sidebar do %>
+	<%= help_block_sidebar(t("ubiquo.helpmsg.authentication.ubiquousers.edit")) %>
+<% end %>

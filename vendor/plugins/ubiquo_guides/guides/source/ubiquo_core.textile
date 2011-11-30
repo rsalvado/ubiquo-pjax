@@ -1,0 +1,1012 @@
+h2. Ubiquo Core
+
+This plugin contains the basic common Ubiquo structure so that other
+plugins can be built on top of it. This includes:
+
+* Ubiquo::Config system
+* Core helpers
+* Ubiquo layout and styling elements
+* Custom FormBuilder
+* Main ruby/rails extensions
+* Navigation links and tabs system
+* Ubiquo filters and filtered search
+* Relation selector
+* Cron jobs
+* Loader mechanism
+
+
+endprologue.
+
+h3. Using configuration
+
+Ubiquo::Config offers a place where store configuration variables
+
+A value can have 2 states, added as default value and added as normal
+value. If both setted, normal value is used.
+
+It allow to store values in contexts using _context_ method.
+
+NOTE: It's not recommended to change the value of the configuration during the life of the application, only in the setup
+
+h4. Getting a value
+
+To get a stored value of the configuration.
+
+<ruby>
+value = Ubiquo::Config.get(:key)
+contexted_value = Ubiquo::Config.context(:context).get(:key)
+</ruby>
+
+h4. Creating a new value
+
+You can create new values for the configuration.
+
+<ruby>
+Ubiquo::Config.add(:key, 'default_value')
+Ubiquo::Config.context(:context).add(:key, default_value)
+</ruby>
+
+h4. Setting a normal value
+
+when a key is added you can override their default value with _set_
+method:
+
+<ruby>
+Ubiquo::Config.set(:key, 'normal_value')
+Ubiquo::Config.context(:context).set(:key, normal_value)
+</ruby>
+
+h4. Inherited values
+
+It is usefull for adding keys that their value is the same of another
+key until it's not setted manually.
+
+Currently is used to the plugins lists max row number, default to 10
+but can be re-setted for a single list.
+
+<ruby>
+Ubiquo::Config.add_inheritance(:key, :existent_key)
+Ubiquo::Config.context(:context).add_inheritance(:key, :existent_key)
+</ruby>
+
+h4. Use of config caller
+
+Config caller let you to define keys with a lambda as value and
+evaluate it in any context.
+
+It's very powerfull to add hooks in the application.
+
+Currently is used to all access_control calls of the plugins, letting
+you to change it in your application without changing plugin code.
+
+<ruby>
+ubiquo_config_call(:key)
+ubiquo_config_call(:key, {:context => :context})
+</ruby>
+
+h3. Core helpers
+
+Ubiquo provides a series of helpers that can be useful in most ubiquo projects.
+On the "rdoc":http://www.ubiquo.me/rdoc/ubiquo_core/classes/Ubiquo/Helpers.html
+you will find an exhaustive list, and here examples for some of the most usual
+plugins will be shown.
+
+h4. Index helpers
+
+Currently, the index views that ubiquo_scaffold generates use filters defined in
+the corresponding helper file. The main helper there is the xxx_list helper
+(e.g. _book_list_ in the Book scaffold). For more information about it please refer to the
+"ubiquo_scaffold guide":http://guides.ubiquo.me/edge/ubiquo_scaffold.html#views-helpers-and-controllers-overview
+where you will find a more detailed explanation, including the different options
+and features available for this method.
+
+h4. Show helpers
+
+The helpers in this group will assist you when creating 'show' pages in Ubiquo.
+
+h5. Lists
+
+<ruby>
+ubiquo_show_list('Title', ['array', 'of', 'elements'])
+</ruby>
+
+This will create a normal, styled ul list.
+
+h5. media_attachment helpers
+
+Visit the "ubiquo_media":ubiquo_media.html guide if you are interested in helpers to
+easily print lists of images or documents
+
+
+h5. HTML text
+
+Just add the class 'text' to the dd tag and you are ready
+
+
+h4. Form helpers
+
+The forms were pieces of repeated code till now. Full of HTML that could be deduced
+from the field type and name of the fields. We focused on it to be DRY and get
+a powerful abstraction applying the "the convention over configuration" concept.
+
+We have a new helper named _ubiquo_form_for_ which is like the _form_for_ but
+uses our custom form builder UbiquoFormBuilder.
+
+This builder does the same as usual but adds all the surrounding html that uses
+to be added to a input in a ubiquo form.
+
+Using the regular builder, we would write this:
+<ruby>
+<% form_for([:ubiquo, @movie]) do |form| %>
+    <div class="form-item">
+        <%= form.label :title, Movie.human_attribute_name("title") %>
+        <%= form.text_field :title %>
+    </div>
+    <div class="form-item">
+        <%= form.label :body, Movie.human_attribute_name("body") %>
+        <%= form.text_area :body, :class => 'visual_editor' %>
+    </div>
+    <fieldset>
+        <legend>Media selector</legend>
+        <%= media_selector form, :images, :visibility => 'public' %>
+    </fieldset>
+    <div class="form-item-submit">
+        <%= form.submit t('ubiquo.create'), :class => 'bt-create' %>
+        <%= button_to_function t('ubiquo.back_to_list'),
+            "document.location.href='#{ubiquo_movies_path}'", :class => 'bt-back' %>
+    </div>
+<% end %>
+</ruby>
+
+but with UbiquoFormBuilder we write this:
+<ruby>
+<% ubiquo_form_for([:ubiquo, @movie] ) do |form| %>
+    <%= form.text_field :title %>
+    <%= form.text_area :body %>
+    <%= form.media_selector :images, :visibility => 'public' %>
+    <% form.submit_group do %>
+        <%= form.create_button %>
+        <%= form.back_button %>
+    <% end %>
+<% end %>
+</ruby>
+
+As you can see the form gets more "right to the point", and the code is far less verbose.
+
+The usual methods for the form like text_field, text_area, media_selector, etc.,
+are enriched with a wrapper and a label with the name of the field. All of them 
+generate the right html to be rendered correctly in the Ubiquo side.
+
+These methods accept the following options aside the usual ones for them:
+ * _translatable_ : when true shows that this field is translatable.
+ * _description_ : a text that will be appended to the field to add extra 
+information. 
+ * _help_: will show a tooltip when clicking on an icon to see extra information.
+ * _label_: in case you want to show another label and not the one of the attribute
+ * _group_: options for the group. When false, no group wraps the field. It can
+be a hash with options to pass to the group generation, like :type => :fieldset, etc.
+
+All this simplification/convention can be customized in two ways:
+ * Pass options to the methods to modify the conventioned behaviour
+ * Disable all extra features of the form builder and generate the code in the old way
+  inside a block.
+
+There are examples of both below.
+
+h5. Customize the building
+
+All the overloaded methods that we usually use, have various options that allows
+you to customize them.
+
+h6. Example 1: removing fieldset tags or form-item wrapper
+
+In our builder, most fields are automatically wrapped by a fieldset or a div tag b
+y default. This can be overriden setting the :group option to false.
+
+<ruby>
+<%= form.category_selector :tags, :group => false %>
+</ruby>
+
+h6. Example 2: grouping various selectors in a fieldset and disable its owns fieldsets
+
+<ruby>
+<% form.group :label => t("ubiquo.article.related_elements"), :type => :fieldset do %>
+  <%= form.category_selector :tags, :group => false %>
+  <%= form.relation_selector :actors, :group => false %>
+<% end %>
+</ruby>
+
+h6. Example 3: forwarding options to the inside generators like label or fieldsets
+
+<ruby>
+<%= form.category_selector :tags, 
+  :group => {:class => “tags”},
+  :label => {:text => t(“ubiquo.tags”)}
+%>
+</ruby>
+
+In this case, the options given in :group will be sent to _UbiquoFormBuilder#group_
+to customize the wrapper tag.
+
+This will generate the same as:
+<ruby>
+<fieldset class=”tags”>
+  <legend><%= t(“ubiquo.tags”) %></legend>
+  <%= form.category_selector :tags %>
+</fieldset>
+</ruby>
+
+h6. Example 4: disable custom form builder methods in a block
+
+This option allows to disable all extra UbiquoFormBuider features and all methods behave
+like a regular FormBuilder instance. Useful when you want to output custom form html.
+
+<ruby>
+<% form.custom_block do %>
+  <div class="form-item">
+    <%= form.label :subtitle, Article.human_attribute_name("subtitle") %>
+    <%= form.text_field :subtitle %>
+  </div>
+<% end %>
+</ruby>
+
+
+h6. Example 5: append custom html around the field
+
+Sometimes you want to append content inside a field, before or after the field. This can be done sending the
+content to the group.
+
+<ruby>
+<%= form.text_field :password, :group => {
+    :after => '<span id="password_strength"></span>' } %>
+<% javascript_tag do %>
+$("user_password").observe("keydown",function(e){
+    $("password_strength").update(
+        calculate_password_strength($("user_password")));
+});
+<% end %>
+</ruby>
+
+The span#password_strength will be rendered just after the input inside the wrapper
+like this:
+
+<ruby>
+<div class="form-item">
+    <label for="user_password">Password</label>
+    <input id="user_password" name="user[password]" size="30" type="text" />
+    <span id="password_strength"></span>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+$("user_password").observe("keydown",function(e){
+    $("password_strength").update(
+        calculate_password_strength($("user_password")));
+});
+
+//]]>
+</script>
+
+</ruby>
+
+h5. Tabs
+
+The tabs allow to wrap long forms in topics to reduce form page length.
+
+The usage is really easy:
+
+<ruby>
+<% form.group(:type=> :tabbed) do %>
+  <% form.tab(("Main data")) do %>
+      ...
+  <% end %>
+  <% form.tab(("Related")) do %>
+      ....
+  <% end %>
+<% end %>
+</ruby>
+
+Don't forget to wrap the tabs inside a tabbed from group. Otherways the builder 
+could not guess where this tab belongs to.
+
+TIP: Anytime you need to unfold a group of tabs, it's as easy as change the type of the wrapper group from :tabbed to :div or :fieldset.
+
+!images/form-builder-tabbed.png(Tabbed form)!
+
+
+h3. Navigation
+
+h4. Tabs navigations
+
+All ubiquo applications have two tab navitations, one for normal mode
+and one for superadmin mode. This tab navigator is what is showed
+under the ubiquo header.
+
+h5. Create new tab to the normal mode
+
+Open RAILS_ROOT/app/views/navigators/_main_navtabs.html.erb.
+
+Here you can edit navigator_left or navigator_right. Inside the
+'create_tab_navigator' method block you can add new tabs with a piece
+of code like that:
+
+<ruby>
+navigator.add_tab do |tab|
+  tab.text = 'Your tab text'
+  tab.title = 'Go to ...'
+  tab.link = ubiquo_your_controllers_path
+  tab.highlights_on({:controller => "ubiquo/your_controller"})
+  tab.highlighted_class = "active"
+end
+</ruby>
+
+h4. Link navigations
+
+Link navigations work like tab navigations but showing links instead
+tabs.
+
+Currently there are only one default link navigation, but scaffold
+generates one for the new controller.
+
+The default navigation is showed on top of the Ubiquo, where is showed
+user name, logout link, etc.
+
+To add a link to any link navigation just add this code to the
+'create_link_navigation' method block:
+
+<ruby>
+navigator.add_link do |link|
+  link.text = 'Your link text'
+  link.url = ubiquo_your_controllers_path
+  link.highlights_on({:controller => "ubiquo/your_controller"})
+end
+</ruby>
+
+h3. Filtered Search
+
+Provides a mechanism to search and filter data in a model based on the params hash and named_scopes.
+
+First step is to add the funcionality to the model:
+
+<ruby>
+class Article < ActiveRecord::Base
+  filtered_search_scopes
+end
+</ruby>
+
+This macro does several things:
+
+* Adds some named scopes if some fields exist.
+* Provides a filtered_search class method to search the model.
+* Provides a paginated_filtered_search (same but suports a page parameter for pagination).
+
+Let's check how it is normally used in the controller:
+
+<ruby>
+def index
+  @articles_pages, @articles = Article.paginated_filtered_search(params)
+
+  respond_to do |format|
+    format.html # index.html.erb
+    format.xml  {
+      render :xml => @articles
+    }
+  end
+end
+</ruby>
+
+What this does is match the "filter_blah" like params to "blah" scopes, it also takes into account order_by and sort_order params.
+
+h4. Default named_scopes
+
+Some named_scopes are automatically created if some fields exist in the table. For example:
+
+If title, name or description exist a "text" named_scope will be created. This named scope suports case and accent insensitive search.
+
+<ruby>
+named_scope :text, lambda { |value|
+  match = accent_insensitive_regexp(value.downcase)
+  matches = fields.inject([]) { |r, f| r << match }
+  conditions = fields.map { |f| "lower(#{table_name}.#{f}) #{regexp_op} ?" }.join(" OR ")
+  { :conditions => [ conditions, *matches ] }
+}
+</ruby>
+
+So a param called filter_text would match against this scope and its value passed to it.
+
+If a published_at field exist two named_scopes will be created:
+
+<ruby>
+named_scope :publish_start , lambda { |value| { :conditions => ["#{table_name}.published_at >= ?", parse_date(value)] } }
+named_scope :publish_end   , lambda { |value| { :conditions => ["#{table_name}.published_at <= ?", parse_date(value, :time_offset => 1.day)] } }
+</ruby>
+
+h4. Enabling named_scopes and customizing text search
+
+Default scopes are enabled by default by just including the filtered_search_scopes macro in the model.
+
+You can disable them:
+
+<ruby>
+class Article < ActiveRecord::Base
+  filtered_search_scopes :defaults => false
+end
+</ruby>
+
+If you need to enable some additional scopes you can do so:
+
+<ruby>
+class Article < ActiveRecord::Base
+  filtered_search_scopes :enable => [ :myscope1, :myscope2, :myscope3 ]
+end
+</ruby>
+
+Enabling scopes means that they would be elegible to be matched against filter_ like params.
+
+Additionally you can customize which fields do you want the text named_scope to operate on:
+
+<ruby>
+class Article < ActiveRecord::Base
+  filtered_search_scopes :text => [ :myfield1, :myfield2, :myfield3 ]
+end
+</ruby>
+
+h4. Using filtered_search
+
+You can search and filter results using 2 methods:
+
+* filtered_search
+* paginated_filtered_search
+
+Usually you will pass the params hash to the paginated_filtered_search methods as seen in previous examples but you can also pass additional conditions to the search too.
+
+<ruby>
+@articles_pages, @articles = Article.paginated_filtered_search(params, :include => :books)
+</ruby>
+
+Valid params for filters and options are:
+
+* filter_ like params (to match against named scopes).
+* sort_order and order_by for ordering.
+* page and per_page params for pagination. (if using paginated_filter_search).
+
+h3. Relation selector
+
+Ubiquo relation selector provides an easy way to implement form-controls on model to model relations. This feature offers a compact view to work with different relation types, like belongs_to and has_many through different controls.
+
+Supported relations are belongs_to, has_many and has_many through with all their options
+
+<ruby>
+Model:
+belongs_to :author
+
+View:
+<%= form.relation_selector :authors %>
+</ruby>
+
+h4. Selector types
+
+Current selector types are:
+* **Select**: select form, used to manage belongs_to relations, displaying all available options in a list with the instance choice as a selected one.
+	Example: form.relation_selector :publisher, :type => :select
+* **Check box group**: a group of checkboxes, used to manage has_many relations, displaying all available options and marking the instances choices.
+	Example: form.relation_selector :authors, :type => :checkbox
+* **Text field with autocomplete functionality**: a text field with autocomplete functionality, used to manage both belongs_to and has_many relations, offering a list of available options filtered for the current text entered by user. It blocks input depending on the size of the given relation.
+	Example: form.relation_selector :authors, :type => :autocomplete
+
+h4. Common options allowed
+
+Options allowed for this helper are:
+* **type(optional, default => autocomplete)**: to choose the type of selector. Options available are select, check_box and autocomplete
+* **autocomplete_style(optional)**: this option will allow to choose between text-field like autocomplete or list-field like autocomplete.
+* **name_field(optional, default => [title, name])**: to choose which model field will be displayed to the final user. This field must be a valid model field or a valid function with a string type return.
+* **collection_url(optional)**: this option will give the needed string to be called to retrieve model instances from its controller. The string must be a valid rails url generator.
+* **url_params(optional)**: this option will contain all additional params needed for all requests made by relation selector to retrieve desired objects.
+* **required(optional)**: this option will append a * character to the given control, showing if that data field is required.
+* **add_callback(optional)**: this option allows user to register a callback function that will be triggered when adding occur.
+* **remove_callback(optional)**:  this option allows user to register a callback function that will be triggered when removing occur
+* **related_object_id_field(optional, default => id)**: this field will be used as the given class objects identifier.
+
+h4. Required code
+
+The code required to use this helper is the following:
+* **Related models for autocomplete**: if use of autocomplete selector type is required, the related model will need to add a json return format to its index controller action (default url discovery option) or another arbitrary defined action with the same return requirements (collection_url option)
+
+Assuming we have an Author class with a related Book, the following code is all we need from Book's controller to receive data in our autocomplete from Author's form
+
+<ruby>
+format.js {
+  render :js => @books.to_json(:only => [:id,:title])
+}
+</ruby>
+
+h4. General examples
+
+h5. Autocomplete with custom name field and collection_url
+
+<ruby>
+form.relation_selector :authors,
+		       :type => :autocomplete,
+		       :name_field => 'custom_name',
+		       :collection_url => 'custom_element_retriever_url'
+</ruby>
+
+h5. Checkbox group with select/unselect callbacks
+
+<ruby>
+form.relation_selector :authors,
+		       :type => :checkbox,
+		       :add_callback => 'custom_add_callback',
+		       :remove_callback => 'custom_remove_callback'
+	...
+	(javascript code)
+	function custom_add_callback(){
+		...
+	}
+	function custom_remove_callback(){
+		...
+	}
+	(/javascript code)
+
+</ruby>
+
+h5. Autocomplete with filters
+
+<ruby>
+form.relation_selector :authors,
+		       :type => :autocomplete,
+		       :url_params => {:filter_first_field => 'custom_value_1',
+		   		       :filter_second_field => 'custom_value_2'}
+
+</ruby>
+
+h4. Notes
+
+The required javascript to make it work is included by default at new projects to the main ubiquo layout. However, if you're adding this new feature to an older project, you must include that javascript.
+
+Then, file app/views/layouts/ubiquo/default.html.erb will have a javascript_include_tag as follows
+
+* javascript_include_tag **'ubiquo/relation_selector.js'**
+
+With the bolded part being the needed new inclusion
+
+h3. Filters
+
+Ubiquo filters are sidebar elements used to filter ubiquo listings.
+
+The Ubiquo::Filters module provides some commonly used filters. Each filter has two main components:
+
+* The sidebar filter itself, containing the HTML that displays the filter on the lateral panel. It contains a header and a link to disable the filter when it is active.
+
+* The displayed information about the applied filters that appears on top of the index listing. It informs about all the active filters and contains a link to disable them all.
+
+ Filters are automatically added to the index view, you only have to fill the helper (example for controller _articles_controller_):
+
+<ruby>
+# app/helpers/ubiquo/articles_helper.rb
+module Ubiquo::ArticlesHelper
+  def article_filters
+     filters_for 'Article' do |f|
+       f.text
+       f.locale
+       f.date
+       f.select :name, @collection
+       f.boolean :status
+     end
+  end
+end
+</ruby>
+
+<ruby>
+# app/views/ubiquo/articles/index.html.erb
+<h1>
+  <%= render :partial => 'title' %>
+</h1>
+
+<h2>
+  <%= render :partial => 'submenu' %>
+</h2>
+
+<%= render :partial => "shared/ubiquo/feedback" %>
+
+<%=
+    show_filter_info # To render filter messages
+%>
+
+<%= article_list(@articles, @articles_pages) %>
+
+<% content_for :sidebar do %>
+  <%=
+      show_filters # To render filters
+  %>
+  <h3><%= t("ubiquo.help") %></h3>
+  <p><%= t("ubiquo.article.index.help_message") %></p>
+<% end %>
+</ruby>
+
+h4. Text filter
+
+It consists of an input text tag with a search button. Default options are shown.
+
+<ruby>
+f.text :field           => :description,            # Filter param name
+       :url_for_options => {}                       # Hash to be merged with filter params
+       :caption         => t('ubiquo.filters.txt')  # Text to display for this filter
+
+f.text # Does the same as the above one.
+</ruby>
+
+h4. Link filter
+
+Given an attribute to filter, generate a link for each possible value. There are two common cases:
+
+* You have a separated model (one-to-many relationship). On this case, you have to pass the collection of values and the associated model tablename (plural, underscore form).
+
+<ruby>
+f.link :type,
+       @asset_types,
+       :id_field    => :id,
+       :name_field  => :name,
+       :caption     => t('type'),
+</ruby>
+
+* Default values are:
+
+<ruby>
+:field       => "filter_#{field}".to_sym,
+:collection  => collection,
+:id_field    => :id,
+:name_field  => default_name_field, # It will check for :name or :title existance
+:caption     => @model.human_attribute_name(field),
+</ruby>
+
+* So you could use something like:
+
+<ruby>
+f.link :type, @asset_types
+</ruby>
+
+* The possible values for an attribute but directly a list of them on the model. Let's see an example:
+
+<ruby>
+class Link
+  TARGET_OPTIONS = [[t("Link|blank"), "blank"], [t("Link|self"), "self"]]
+  validates_inclusion_of :target, :in => TARGET_OPTIONS.map { |name, key| key }
+end
+</ruby>
+
+<ruby>
+# On the controller
+@target_types = Link::TARGET_OPTIONS.collect do |name, value|
+  OpenStruct.new(:name => name, :value => value)
+end
+</ruby>
+
+<ruby>
+# On the helper in a filtet set
+f.link :type,
+       @target_types,
+       :id_field => :value,
+       :caption => t('type'),
+       :translate_prefix => 'Link'
+</ruby>
+
+h4. Select filter
+
+Generate a select tag given an array of items.
+
+* It works exactly on the same way than the links filter, only that an extra option <tt>options[:all_caption]</tt> is needed to add a "all" option that disables the filter:
+
+<ruby>
+f.select :type,
+         @asset_types,
+         :id_field    => :id,
+         :name_field  => :name,
+         :caption     => t('type'),
+         :all_caption => t('-- All --')
+</ruby>
+
+h4. Links or Select filter
+
+This filter renders a select filter if the collection items length is greater than the <tt>:max_size_for_links</tt> parameter it uses a link filter otherwise. Pass the same options needed by a select filter. An example of the filter info code:
+
+<ruby>
+f.links_or_select :type,
+                  @asset_types,
+                  :id_field    => :id,
+                  :name_field  => :name,
+                  :caption     => t('type'),
+                  :all_caption => t('-- All --'),
+                  :max_size_for_links => 2
+</ruby>
+
+h4. Boolean Filter
+
+For boolean attributes use a link or select filter, but instead of <tt>collection/id_field/name_field</tt> options, pass <tt>boolean/caption_true/caption_false</tt>.
+
+<ruby>
+f.boolean :admin,
+          :caption => t('ubiquo_user type'),
+          :caption_true => t('Admin'),
+          :caption_false => t('Non-admin')
+          :options_for_url => params
+</ruby>
+
+* Default values are:
+
+<ruby>
+:field         => "filter_#{field}",
+:caption       => @model.human_attribute_name(field),
+:caption_true  => I18n.t('ubiquo.filters.boolean_true'),
+:caption_false => I18n.t('ubiquo.filters.boolean_false'),
+</ruby>
+
+h4. Date filter
+
+Date filters employ the plugin "calendar_date_select":http://code.google.com/p/calendardateselect/ . If you need to change the stylesheets, edit <tt>public/stylesheets/calendar_date_select/ubiquo.css</tt>. To use the lateral filter on your listing, you have to indicate the caption and the start/end date field names:
+
+<ruby>
+f.date :field   => [:date_start, :date_end],
+       :caption => t('creation'),
+</ruby>
+
+* Default values are:
+
+<ruby>
+:field   => [:filter_publish_start, :filter_publish_end],
+:caption => @model.human_attribute_name(field)
+</ruby>
+
+h4. Single Date filter
+
+Used to filter with only one date. It's like last filter but with just one date field:
+
+<ruby>
+f.date :field => :date,
+       :caption => t('creation')
+</ruby>
+
+* Default values are:
+
+<ruby>
+:field => :filter_publish_end,
+:caption => @model.human_attribute_name(field)
+</ruby>
+
+h3. Cron jobs
+
+Ubiquo provides a mechanism for defining, scheduling and running cron jobs. It requires a cron daemon and it has been tested with vixie cron.
+
+The ubiquo cron job system provides several advantages:
+
+* Ability to put jobs under version control. (minimizes sysadmin burden).
+* Ability to deal with concurrency, it avoids running multiple instances of the same job at the same time.
+* Ability to log job execution details.
+* Alert on job errors.
+* Provides a standard mechanism for running rake or script/runner like tasks.
+
+WARNING: The most important assumption is that the application owns the user's (the one the application runs as) crontab.
+
+h4. Defining our crontab schedule
+
+We can use the ubiquo_crontab initializer that you should be able to find at +config/initializers/ubiquo_crontab.rb+:
+
+<ruby>
+Ubiquo::Cron::Crontab.schedule do |cron|
+  # Who to mail on errors
+  # cron.mailto = 'errors@change.me'
+  cron.mailto = 'errors@mysite.com'
+
+  # *     *     *   *    *
+  # -     -     -   -    -
+  # |     |     |   |    |
+  # |     |     |   |    +----- day of week (0 - 6) (Sunday=0)
+  # |     |     |   +------- month (1 - 12)
+  # |     |     +--------- day of        month (1 - 31)
+  # |     +----------- hour (0 - 23)
+  # +------------- min (0 - 59)
+
+  # Examples:
+  # "30 08 10 06 *"  Executes on 10th June 08:30 AM.
+  # "00 11,16 * * *" Executes at 11:00 and 16:00 on every day.
+  # "00 09-18 * * *" Executes everyday (including weekends) during the working hours 9 a.m – 6 p.m
+  # "* * * * *"      Execute every minute.
+  # "*/10 * * * *"   Execute every 10 minutes.
+  # "@hourly"        Execute every hour.
+  # "@daily"         Execute daily.
+  # "@monthly"       Execute monthly.
+  # "@reboot"        Execute after every reboot.
+
+  # The specification of days can be made in two fields: month day and weekday.
+  # If both are specified in an entry, they are cumulative meaning both of the entries will get executed.
+
+  # See man 5 crontab for more information.
+
+  # Executes the routes (rake) task every minute
+  # cron.rake   "* * * * *", "routes"
+
+  # Executes the update:stats (rake) task every minute and logs debug information
+  cron.rake   "* * * * *", "update:stats debug='true'"
+
+  # Executes a script/runner like task
+  cron.runner "* * * * *", "User.notify_all"
+end
+</ruby>
+
+As we can see it is easy to schedule new jobs using the already known cron syntax but with the added advantage of specifying rake or runner tasks in a convenient way without having to deal with all the low level details.
+
+NOTE: This definition is used to generate a "real" crontab file ready to installed as the user's (the one running the application) crontab.
+
+h4. Rendering our crontab
+
+With our crontab defined we can run the +ubiquo:crontab:render+ task to see how the real crontab file would look like.
+
+<shell>
+$ rake ubiquo:crontab:render
+
+### Start jobs for application ###
+* * * * * /bin/bash -l -c "cd /home/appuser/myapp && RAILS_ENV=development rake ubiquo:cron:runner task='update:stats' debug='true' --silent 2>&1"
+* * * * * /bin/bash -l -c "cd /home/appuser/myapp && RAILS_ENV=development rake ubiquo:cron:runner task='User.notify_all' type='script' --silent 2>&1"
+### End jobs for application ###
+</shell>
+
+As we can see our jobs are run by a rake task that deals with the low level details like:
+
+* logging
+* error alerts
+* concurrency
+
+h4. Installing our crontab
+
+We can install our defined crontab, but keep in mind that doing so removes all existing jobs in crontab and replaces them with the current definition:
+
+<shell>
+rake ubiquo:crontab:install
+</shell>
+
+Usually this task would be executed by a capistrano's hook when deploying the application:
+
+<ruby>
+set :cron_user, user
+
+after "deploy:symlink", "ubiquo:crontab:update"
+
+namespace :ubiquo do
+  namespace :crontab do
+
+    task :update, :roles => :cron do
+      run "cd #{current_path} && RAILS_ROOT=#{current_path} rake ubiquo:crontab:install"
+    end
+
+  end
+end
+</ruby>
+
+A similar recipe should be included in your capistrano file.
+
+WARNING: Remember, installing a crontab replaces (deletes) the current scheduled jobs with an entirely new crontab schedule. Old schedule is lost.
+
+h4. Testing your jobs
+
+You can test your jobs using the ubiquo:cron:runner task:
+
+<shell>
+rake ubiquo:cron:runner task='routes' debug='true'
+</shell>
+
+TIP: If you pass the debug option to the runner task it will log standard output to the log file.
+
+You can now look at the cron log in the application's log folder and see the output.
+
+h4. Defining cron jobs in your ubiquo plugins
+
+You can use this system to define jobs for your ubiquo plugins, for example:
+
+<ruby>
+Ubiquo::Cron::Crontab.schedule("ubiquo_stats") do |cron|
+  cron.rake "*/10 * * * *", "stats:update"
+  cron.rake "@daily",       "stats:send_report"
+end
+</ruby>
+
+This would translate to:
+
+<shell>
+### Start jobs for application ###
+...
+...
+...
+### End jobs for application ###
+### Start jobs for ubiquo_stats ###
+*/10 * * * * /bin/bash -l -c "cd /home/appuser/myapp && RAILS_ENV=development rake ubiquo:cron:runner task='stats:update'  --silent 2>&1"
+@daily /bin/bash -l -c "cd /home/appuser/myapp && RAILS_ENV=development rake ubiquo:cron:runner task='stats:send_report'  --silent 2>&1"
+### End jobs for ubiquo_stats ###
+</shell>
+
+h3. Ubiquo Loader
+
+When you are extending external classes usually an order problem appears. For example,
+if you are developing a lib that extends a class from another plugin, you have
+to make sure that the plugin is already loaded in order to work properly.
+
+While this is sometimes feasible using explicit requires, you might prefer, or
+even require, some plugin parts to be lazy loaded. In some other circumstances,
+you don't have control in the loading order, and you can't guarantee that the class
+you need is already loaded. For example, this is usually the case when you extend
+a plugin from another plugin.
+
+Another common problem is that you cannot load extensions from a lib file
+into an application (controller, model) class, since in development, with
+cache_classes disabled, the extension would be lost in the second request, when
+the classes are reloaded. While there are hacks to fix this (e.g. using before_dispatch
+to reload the extensions), it's an annoying and unnecessary recurrent problem.
+
+To fix all these loading issues, which you probably have already experienced, since you are
+reading this, Ubiquo has an Extension Loader that allows you to overcome all this.
+
+The idea of the Loader is the following: you simply "define":
+
+* The class to extend,
+* The module that encapsulates the extension
+* The extension action
+
+And the extension will be applied either at this same moment (if the class to extend
+is already loaded), or else, in the future, when the class is really loaded.
+
+So, what it used to be, for example
+
+<ruby>
+Asset.send :extend, UbiquoExtensions::AssetExtensions
+</ruby>
+
+now becomes
+
+<ruby>
+Ubiquo::Extensions::Loader.append_extend(:Asset, UbiquoExtensions::AssetExtensions)
+</ruby>
+
+As you can see, you only pass the name of the class (:Asset), since if you use
+_Asset_ you'd trigger the class loading.
+
+The other difference is that instead of _extend_, you use _append_extend_, to schedule
+the extension inclusion.
+
+Of course if that is too verbose for you, and provided you don't have name conflicts,
+you can alias Ubiquo::Extensions::Loader to a shorter name:
+
+<ruby>
+Loader = Ubiquo::Extensions::Loader
+Loader.append_extend(:Asset, UbiquoExtensions::AssetExtensions)
+</ruby>
+
+TIP: You don't need to determine if the class is already loaded or not in order to decide using Ubiquo Extensions Loader or not. If the class is already loaded, the effect is the same as using directly the original extensions methods, so it  pays off to *always* use Loader to extend classes, since you will avoid possible present and future problems _for free_.
+
+The methods currently available in Loader are the following:
+
+* append_extend
+* append_include
+* append_helper
+
+The first two simply schedule the launch of _extend_ and _include_.
+The last one is handy to add helpers to controllers.
+
+Note that there still remains a limitation when extending classes, and is to use
+ActiveRecord's relations from plugin models to application models. For example,
+if in a plugin you have a User class, and you want to add a has_many :books, with
+Book defined into your application app/models folder, you will run into trouble.
+
+With the development standard configuration, application models are reloaded but
+plugins are not. The internals in Rails 2.X will break these associations because of this,
+causing the "second request" symptom, when things work in the first request but not
+in the successive ones.
+
+The solutions for this are, either make the plugins also unloadable (which may
+create other bugs, since some of the plugins could not support it), or activate
+cache_classes in development. If you have a closed circuit of associations between classes,
+you might consider also moving them to a new plugin, so that you can maintain cache_classes
+disabled for the rest of classes.
+
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_core

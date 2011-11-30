@@ -1,0 +1,31 @@
+h2. Ubiquo Plugin
+
+Ubiquo plugin is a scaffold that will generate all needed stuff to
+begin a plugin project. This stuff include hierarchical folders, and
+common needed files found in each plugin.
+
+endprologue.
+
+h3. Generating your plugin
+
+To generate a plugin skeleton, is as easy as type the following command
+<shell>
+script/generate ubiquo_plugin plugin_name
+</shell>
+
+Where plugin_name is the name of your plugin.
+
+h3. Understanding your plugin
+
+This section will explain what should you add in each generated folder, and what it will accomplish in your final app:
+
+* app: This folder contains all models, controllers, views and helpers that will be acceed from your application but will live in plugin.
+* config: In this folder you will add, commonly, your plugin locales, your plugin routes and any config file that is not an initialization of your code
+* lib: This folder will contain all lib files needed by your plugin,
+ including extensions, connectors...
+* test: All unit, functional and integration test will be placed here
+* rails: There is a file under this folder called init.rb, where all
+ initializations needed for the given plugin should be placed
+* install: This folder will contain all files that need to be
+ installed under application tree. Then, the hierachy defined here
+ will be the same followed when all files became installed

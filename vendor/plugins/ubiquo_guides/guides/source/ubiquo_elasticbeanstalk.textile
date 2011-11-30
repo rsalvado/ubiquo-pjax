@@ -1,0 +1,329 @@
+h2. Deploying ubiquo apps to AWS Elastic Beanstalk
+
+This guide covers the process of packaging, configuring and deploying ubiquo apps using the new "AWS Elastic Beanstalk":http://aws.amazon.com/elasticbeanstalk/ service.
+
+Here we will use an example ubiquo application but the process should be more or less the same for every other Rails 2.3 application.
+
+You will need an AWS account with access to the following AWS services:
+
+* "AWS Elastic Beanstalk":http://aws.amazon.com/elasticbeanstalk/
+* "Amazon RDS (Relational Database Service)":http://aws.amazon.com/rds/
+* "Amazon S3 (Simple Storage Service)":http://aws.amazon.com/s3/
+
+In the end we will get an ubiquo app running on AWS taking advantage of the dynamic scaling features of AWS with little cost and effort.
+
+NOTE: This guide has been written on 31-01-2011 while Elastic Beanstalk it's still in beta. It has not been revised so it may contain errors, if you find them you can report them "here":http://ubiquo.lighthouseapp.com/projects/31609-ubiquo-guides/overview
+
+endprologue.
+
+h3. Configuring AWS services
+
+First we are going to configure some services we need to support our application before we can deploy it to "AWS Elastic Beanstalk":http://aws.amazon.com/elasticbeanstalk/
+
+This way our application will run in the cloud just using AWS.
+
+h4. Configuring S3 buckets
+
+Since we are going to use the AWS S3 service to store uploaded user media (images, videos, etc) we need to create and configure the buckets.
+
+We can do so using the "AWS console":http://aws.amazon.com/console/ , if you are new to S3 read the "documentation":http://aws.amazon.com/documentation/s3/ first.
+
+!(screenshot)images/ubiquo_elasticbeanstalk/bucket-creation.png(Bucket creation)!
+
+NOTE: You can also create buckets for development and test environments if you want.
+
+h4. Creating and configuring our database using AWS RDS
+
+We are going to need a database for our application and we are going to use "AWS RDS":http://aws.amazon.com/rds/ to create ours.
+
+First log into AWS console and click on the RDS tab, after that on the central launch instance button:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/db-creation-1.png(Database creation)!
+
+Next we need to configure some database parameters:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/db-creation-2.png(Database creation)!
+
+Some more configuration for backups and snapshots:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/db-creation-3.png(Database creation)!
+
+Finally review and laucn the db instance:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/db-creation-4.png(Database creation)!
+
+Once the instance has been created we need to configure the security groups:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/db-creation-5.png(Database creation)!
+
+Now we need to grant access to our recently created database:
+
+* From our public ip, we will need this to create the default tables and data from our machine.
+* To the elasticbeanstalk-default securitygroup, this is needed because once we deploy the application on AWS Elastic Beanstalk it will need to connect to this database.
+
+!(screenshot)images/ubiquo_elasticbeanstalk/db-creation-6.png(Database creation)!
+
+CAUTION: You may need to be subscribed to AWS Elastic Beanstalk to be able to select the elasticbeanstalk-default security group. I am not sure about it.
+
+h3. Create, package and configure the ubiquo application
+
+Now we will need to create a WAR archive containing our application, so it can be deployed on AWS Elastic Beanstalk.
+
+h4. Install jruby with rvm
+
+Since AWS Elastic Beanstalk uses tomcat, our app will need to run under "jruby":http://jruby.org/ .
+
+To install "jruby":http://jruby.org/ we recommend installing "rvm":http://rvm.beginrescueend.com first. Once you have rvm installed, switch to "jruby":http://jruby.org/:
+
+<shell>
+rvm install jruby
+</shell>
+
+<shell>
+rvm use jruby
+</shell>
+
+Make sure you are really running "jruby":http://jruby.org/:
+
+<shell>
+ruby -v
+jruby 1.6.0.RC1 (ruby 1.8.7 patchlevel 330) (2011-01-10 769f847) (OpenJDK Client VM 1.6.0_20) [linux-i386-java]
+</shell>
+
+h4. Installing the required gems
+
+We are going to need some gems to be able to run ubiquo:
+
+* rails 2.3.10
+* mysql adapter
+* ubiquo
+* s3
+* warbler
+
+h4. Create an ubiquo application
+
+So we can install the required gems with the following commands:
+
+<shell>
+gem install rails -v 2.3.10
+gem install jdbc-mysql activerecord-jdbc-adapter s3 warbler ubiquo
+</shell>
+
+First let's create a default ubiquo application:
+
+<shell>
+ubiquo --edge --mysql ubiquodemo
+</shell>
+
+CAUTION: Make sure you are using jruby +rvm use jruby+.
+
+Once finished cd into the created directory and proceed to:
+
+h4. Configuring and initializing the database.
+
+Update the +config/database.yml+ using this example as a template:
+
+<yaml>
+base_config: &base_config
+  encoding: utf8
+  adapter:  mysql
+  pool: 5
+  username: ubiquodemo
+  password: mysecret
+  socket: /var/run/mysqld/mysqld.sock
+
+test:
+  <<: *base_config
+  database: ubiquodemo_test
+
+development:
+  host: ubiquodemo.dsadsdsadsad.us-east-1.rds.amazonaws.com
+  adapter: mysql
+  database: ubiquodemo
+  username: ubiquodemo
+  password: mysecret
+
+production:
+  host: ubiquodemo.dsadsdsadsad.us-east-1.rds.amazonaws.com
+  adapter: mysql
+  database: ubiquodemo
+  username: ubiquodemo
+  password: mysecret
+</yaml>
+
+NOTE: You can get the +hostname+ form the +Endpoint+ field of your db instance in the AWS RDS +DB Instances+ tab.
+
+Now we are ready to initialize the database with the following command:
+
+<shell>
+rake ubiquo:db:init
+...
+Importing fixtures into development database...
+"Created fixtures: 3 roles, 85 locales, 5 role_permissions, 6 asset_types, 3 permissions"
+Invoking db:seed task...
+Done :-)
+</shell>
+
+CAUTION: Elastic Beanstalk does a health check requesting a default home page for the app. Let's create one since ubiquo does't come with one. First remove the static one:
+
+<shell>
+rm public/index.html
+</shell>
+
+Now let's launch the rails console with +script/console+ :
+
+<shell>
+>> page_home = Page.create!({ :name => "Home", :key => "home", :url_name => "", :parent_id => "", :page_template => "home"})
+>> banner_widget = Free.create(:name => "ubiquodemo", :content =>"ubiquodemo")
+>> page_home.add_widget(:sidebar, banner_widget)
+>> page_home.publish
+</shell>
+
+Ok our default homepage should be created.
+
+CAUTION: We need to configure database.yml to use our local database for development, we just configured the production one as development to initialize it.
+
+<yaml>
+base_config: &base_config
+  encoding: utf8
+  adapter:  mysql
+  pool: 5
+  username: root
+  password:
+  socket: /var/run/mysqld/mysqld.sock
+
+test:
+  <<: *base_config
+  database: ubiquodemo_test
+
+development:
+  <<: *base_config
+  database: ubiquodemo_development
+
+production:
+  host: ubiquodemo.chjfdjlhquhp.us-east-1.rds.amazonaws.com
+  adapter: mysql
+  database: ubiquodemo
+  username: ubiquodemo
+  password: ubiquodemo
+</yaml>
+
+h4. S3 and ubiquo configuration
+
+We need to configure ubiquo_media to be able to use S3 as a storage for uploaded media to do se we need to create a +config/s3.yml+ file, you can use this one as a template:
+
+<yaml>
+development:
+  access_key_id: YOUR_ACCESS_KEY_ID
+  secret_access_key: YOUR_SECRET_ACCESS_KEY
+  bucket: ubiquodemo-dev
+test:
+  access_key_id: YOUR_ACCESS_KEY_ID
+  secret_access_key: YOUR_SECRET_ACCESS_KEY
+  bucket: ubiquodemo-test
+production:
+  bucket: ubiquodemo
+  access_key_id: YOUR_ACCESS_KEY_ID
+  secret_access_key: YOUR_SECRET_ACCESS_KEY
+</yaml>
+
+CAUTION: Make sure to create dev and test buckets if you want to use them.
+
+We also need to configure the ubiquo initializer +config/initializers/ubiquo_config.rb+ as shown:
+
+<ruby>
+Ubiquo::Config.add do |config|
+  config.app_name = "ubiquodemo"
+  config.app_title = "Ubiquodemo"
+  config.app_description = "Ubiquodemo"
+  case RAILS_ENV
+  when 'development', 'test'
+    config.notifier_email_from = 'my@mail.com'
+  else
+    config.notifier_email_from = 'my@mail.com'
+  end
+end
+
+Ubiquo::Config.context(:ubiquo_media).set do |config|
+  config.media_storage = :s3
+end
+</ruby>
+
+h4. Package the application as a WAR using warbler
+
+Since our application will be deployed on Tomcat6 we need to pacakge our application as a WAR, first let's run the following command (inside our app directory):
+
+<shell>
+warble config
+</shell>
+
+This command adds a config/warble.rb which defines how our app will be packaged into a WAR, we need to configure it as shown:
+
+<ruby>
+Warbler::Config.new do |config|
+  # Application directories to be included in the webapp.
+  config.dirs = %w(app config lib log vendor tmp public)
+
+  # Other gems to be included. You need to tell Warbler which gems
+  # your application needs so that they can be packaged in the war
+  # file.
+  # The Rails gems are included by default unless the vendor/rails
+  # directory is present.
+  config.gems += ["activerecord-jdbc-adapter","jdbc-mysql", "jruby-openssl", "s3"]
+
+  # Pathmaps for controlling how public HTML files are copied into the .war
+  # config.pathmaps.public_html = ["%{public/,}p"]
+
+  # Control the pool of Rails runtimes. Leaving unspecified means
+  # the pool will grow as needed to service requests. It is recommended
+  # that you fix these values when running a production server!
+  config.webxml.jruby.min.runtimes = 1
+  config.webxml.jruby.max.runtimes = 1
+end
+</ruby>
+
+NOTE: There are a lot of options you should review with care and configure appropiately.
+
+CAUTION: It's important to configure the pool of Rails runtimes if you want to test the autoscaling features of Elastic Beanstalk, if you leave the default configuration the machine will start to swap when starting enough Rails instances to eat all the avaliable memory.
+
+And finally we can package our app with the following command:
+
+<shell>
+warble
+</shell>
+
+h3. Deploying our WAR to Elastic Beanstalk
+
+Finally log into AWS Console go to the +Elastic Beanstalk+ tab and click on +Launch new application+ :
+
+!(screenshot)images/ubiquo_elasticbeanstalk/deploy-war-1.png(Deploying the app)!
+
+Name your application, select +Upload an existing application+ and select the previously generated war. Remember to check the +Launch a new environment running this application+ option.
+
+Now go and grab a coffee while the upload finishes. Once finished check the +Events+ tab of the newly created environment and see the magic happen:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/deploy-war-2.png(Deploying the app)!
+
+NOTE: Keep in mind that, for now, deployment can be painfully slow.
+
+Once finished (green state) you can finally check your app running, you can obtain the URL in the overview tab of your environment:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/deploy-war-3.png(Deploying the app)!
+
+You can also edit the configuration of your environment which includes the autoscaling options:
+
+!(screenshot)images/ubiquo_elasticbeanstalk/deploy-war-4.png(Deploying the app)!
+
+Here you can also customize some useful settings:
+
+* Add your keys, to be able to log into the EC2 instances.
+* The instance type, I recommend using the medium one for testing since the micro one it's slow.
+* Customize the +Xmx+, +Xms+, etc. options for the +JVM+
+
+You can test autoscaling with a tool like "httperf":http://www.hpl.hp.com/research/linux/httperf/ or Apache's "ab":http://httpd.apache.org/docs/2.0/programs/ab.html
+
+Example:
+
+<shell>
+httperf --server ubiquodemo.elasticbeanstalk.com  --uri / --num-conns 100000 --rate 200
+</shell>

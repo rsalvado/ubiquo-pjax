@@ -1,0 +1,11 @@
+en:
+  ubiquo:
+    helpmsg:
+      design:
+        page:
+          edit: "Here you can set options for this page. The url name, section and category are fields to determine the URL for this page."
+          new: "Here you can set options for this page. The url name, section and category are fields to determine the URL for this page."
+          index: "Here you can see, modify and design the application pages."
+        static_page:
+          index: "Here you can see, modify and remove static pages"
+          new: "Here you can create new static pages."

@@ -1,0 +1,28 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2><%= render :partial => 'submenu' %></h2>
+<%= render :partial => "shared/ubiquo/feedback" %>
+
+<%= show_filter_info %>
+<%= render(:partial => "shared/ubiquo/lists/standard", :locals => {
+  :name => 'asset',
+  :headers => [:name, :asset_type_id, Ubiquo::Config.context(:ubiquo_media).get(:force_visibility) ? nil : "Visibilitat"].compact,
+  :rows => @assets.collect do |asset|
+    {
+      :id => asset.id,
+      :columns => [
+        link_to(asset.name, url_for_media_attachment(asset)),
+        I18n.t("ubiquo.asset_type.names.#{asset.asset_type.key}"),
+        Ubiquo::Config.context(:ubiquo_media).get(:force_visibility) ?
+              nil : (asset.resource_is_public? ? t("ubiquo.media.public") : t("ubiquo.media.private")),
+      ].compact,
+      :actions => uhook_asset_index_actions(asset)
+    }
+  end,
+  :pages => @assets_pages,
+  :link_to_new => link_to(t('ubiquo.media.asset_new'), new_ubiquo_asset_path, :class => "new")
+}) %>
+
+<% content_for :sidebar do %>
+  <%= show_filters %>
+  <%= help_block_sidebar(t("ubiquo.helpmsg.media.assets.index")) %>
+<% end %>

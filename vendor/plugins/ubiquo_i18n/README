@@ -1,0 +1,17 @@
+UbiquoI18n
+==========
+
+This plugin adds i18n support to Ubiquo
+
+This plugin is not about the ubiquo interface, which also comes with out of the box i18n capabilites (using the Rails i18n system). This is about translating data from models.
+
+It tries to be simple to use, but also is filled with a lot of useful features, among which:
+
+    * Define which attributes in a model are translatable with a single line.
+    * Every translation is a separate instance, so you can operate on it transparently, as you did before ubiquo_i18n
+    * Automatic update of shared attributes among translations
+    * Define relations that should be shared between translations, ubiquo_i18n will track them for you
+    * Use instance.translate(‘locale’) to create a translation of an existing model instance
+
+
+Copyright (c) 2009 International Product Design S.L. - gnuine (http://www.gnuine.com)

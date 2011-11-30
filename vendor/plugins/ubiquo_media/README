@@ -1,0 +1,69 @@
+UbiquoMedia
+===========
+
+This plugin provides a media management system for Ubiquo. Once installed, you will be able to:
+
+* Centralize and manage all the media files from the Ubiquo Media section
+Create, edit or delete new assets that will be available throughout your app
+
+* Easily enhance your models with a media selector
+Add a single line to your model definition and it will be immediately able to store assets, without migrations
+
+* Use an AJAX asset searcher on forms
+That will find assets as you type them
+
+* Organize your assets by type or visibility
+Restrict a model attribute to just some types of assets (images, videos..) and decide if the asset is public or private
+
+Basic example
+=============
+
+In your model, add:
+
+  media_attachment :attrs
+
+In your form, add:
+
+   <%= media_selector form, :attrs %>
+
+And that's all - now your model has a :attrs field that can store ubiquo media files, and you can fill it using the form
+
+Detailed examples
+=================
+
+== Add media to your models
+
+On this example we include a _media_attachment_ attribute called _images_, with a maximum of 2 elements and accepting only images.
+
+  class ExampleModel
+          media_attachment :images, :size => 2, :types => ["image"]
+    ...
+  end
+
+Note: For convention, the attribute name should be always plural no matter if it contains a single element (_size_ option is 1). The _media_attachment_ accessor always returns an array.
+
+_media_attachment_ creates some methods on the object which can be useful on validations:
+
+  validates_length_of :images_ids, :minumum => 1, :message => t('should contain at least one image')
+
+== Add media selectors to your views
+
+In your views you only need to use the _media_selector_ helper:
+
+  <% form_for ... do |form| %>
+          ....
+          <%= media_selector form, :images, :visibility => 'public' %>
+          ....
+  <% end %>
+
+The visibility attribute allows you to filter which assets will be available in this selector
+
+== Add media to your views
+
+Get an url to your media with _url_for_media_attachment_:
+
+  <%= link_to("a link to first image image", url_for_media_attachment(object.images.first)) %>
+
+
+
+Copyright (c) 2009 International Product Design S.L. - gnuine (http://www.gnuine.com)

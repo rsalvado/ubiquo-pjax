@@ -1,0 +1,227 @@
+h2. Ubiquo sidebar filters
+
+Ubiquo sidebar filters have been refactored not only the external API but also in their internal one.
+
+ * Class based filters with inheritance.
+ * Test helper class to make testing filters easier.
+ * Filter dispatch.
+
+In this guide we will see how sidebar filters work and how to create new ones.
+
+endprologue.
+
+h3. How do sidebar filters look like internally
+
+Let's have a look at a typical ubiquo sidebar filter implementation (these filters are located in ubiquo_core):
+
+<ruby>
+module Ubiquo
+  module Extensions
+    module FilterHelpers
+      class TextFilter < BaseFilter
+
+        def configure(options={})
+          options[:field] = add_filter_prefix(options[:field]) if options[:field]
+          defaults = {
+            :field       => :filter_text,
+            :caption     => I18n.t('ubiquo.filters.text'),
+          }
+          @options = defaults.merge(options)
+        end
+
+        def render
+          lateral_filter(@options) do |keepable_params|
+            @context.form_tag(@options[:url_for_options], :method => :get) do
+              hidden_fields(keepable_params) + \
+              @context.content_tag(:p) do
+                @context.text_field_tag(@options[:field], @context.params[@options[:field]]) + "\n" + \
+                @context.submit_tag(I18n.t('ubiquo.search'))
+              end
+            end
+          end
+        end
+
+        def message
+          field = @options[:field].to_s
+          string = !@context.params[field].blank? && @context.params[field]
+          return unless string
+          info = @options[:caption].blank? ?
+          I18n.t('ubiquo.filters.filter_text', :string => string) :
+            "#{@options[:caption]} '#{string}'"
+          [info, [field]]
+        end
+
+      end
+    end
+  end
+end
+</ruby>
+
+As we can see our <tt>TextFilter</tt> class inherits from <tt>BaseFilter</tt> which provides some common methods needed by our filters.
+
+NOTE: It's important to note that we have the view context available through the <tt>@context</tt> instance variable, so we need to keep this in mind when trying to access vars or methods available only in the view.
+
+We need to implement 3 public methods:
+
+ * <tt>configure</tt>. This method is the one it will be used in the <tt>filters_for</tt> definition and it must set the <tt>@options</tt> instance var.
+
+ * <tt>render</tt>. This method should return the rendered filter as a string. Obviously it is invoked during sidebar filter rendering.
+
+ * <tt>message</tt>. This method is used to build the message, on top of listings, that informs of the current filter selection.
+
+NOTE: It's important to remember that filters are defined using a <tt>FilterSetBuilder</tt>. For example if we create a <tt>MyCustomFilter</tt> filter class, it would be invoked as shown in the example:
+
+<ruby>
+# app/helpers/ubiquo/articles_helper.rb
+module Ubiquo::ArticlesHelper
+  def article_filters
+     filters_for 'Article' do |f|
+       f.text
+       f.locale
+       f.date
+       f.select :name, @collection
+       f.boolean :status
+       f.my_custom :title # <-- Your new filter
+     end
+  end
+end
+</ruby>
+
+h3. Building new sidebar filters using the existing ones
+
+Let's see another example:
+
+<ruby>
+module Ubiquo
+  module Extensions
+    module FilterHelpers
+      class BooleanFilter < LinkFilter
+
+        def configure(field, options = {})
+          defaults = {
+            :field         => "filter_#{field}",
+            :caption       => @model.human_attribute_name(field),
+            :caption_true  => I18n.t('ubiquo.filters.boolean_true'),
+            :caption_false => I18n.t('ubiquo.filters.boolean_false'),
+          }
+          @options = defaults.merge(options)
+          collection = [
+            OpenStruct.new(:option_id => 0, :name => @options[:caption_false]),
+            OpenStruct.new(:option_id => 1, :name => @options[:caption_true]),
+          ]
+          boolean_options = {
+            :id_field => :option_id,
+            :name_field => :name,
+            :collection => collection
+          }
+          @options.update(boolean_options)
+        end
+
+      end
+    end
+  end
+end
+</ruby>
+
+As we can see this is a <tt>BoolenFilter</tt> based on a <tt>LinkFilter</tt>. It is basically a <tt>LinkFilter</tt> with a different configuration.
+
+Now if we have a look at the <tt>LinkFilter</tt>:
+
+<ruby>
+module Ubiquo
+  module Extensions
+    module FilterHelpers
+      class LinkFilter < SelectFilter
+
+        def render
+          lateral_filter(@options) do |keepable_params|
+            filter_field = @options[:field]
+            @context.content_tag(:div, :id => 'links_filter_content') do
+              @context.content_tag(:ul) do
+                @options[:collection].inject('') do |result, object|
+                  css_class = (@context.params[filter_field].to_s) == object.send(@options[:id_field]).to_s ? "on" : "off"
+                  name = object.send(@options[:name_field])
+                  keepable_params.update(filter_field => object.send(@options[:id_field]))
+                  result += @context.content_tag(:li) do
+                    @context.link_to name, keepable_params, :class => css_class
+                  end
+                end
+              end
+            end
+          end
+        end
+
+      end
+    end
+  end
+end
+</ruby>
+
+We can see that a <tt>LinkFilter</tt> is basically a <tt>SelectFilter</tt> but changing the <tt>render</tt> method.
+
+So building new ubiquo sidebar filters using inheritance should be easy.
+
+h3. Testing ubiquo sidebar filters
+
+Since testing sidebar filters involves a lot of setup. A Test helper class has been created to make it easier.
+
+Let's see an example:
+
+<ruby>
+class LinksOrSelectFilterTest < Ubiquo::Extensions::FilterHelpers::UbiquoFilterTestCase
+
+  def setup
+    @filter = LinksOrSelectFilter.new(@model, @context)
+    @filter.configure(:title,@model.all)
+  end
+
+  test "Should render a link filter with a small collection" do
+    doc = HTML::Document.new(@filter.render).root
+    assert_select doc, 'div#links_filter_content a', 3
+  end
+
+  test "Should render a select filter with a bigger collection" do
+    load_more_test_data
+    @filter.configure(:title, @model.all)
+    doc = HTML::Document.new(@filter.render).root
+    assert_select doc, 'form', 1
+    assert_select doc, 'select[name=filter_title]', 1
+  end
+
+  test "Should be able to get a message when the filter is set" do
+    @context.params.merge!({ 'filter_title' => 'my_title_text' })
+    assert_match /my_title_text/, @filter.message.first
+  end
+
+  private
+
+  def load_more_test_data
+    [
+     { :title => 'Yesterday loot was cool',
+       :description => 'òuch réally?',
+       :published_at => Date.today,
+       :status => true
+     },
+     { :title => 'Today is the new yesterday. NIÑA',
+       :description => 'bah loot',
+       :published_at => Date.today,
+       :status => false
+     },
+     { :title => 'Tíred',
+       :description => 'stop',
+       :published_at => Date.tomorrow,
+       :status => false
+     }
+    ].each { |attrs| @model.create(attrs) }
+  end
+
+end
+</ruby>
+
+<tt>Ubiquo::Extensions::FilterHelpers::UbiquoFilterTestCase</tt> provides:
+
+ * <tt>@context</tt> view context.
+ * <tt>@model</tt> test model.
+ * Some test data.
+
+All of which is needed to test filters. It is advisable review this class.

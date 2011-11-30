@@ -1,0 +1,14 @@
+thumb_url = url_for_media_attachment(@asset,:thumb)
+
+page << "var sourceWindow= window;"
+page << " var elem = sourceWindow.$(#{params[:target].to_json}); "
+page << "elem.up('.item').down(\"img\").src = #{(thumb_url).to_json};"
+page << "var params = "+ {
+  :asset_id => @asset.id,
+  :thumbnail_url => thumb_url ,
+  :view_link => view_asset_link(@asset),
+  :asset_name => @asset.name,
+  :options => { :advanced_form => advanced_asset_form_for(@asset) }
+}.to_json
+
+page << "sourceWindow.#{params[:target]+"_replace"}(params);"

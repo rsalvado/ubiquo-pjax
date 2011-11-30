@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    models:
+      category_set: "Category Set"
+    attributes:
+      category_set:
+        name:  "Name"
+        key:  "Key"
+        

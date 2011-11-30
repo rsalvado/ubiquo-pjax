@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>Ubiquo: Welcome aboard</title>
+        <style type="text/css" media="screen">
+          * { margin: 0; padding: 0; line-height: 1; font-size: 1em;}
+          body { font-size: 62.5%; background: #ECECEC;}
+          body, input, select, textarea { color: #454445; font-family: "Verdana", "Arial","Lucida Grande", "sans-serif"; font-weight: normal;}
+          a { color: #FFF; text-decoration: none;}
+          img { border: 0;}
+          hr, #skip, .access { display: none;}
+          ul { list-style-type: none;}
+          ol { list-style-position: inside;}
+          p { margin-bottom: 1.5em; line-height: 1; font-size: 1em;}
+          p strong { color: #cad133;}
+
+
+          #header {
+            background-color: #fff;
+            height: 11em;
+            position:relative;
+            padding:0em;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 900px;
+          }
+
+          #header h1 {
+            padding: 20px 0px 0px 20px;
+            font-size: 4.8em;
+            font-family: "Arial","Lucida Grande", "sans-serif";
+            font-weight: normal;
+          }
+          #header h2 {
+            padding: 0px 0px 0px 20px;
+            font-size: 1.6em;
+            font-family: "Arial","Lucida Grande", "sans-serif";
+            font-weight: normal;
+          }
+
+          #header a.logo {
+            position:absolute;
+            top:24px;
+            right:20px;
+          }
+
+          #gs-wrapper {
+            background-color: #252525;
+          }
+          #getting-started {
+            background: #252525 url(images/install/bg-getting-started.png) no-repeat;
+            height: 44.6em;
+            position:relative;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 922px;
+          }
+
+          #getting-started ul {
+            position:absolute;
+            top: 40px;
+            left: 35px;
+            width: 600px;
+            margin:0;
+            padding:0;
+            list-style-type:none;
+          }
+
+          #getting-started ul li {
+            font-size: 1.8em;
+            color: #fff;
+            font-family: "Verdana", "Arial","Lucida Grande", "sans-serif";
+            margin-bottom: 20px;
+            overflow:visible;
+            padding-left: 150px;
+          }
+
+          #getting-started ul li.configure {
+            background: url(images/install/tit-configure.png)  no-repeat;
+          }
+
+          #getting-started ul li.run {
+            background: url(images/install/tit-run.png)  no-repeat;
+          }
+
+          #getting-started ul li.restart {
+            background: url(images/install/tit-restart.png)  no-repeat;
+          }
+
+          #getting-started ul li a {
+            text-decoration: underline;
+          }
+
+          #getting-started ul li a:hover {
+            text-decoration: underline;
+            color: #ccc;
+          }
+
+          #getting-started ul li span {
+            width: 390px;
+            display:block;
+            margin-top: 10px;
+            padding: 15px 5px 5px 50px;
+          }
+
+          #getting-started ul li span.help {
+            background: transparent url(images/install/bg-help.png) no-repeat;
+            height: 50px;
+          }
+
+          #getting-started ul li span.info {
+            background: transparent url(images/install/bg-info.png) no-repeat;
+            height: 50px;
+          }
+
+          #getting-started ul li span p {
+            font-size: 0.8em;
+            color: #fff;
+          }
+
+          #explore {
+            background-color: #fff;
+            height: 30em;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 900px;
+          }
+
+          #search, #community, #documentation {
+            background: transparent url(images/install/bg-module.png) no-repeat;
+            width: 248px;
+            height: 237px;
+            float: left;
+            margin: 30px 20px 0px 30px;
+          }
+
+          #search h3, #community h3, #documentation h3 {
+            padding: 15px 0px 0px 80px;
+            font-size: 2.2em;
+            font-family: "Arial","Lucida Grande", "sans-serif";
+            font-weight: bold;
+            color: #F7941D;
+          }
+
+          #search h3 {
+            background: transparent url(images/install/tit-search.png) 15px 15px no-repeat;
+          }
+
+          #community h3 {
+            background: transparent url(images/install/tit-community.png) 15px 15px no-repeat;
+          }
+
+          #documentation h3 {
+            background: transparent url(images/install/tit-documentation.png) 15px 15px no-repeat;
+          }
+
+          #explore ul {
+            margin: 20px 20px 0px 20px;
+          }
+
+          #explore ul li {
+            background: transparent url(images/install/ico-list.png) no-repeat;
+            font-family: "Arial","Lucida Grande", "sans-serif";
+            font-size: 1.7em;
+            font-weight: normal;
+            color: #666;
+            padding: 0px 0px 20px 40px;
+          }
+
+          #explore ul li a{
+            text-decoration: underline;
+            color: #666;
+          }
+
+          #explore ul li a:hover{
+            text-decoration: underline;
+            color: #333;
+          }
+
+          #search .search {
+            margin: 30px 0px 20px 20px;
+            width: 200px;
+            text-align:center;
+          }
+          #search .bt-search {
+            background:transparent url(images/install/bt-search.png) 0px 2px no-repeat scroll;
+            border:0 none;
+            color:#FFFFFF;
+            cursor:pointer;
+            width:121px;
+            height:26px;
+            margin:0px;
+            padding:0px;
+            font-family: "Arial","Lucida Grande", "sans-serif";
+            font-size: 1.8em;
+            font-weight: normal;
+          }
+
+          #search input {
+            border: 1px solid #F3EFEF;
+            padding: 0.2em;
+            width: 200px;
+            font-size: 1.8em;
+            font-weight: normal;
+          }
+
+          #footer {
+            border-top: 1px solid #ccc;
+            padding: 10px 0px 10px 0px;
+            background-color:#fff;
+            color: #969696;
+            font-family:  "Arial","Lucida Grande", "sans-serif";
+            font-size: 13px;
+            line-height: 1.1em;
+            margin-left: 12px;
+            overflow: hidden;
+            width: 900px;
+            margin: 0 auto;
+          }
+          #footer a {
+            color:#424242;
+            margin-right:7px;
+            text-decoration:underline;
+          }
+          #footer a:hover {
+            text-decoration:none;
+          }
+          #footer div.links_ubiquo, #footer div.logo_ubiquo {
+            float:right;
+          }
+          #footer div.links_ubiquo {
+            text-align:left;
+          }
+          #footer a.logo_ubiquo {
+            background:transparent url(images/install/logo-ubiquo-footer.png) no-repeat scroll left top;
+            border-right:1px solid #C9C9C9;
+            display:block;
+            height:30px;
+            margin-right:14px;
+            text-indent:-1000px;
+            width:90px;
+          }
+       </style>
+    </head>
+<body>
+    <div id="header">
+        <h1>welcome to ubiquo!</h1>
+        <h2>the CMS framework for pragmatic developers.</h2>
+        <a class="logo" target="_blank" href="http://www.ubiquo.me/">
+            <img alt="ubiquo" title="ubiquo" src="images/install/logo-ubiquo.png"/>
+        </a>
+    </div>
+    <div id="gs-wrapper">
+        <div id="getting-started">
+            <ul>
+                <li class="configure">
+                    Configure your database using the config file <tt>config/database.yml</tt>
+                    <span class="help"><p>You can follow detailed instructions provided <a href="http://guides.rubyonrails.org/getting_started.html#configuring-a-database" target="_blank">here</a>.</p></span>
+                </li>
+                <li class="run">
+                    Run <tt>rake ubiquo:db:init</tt> to initialize the database.
+                    <span class="help"><p>If you need more info about rake check <a href="http://github.com/jimweirich/rake" target="_blank">here</a>.<p></span>
+                </li>
+                <li class="restart">
+                    Restart your server <tt>script/server</tt> and go to <a href="http://localhost:3000/ubiquo">http://localhost:3000/ubiquo</a>
+                    <span class="info"><p>A superadmin user will be created upon login using the provided login and password.</p></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="explore">
+        <div id="search">
+            <h3>search the ubiquo site</h3>
+            <form class="search" action="http://www.google.com/search" method="get">
+                <input type="hidden" name="hl" value="en" />
+                <input type="hidden" value="www.ubiquo.me" name="sitesearch"/>
+               <p>
+                  <input type="text" name="q" id="q"/>
+                </p>
+                <p>
+                  <input type="submit" value="search" class="bt-search"/> </p>
+              </form>
+        </div>
+        <div id="community">
+            <h3>join the community</h3>
+            <ul>
+                <li><a href="http://www.ubiquo.me/" target="_blank">Ubiquo</a></li>
+                <li><a href="http://blog.ubiquo.me/" target="_blank">Official weblog</a></li>
+                <li><a href="http://groups.google.com/group/ubiquo-gnuine" target="_blank">Official mailing list</a></li>
+            </ul>
+        </div>
+        <div id="documentation">
+            <h3>browse the documentation</h3>
+            <ul>
+                <li><a href="http://www.ubiquo.me/guides/" target="_blank">Ubiquo Guides</a></li>
+                <li><a href="http://api.rubyonrails.org/" target="_blank">Rails API</a></li>
+                <li><a href="http://stdlib.rubyonrails.org/" target="_blank">Ruby standard library</a></li>
+                <li><a href="http://corelib.rubyonrails.org/" target="_blank">Ruby core</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="links_ubiquo">
+            ® 2009 ubiquo <br/>
+            <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">MIT license</a>
+            <a href="http://www.ubiquo.me" target="_blank">ubiquo website</a>
+        </div>
+        <div class="logo_ubiquo">
+            <a class="logo_ubiquo" href="http://www.ubiquo.me" target="_blank">Ubiquo</a>
+        </div>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,22 @@
+ca:
+  ubiquo:
+    category_set:
+      title: "Conjunt de categories"
+      created: "Conjunt de categories creat amb èxit"
+      create_error: "Error al crear el conjunt de categories"
+      edited: "Conjunt de categories editat amb èxit"
+      edit_error: "Error a l'editar el conjunt de categories"
+      destroyed: "Conjunt de categories eliminat amb èxit"
+      destroy_error: "Error al eliminar el conjunt de categories"
+      index:
+        title: "Llistat de conjunts de categories"
+        help_message: "Aquí pots veure el llistat de conjunts de categories"
+        new: "Nou conjunt de categories"
+        confirm_removal: "Estàs segur de voler eliminar aquest conjunt de categories?"
+      new:
+        help_message: "Aquí pots crear el nou conjunt de categories"
+      edit:
+        help_message: "Aquí pots editar el nou conjunt de categories"
+      see_categories: "Veure categories"
+      empty_list_title: "Llistat de conjunts de categories"
+      empty_list_message: "Des d’aquest apartat pots veure una llista de tots els conjunt de categories existents. Podràs crear-los, editar-los o esborrar-los."

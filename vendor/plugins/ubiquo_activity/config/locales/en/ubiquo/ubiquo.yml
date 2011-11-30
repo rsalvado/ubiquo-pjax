@@ -1,0 +1,28 @@
+en:
+  ubiquo:
+    activity_info:
+      activity_list: "Activities list"
+      title: "Activity"
+      controller: "Controller"
+      action: "Action"
+      date: "Date"
+      actions:
+        create: "Create"
+        update: "Update"
+        destroy: "Destroy"
+      status: "Status"
+      statuses:
+        successful: "Successful"
+        info: "Information"
+        error: "Error"
+      successful_create_message: "User %{user} has been created %{object_name} successfully"
+      error_create_message: "An error has ocurred and user %{user} couldn't create %{object_name}"
+      show_it: "Show it"
+      successful_update_message: "User %{user} has been updated %{object_name} successfully"
+      error_update_message: "An error has ocurred and user %{user} couldn't update %{object_name}"
+      successful_destroy_message: "User %{user} has been destroyed %{object_name} successfully"
+      error_destroy_message: "An error has occurred and user %{user} couldn't remove %{object_name}"
+      empty_list_title: "Activity log"
+      empty_list_message: "You can see all executed actions in Ubiquo. You can see the action detail or remove the log."
+      confirm_removal: "Do you really want to delete this activity register?"
+      destroyed: "Activity registed deleted succesfully"

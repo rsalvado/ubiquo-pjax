@@ -1,0 +1,13 @@
+--- 
+permissions_001: 
+  id: 1
+  name: "Ubiquo user management"
+  key: ubiquo_user_management
+permissions_002: 
+  id: 2
+  name: "Role management"
+  key: role_management
+permissions_003:
+  id: 3
+  name: "Media management"
+  key: media_management

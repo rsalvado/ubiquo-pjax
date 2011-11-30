@@ -1,0 +1,13 @@
+<div class="pagination">
+  <% if item_pages %>
+    <% %w{next previous}.each do |dir| %>
+      <% page = page = item_pages[dir.to_sym] %>
+      <% html_options = {:class => "bot_pag_#{dir}#{' disabled' unless page}"} %>
+      <% if page %>
+        <%= link_to t("ubiquo.#{dir}"), params.merge({:page => page}), html_options %>
+      <% else %>
+        <%= content_tag(:span, t("ubiquo.#{dir}"), html_options) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

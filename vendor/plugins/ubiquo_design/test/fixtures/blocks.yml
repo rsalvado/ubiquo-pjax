@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 11000
+  block_type: "sidebar"
+  page_id: 10000
+
+one_design:
+  id: 11004
+  block_type: "sidebar"
+  page_id: 10003
+
+main_one_design:
+  id: 11005
+  block_type: "main"
+  page_id: 10003
+
+two:
+  id: 11001
+  block_type: "subheader"
+  page_id: 10000
+  
+three:
+  id: 11002
+  block_type: "main"
+  page_id: 10001
+
+test_block:
+  id: 11003
+  block_type: "sidebar"
+  page_id: 10006
+
+sidebar_two_design:
+  id: 11006
+  block_type: "sidebar"
+  page_id: 10004
+
+main_two_design:
+  id: 11007
+  block_type: "main"
+  page_id: 10004

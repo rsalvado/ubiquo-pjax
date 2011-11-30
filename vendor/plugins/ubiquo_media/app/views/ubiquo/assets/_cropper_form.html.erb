@@ -1,0 +1,235 @@
+<%
+  show_current = true unless show_current === false
+  hidden= false unless hidden
+  preview = true unless preview == false
+  allow_restore = style.to_s == "original" && 
+    ( Ubiquo::Config.context(:ubiquo_media).get(:advanced_edit_allow_restore_from_media_selector) || 
+    params[:target].blank? )
+  allow_save_as = ( style.to_s == "original" ||
+    Ubiquo::Config.context(:ubiquo_media).get(:advanced_edit_allow_save_as_for_all_styles) )
+  style_scope = "#{style}"
+  asset = f.object
+  ratio = resize_ratio_for( asset )
+  format_geometry = Paperclip::Geometry.parse(format)
+  original_geometry = asset.geometry
+  base_to_crop_geometry = asset.geometry(:base_to_crop)
+  # Decide if its previewable or not
+  previewable = ( ( ratio == 1.0 ) && format_geometry.modifier == "#" rescue false )
+  previewable = previewable && format_geometry.width <= original_geometry.width && format_geometry.height <= original_geometry.height
+
+  shared_asset_msg = if @asset.asset_relations.count > 0 &&
+      Ubiquo::Config.context(:ubiquo_media).get(:advanced_edit_warn_user_when_changing_asset_in_use)
+    t("ubiquo.media.affects_all_related_elements")
+  end
+
+-%>
+<% if asset.resource.original_filename -%>
+  <% asset_area = asset.asset_areas.find_by_style(style.to_s) || asset.asset_areas.from_format(format) %>
+<div class="resize_zone resize-box-content" <%= "style='display:none;'" if hidden %>>
+   
+  <div class="resize-box-content-left to_resize">
+    <div class="resize-box-image-container">
+      <%= image_tag(url_for_media_attachment(asset, :base_to_crop),
+       :id => "original_to_resize_#{style_scope}"
+     ) %>
+    </div>
+
+    <%= hidden_field_tag "crop_resize[#{style_scope}][top]", asset_area.top %>
+    <%= hidden_field_tag "crop_resize[#{style_scope}][left]", asset_area.left %>
+    <%= hidden_field_tag "crop_resize[#{style_scope}][width]", asset_area.width %>
+    <%= hidden_field_tag "crop_resize[#{style_scope}][height]", asset_area.height %>
+    <% javascript_tag do %>
+    (function(){
+      function saveCoords_<%= style_scope %>  (coords, dimensions)
+      {
+        if( $( 'crop_resize_<%= style_scope %>_left') ){
+          //Transform values to original size
+          var initial= serialize_crop_<%= style_scope %>();
+
+          var ratio = <%= ratio.to_json %>;
+          $( 'crop_resize_<%= style_scope %>_left').value = Math.round(coords.x1 * ratio);
+          $( 'crop_resize_<%= style_scope %>_top').value = Math.round(coords.y1 * ratio);
+          $( 'crop_resize_<%= style_scope %>_width' ).value = Math.round(dimensions.width * ratio);
+          $( 'crop_resize_<%= style_scope %>_height' ).value = Math.round(dimensions.height * ratio);
+
+
+          if( initial != serialize_crop_<%= style_scope %>()){
+            $("undo_link_<%= style_scope %>").removeClassName("disabled");
+          }
+        }
+      }
+      window.cropper_instance_<%= style_scope %> = null;
+
+      window.serialize_crop_<%= style_scope %> = function(){
+          return ["_left","_top","_width","_height"].map(function(e){
+              var el = $('crop_resize_<%= style_scope %>'+e);
+              if( el ){
+                return el.value;
+              }else{
+                return "NOTFOUND";
+                }
+          }).join("@");
+      }
+
+      window.cropper_instance_initializer_<%= style_scope %> = function(){
+        cropper_instance_<%= style_scope %> = new Cropper.<%= previewable ? "ImgWithPreview":"Img" %>(
+          'original_to_resize_<%= style_scope %>',
+          {
+            <% if previewable %>
+              previewWrap: <%= "original_to_resize_#{style_scope}_preview".to_json %>,
+            <% end %>
+            onEndCrop: saveCoords_<%= style_scope %>,
+            captureKeys: false, //this feature does not support more than one cropper per page.
+            <%=
+            # http://www.imagemagick.org/script/command-line-processing.php#geometry
+            if geo = Paperclip::Geometry.parse(format)
+              case geo.modifier
+              when "#"
+                "ratioDim: { x: #{geo.width}, y: #{geo.height} },"
+              when "<" # It does not crop, only resizes. No ratio can be applied.
+              when ">"
+              when "@" # Does no crop
+              when "%" # Scale (resize) => no cropping
+              end
+            end
+            %>
+            <% if previewable %>
+              minHeight: <%= ( geo.height ).round %>,
+              minWidth: <%= ( geo.width ).round %>,
+            <% end %>
+
+            <% if asset_area.width.to_i > 0 %>
+              displayOnInit: true,
+              onloadCoords: {
+                x1: <%= (asset_area.left / ratio).round %>,
+                y1: <%= (asset_area.top / ratio).round %>,
+                x2: <%= ((asset_area.left.to_i + asset_area.width.to_i) / ratio).round %>,
+                y2: <%= ((asset_area.top.to_i + asset_area.height.to_i) / ratio).round %>
+              },
+            <% end %>
+              //Setting width and height to work with IEx when the base to crop is in a display:none container.
+              //Changes to Cropper were required.
+              width: <%= base_to_crop_geometry.width.to_i.to_json %>,
+              height: <%= base_to_crop_geometry.height.to_i.to_json %>
+          });
+          //Hack. Otherways a click NEAR the crop item gets the "undo" link shown
+          cropper_instance_<%= style_scope %>.reset();
+          $("undo_link_<%= style_scope %>").addClassName("disabled");
+      };
+      window.cropper_instance_initializer_<%= style_scope %>();
+      })();
+
+
+    <% end %>
+    </div>
+  <div class="resize-box-content-right">
+    <div class="resize-box-widget info">
+      <div class="resize-box-widget-title">
+        <h4><%= t('ubiquo.media.image_details') %></h4>
+      </div>
+      <div class="resize-box-widget-content">
+        <dl>
+          <dt><%= Asset.human_attribute_name("name") %>:</dt>
+          <dd><%= @asset.name %></dd>
+          <dt><%= t('ubiquo.media.filename')%>:</dt>
+          <dd><%= @asset.resource_file_name %></dd>
+          <dt><%= t('ubiquo.media.geometry') %>:</dt>
+          <dd><%= @asset.geometry(style).to_s rescue "" %></dd>
+	  <% if @asset.resource.options[:storage] == :filesystem %>
+          <dt><%= t('ubiquo.media.filesize') %>:</dt>
+          <dd><%= number_to_human_size(@asset.resource_file(style).size, :locale => "en") rescue "" %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+
+    <div class="resize-box-widget alert">
+      <div class="resize-box-widget-title">
+        <h4><%= t("ubiquo.media.undo_buttons") %></h4>
+      </div>
+      <div class="resize-box-widget-content">
+        <ul class="resize-box-related-actions">
+          <li>
+            <%= link_to_function t('ubiquo.media.undo_changes'),
+               "cropper_instance_#{style_scope}.reset();this.addClassName('disabled');",
+               :id => "undo_link_#{style_scope}", :class=>"reset_form disabled" %>
+          </li>
+          <% if allow_restore && @asset.restorable? %>
+            <li>
+            <%= link_to_function t('ubiquo.media.restore'),
+              remote_function(
+                :update => "' + $('crop-resize-container').up().identify() +'",
+                :before => "myLightWindow.innerLoadingStart();",
+                :after => "myLightWindow.innerLoadingEnd();",
+                :type => :synchronous,
+                :url => restore_ubiquo_asset_path(@asset, :target => params[:target]),
+                :method => :post,
+                :allow_scripts => true,
+                :confirm => shared_asset_msg.to_s + " "+ t('ubiquo.media.confirm_asset_restore')
+              )
+          %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <% if preview && previewable %>
+      <div class="resize-box-widget preview">
+        <div class="resize-box-widget-title">
+          <h4><%= t('ubiquo.media.preview') %></h4>
+        </div>
+        <div class="resize-box-widget-content">
+          <div class="resize-box-widget-preview-left current">
+            <h5><%= t('ubiquo.media.current_image') %></h5>
+            <%= image_tag(url_for_media_attachment(asset, style.to_sym)) %>
+          </div>
+          <div class="resize-box-widget-preview-right new">
+            <h5><%= t('ubiquo.media.new_image') %></h5>
+            <div class="preview <%= previewable ? "available" : "not_available" %>" id="original_to_resize_<%= style_scope %>_preview">
+              <%= t('ubiquo.media.preview_not_available') if !previewable %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="resize-box-save">
+      <div class="resize-box-widget-title">
+        <h4><%=  t('ubiquo.media.save') %></h4>
+      </div>
+      <ul>
+        <li>
+          <%= f.submit t('ubiquo.media.save'), :name => "apply", :class => "resize-save-button",
+        :confirm => ( shared_asset_msg ? (shared_asset_msg +" " + t("ubiquo.media.confirm_continue")) : nil )  %>
+        </li>
+        <% if allow_save_as %>
+        <li class="resize-save-as"> <!-- #ocultar per convertir la caixa en inactiva -->
+          <!-- <li class="resize-save-as resize-open-fold"> --> <!-- #Mostra la caixa següent -->
+          <a href="#" onclick="this.up('li').addClassName('resize-open-fold');return false;"><span><%= t('ubiquo.media.save_as_new') %></span></a>
+          <div class="resize-box-save-as-content">
+              <fieldset>
+                <p>
+                  <%= label_tag "name", Asset.human_attribute_name("name") %>
+                  <%= text_field_tag "asset_name_#{style}", @asset.name, 
+                    :class => "resize-form-name" %>
+                </p>
+                <p class="buttons">
+                  <%= f.submit t('ubiquo.media.save_as_new'),
+                     :name => "save_as_new_button_#{style}",
+                     :type=>"image",
+                     :src => "/images/ubiquo/media/resize-save-as-button-big.png",
+                     :onclick => "$('crop_resize_asset_name').value = $F('asset_name_#{style}');$('crop_resize_save_as_new').value='1';return true;",
+                     :title => t('ubiquo.media.save_as_new')
+                  %>
+                </p>
+              </fieldset>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+</div>
+</div>
+
+<% end %>

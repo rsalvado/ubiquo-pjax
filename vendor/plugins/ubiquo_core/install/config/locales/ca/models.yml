@@ -1,0 +1,5 @@
+--- 
+ca: 
+  activerecord: 
+    attributes: {}
+    models: {}

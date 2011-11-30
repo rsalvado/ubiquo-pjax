@@ -1,0 +1,18 @@
+<% versions = model.versions %>
+<% ubiquo_sidebar_box t("ubiquo.versions.versions"), :class => "version-box" do %>
+  <% versions.each do |version| %>
+    <div class="version<%= version.id == params[:preview_id].to_i ? "_selected" : ""%>">
+      <p class="name">
+        <%= version.version_number %>
+        <span class="data">
+          <%= l version.updated_at %>
+        </span>
+      </p>
+      <div class="options">
+        <ul>
+          <li><%= link_to t("ubiquo.preview"), url_for(params.merge(:preview_id => version.id)) %></li>
+          <li><%= link_to t("ubiquo.restore"), url_for(params.merge(:action => 'update', :restore_from_version => version.id)), :method => :put %></li>
+      </div>
+    </div>
+  <% end %>
+<% end %>

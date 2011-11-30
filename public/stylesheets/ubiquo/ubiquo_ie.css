@@ -1,0 +1,16 @@
+#controls, 
+#tabs, 
+#central, 
+#content, 
+form .page_templates, 
+form#frm_calendar p, 
+#template, 
+.form_box, 
+.box_list, 
+#content .form_buttons,
+.form-item,
+.form-item-submit,
+#content td.actions
+{
+	height: 1%;
+}

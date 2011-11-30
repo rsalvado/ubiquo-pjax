@@ -1,0 +1,135 @@
+body {
+	background-color: #FFF;
+}
+p {
+	font-size: 1.6em;
+}
+/*-------------- Apartats generals --------------*/
+#wrapper {
+	margin: 20em auto;
+	width: 49em;
+}
+#central {
+	padding: 0;
+}
+/*-------------- Capsa formulari --------------*/
+.form_box {
+	padding: 0;
+	background-color: #F3F6EB;
+	border: 2px solid #D5D9C2;
+	-moz-box-shadow: 3px 3px 8px #BBB;
+	-webkit-box-shadow: 3px 3px 8px #BBB;
+	box-shadow: 3px 3px 8px #BBB;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+.inner_form_box {
+	padding: 2em 2em 2.8em;
+}
+
+#feedback_error, #feedback_notice, #feedback_warning {
+	width: 90%;
+	padding-left: 9%;
+	margin-bottom: 2em;
+}
+
+form {
+	margin: 2em 0 0;
+}
+	form p {
+		margin-bottom: .3em;
+		font-size: 1.5em;
+	}
+	form label {
+		display: block;
+		clear: both;
+		float: left;
+		width: 11em;
+		margin-right: .6em;
+		padding-top: .2em;
+		text-align: right;
+		font-weight: normal;
+		color: #4F4F4F;
+	}
+	form input {
+		padding: .2em;
+		border: 1px solid #999;
+	}
+	.remember {
+		clear: both;
+	}
+	.remember label {
+		display: inline;
+		float: none;
+		width: auto;
+		font-size: .8em;
+	}
+	.remember input {
+		margin-left: 11.6em;
+		padding: 0;
+		border: none;
+	}
+        .forgot a{
+		margin-left: 14.6em;
+		color: #4F4F4F;
+                text-decoration: underline;
+		font-weight: normal;
+		font-size: .8em;
+            
+        }
+	.form_buttons {
+		margin: .6em 0 0;
+		text-align: center;
+	}
+		.form_buttons input {
+			padding: 0;
+			border: none; 
+		}   
+		
+		.form_buttons input.buttons {
+			background: url(../../images/ubiquo/bg_button.png) no-repeat;
+			text-align: center;
+			width: 100px;
+			height: 29px;
+			font-size:14px;
+			color: #717171;
+			cursor: pointer;
+		   
+		}
+/* corners */
+.form_box .corner_tl, .form_box .corner_tr, .form_box .corner_bl, .form_box .corner_br {
+	width: 19px;
+	height: 19px;
+}
+.form_box .corner_tl {
+	background-image: url(../../images/ubiquo/bg_login_tl.gif);
+	top: -5px;
+	left: -5px;
+}
+.form_box .corner_tr {
+	background-image: url(../../images/ubiquo/bg_login_tr.gif);
+	top: -5px;
+	right: 0;
+}
+.form_box .corner_bl {
+	background-image: url(../../images/ubiquo/bg_login_bl.gif);
+	bottom: 0;
+	left: -5px;
+}
+.form_box .corner_br {
+	background-image: url(../../images/ubiquo/bg_login_br.gif);
+	bottom: 0;
+	right: 0;
+}
+/*-------------- footer --------------*/
+#footer {
+	width: auto;
+	margin-left: 56%;
+}
+	#footer a {
+		float: left;
+	}
+	#footer a.gnuine {
+		float: right;
+	}

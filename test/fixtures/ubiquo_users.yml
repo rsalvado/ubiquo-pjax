@@ -1,0 +1,55 @@
+josep:
+  name: Josep
+  surname: Josep
+  login: josep
+  email: test1@test.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.to_s :db %>
+  is_admin: false
+  is_active: true
+
+eduard:
+  name: Eduard
+  surname: Eduard
+  login: eduard
+  email: test2@test.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 1.days.ago.to_s :db %>
+  is_active: true
+  is_admin: false
+
+admin:
+  name: Admin
+  surname: Admin
+  login: admin
+  email: test3@test.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 90.days.ago.to_s :db %>
+  is_active: true
+  is_admin: true
+
+superadmin:
+  name: Superadmin
+  surname: Superadmin
+  login: superadmin
+  email: test3@test.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 90.days.ago.to_s :db %>
+  is_active: true
+  is_admin: true
+  is_superadmin: true
+
+inactive:
+  name: Inactive
+  surname: Inactive
+  login: inactive
+  email: test4@test.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  is_admin: false
+  created_at: <%= 91.days.ago.to_s :db %>
+  is_active: false

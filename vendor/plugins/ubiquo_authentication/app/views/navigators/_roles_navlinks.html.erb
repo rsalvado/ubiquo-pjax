@@ -1,0 +1,11 @@
+
+<%
+    navigator_section = create_link_navigator(:class => 'submenu') do |navigator|
+      navigator.add_link do |link|
+        link.text = (t("ubiquo.auth.roles_list"))
+        link.url = ubiquo_roles_path    
+        link.highlights_on({:controller => "ubiquo/roles"})
+      end
+    end
+%>
+<%= render_link_navigator(navigator_section) %>

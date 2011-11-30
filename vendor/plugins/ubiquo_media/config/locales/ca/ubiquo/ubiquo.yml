@@ -1,0 +1,98 @@
+ca:
+  ubiquo:
+    asset:
+      empty_list_title: "Llistat multimèdia"
+      empty_list_message: "Des d'aquest apartat podeu gestionar el vostre catàleg d'elements multimèdia."
+    media:
+      file_upload_in_progress: "Pujada de fitxer en progrés"
+      file_upload_complete: "Pujada completada. Processant fitxer..."
+      media: "Multimèdia"
+      media_title: "Anar a multimèdia"
+      media_list: "Llistat multimèdia"
+      asset_new: "Nou recurs"
+      confirm_asset_removal: "Estàs segur de voler eliminar aquest recurs?"
+      current_file: "Fitxer actual"
+      use_commas: "(Utilitza comes per a separar les etiquetes)"
+      asset_created: "Recurs creat amb èxit"
+      asset_create_error: "Error al crear el recurs"
+      asset_updated: "Recurs modificat amb èxit"
+      asset_update_error: "Error modificant el recurs"
+      asset_removed: "Recurs eliminat amb èxit"
+      asset_remove_error: "Error a l'eliminar el recurs"
+       # Helpers
+      text: "text"
+      type: "tipus"
+      all: "-- Tots --"
+      visibility: "visibilitat"
+      creation: "creació"
+      public: "públic"
+      private: "privat"
+      is_protected: "Es un fitxer protegit?"
+      # Filters FIXME: (I think all of this should be in base)
+      filter_between: "entre %{date_start} i %{date_end}"
+      filter_from: "des de %{date_start}"
+      filter_until: "fins a %{date_end}"
+      filter_text: "text %{string}"
+      # Media column
+      remove: "eliminar"
+      assigned_text: "text assignat"
+      change_text: "canviar text"
+      save: "Guardar"
+      apply: "Aplicar"
+      back: "Tornar"
+      save_as_new: "Guardar com a nou element"
+      selected_media_element: "Element multimèdia seleccionat"
+      selected_media_elements: "Elements multimèdia seleccionats"
+      search_results: "Resultats de la cerca"
+      footer_text: "El text assignat s'utiliza com a peu de la imatge o com títol per a documents"
+      media_item_new: "Afegir nou element multimèdia"
+      select_existing_media_item: "Selecciona un element multimèdia existent"
+      search_asset: "Buscar element multimèdia"
+      no_assets_found: "No s'han trobat recursos"
+      asset_open: "obrir"
+      asset_select: "selecciona"
+      asset_next: "següent"
+      asset_previous: "anterior"
+      asset_view: "veure"
+      invalid_related_object_type: "Identificador invàlid pel tipus seleccionat: %{type} %{id}"
+      invalid: "invàlid"
+      type_filter: "Filtrar per tipus"
+      # Resize
+      crop_and_resize: "Redimensionar imatge"
+      advanced_edit: "Avançat"
+      advanced: "avançat"
+      asset_not_resizeable: "Tipus d'element no redimensionable."
+      crop: "Retallar"
+      formats: "Formats predeterminats"
+      selected_format: "Format seleccionat:"
+      available_styles: "Formats disponibles"
+      current_image: "Imatge actual"
+      asset_original_crop_error: "Error al retallar la imatge original: %s"
+      undo_changes: "Desfer els canvis"
+      restore: "Restaurar fitxer original"
+      confirm_asset_restore: "Estàs segur de voler restaurar aquest recurs?"
+      preview: "Previsualització"
+      preview_not_available: "Previsualització no disponible"
+      affects_all_related_elements: "Aquest canvi afectarà a tots els elements relacionats amb aquest recurs."
+      confirm_continue: "Vols continuar?"
+      shared_asset_warning: "Avís: els canvis que es realitzin afectaran als %{num} elements que estan associats a aquest recurs."
+      keep_backup: "Mantenir còpia prèvia als canvis"
+      image_details: "Editant la imatge:"
+      filename: "Fitxer"
+      geometry: "Mesures"
+      filesize: "Pes"
+      undo_buttons: "Versions anteriors"
+      new_image: "nova"
+      paperclip:
+        resize_and_crop:
+          error_no_style_matched: "Cap estil coincideix amb les opcions: %s"
+      tips:
+        main: Aquí podeu retallar la imatge original. Fes clic a la imatge i modifica les mesures de la capsa puntejada per obtenir una nova proporció.
+    asset_type:
+      names:
+        flash: 'Flash'
+        doc: 'Document'
+        audio: 'Àudio' 
+        other: 'Altres'
+        video: 'Vídeo' 
+        image: 'Imatge'

@@ -1,0 +1,32 @@
+
+<%- if options[:translatable] -%>
+  <%%= form.hidden_field :content_id %>
+<%- end -%>
+<% for attribute in attributes -%>
+  <%%= form.<%= attribute.field_type %> :<%= attribute.name %> %>
+<% end -%>
+
+<%- if options[:belongs_to] || options[:has_many] -%>
+  <%- if options[:belongs_to] -%>
+    <%- options[:belongs_to].each do |bt| -%>
+  <%%= form.relation_selector :<%= bt %>, :type => :select %>
+    <%- end -%>
+  <%- end -%>
+  <%- if options[:has_many] %>
+    <%- options[:has_many].each do |bt| -%>
+  <%%= form.relation_selector :<%= bt.pluralize %>, :type => :checkbox %>
+    <%- end -%>
+  <%- end -%>
+<%- end -%>
+
+<%- if options[:media] -%>
+  <%- options[:media].each do |bt| -%>
+  <%%= form.media_selector :<%= bt %>, :visibility => 'public' %>
+  <%- end -%>
+<%- end -%>
+
+<%- if options[:categorized] -%>
+  <%- options[:categorized].each do |bt| -%>
+  <%%= form.category_selector :<%= bt %> %>
+  <%- end -%>
+<%- end -%>

@@ -1,0 +1,107 @@
+h2. Translate
+
+Translate is a plugin that provides a interface to handle the default rails internationalization and localization mechanism throught I18n gem and YAML files.
+
+This guide explains differences between the original translate plugin version and this ubiquo customization.
+
+endprologue.
+
+h3. Installation
+
+If you create a new ubiquo project with the ubiquo gem you already have the translate plugin installed and available. For an existing project, follow the README instructions present at the repository: "http://github.com/gnuine/translate":http://github.com/gnuine/translate
+
+h3. Using translate
+
+h4. Web UI
+
+You can use access to the UI by default on a URL like: "http://localhost:3000/translate":http://localhost:3000/translate
+
+!images/translate/web_interface.png(Default view)!
+
+In the screenshot we were translating from English to Spanish. The first key is *activerecord.attributes.activity_info.action* with the value in the original language 'Action', and the current value for spanish 'Acción'.
+
+We can change 'Acción' for another term and save to filesystem using the "Save Translations" button. We would save all keys updating a YAML file depending on the translation mode explained later.
+
+h5. Filtering
+
+Apart from translating, this plugin is useful to view which keys have not been translated yet.
+The most important areas in the filtering form are the *from* and *to* selector. You must choose which locales you are in interested in.
+
+h4. Translation modes
+
+This modification saves the translations acording to a configurable mode. You would not probably need to change it.
+By default you can configure the mode with a specific setting:
+
+<ruby>
+  Ubiquo::Config.set(:translate_mode, :origin)
+</ruby>
+
+You can set up this setting on your ubiquo_config initializer
+
+NOTE: If you have a standalone rails application you can setup Translate::Storage.mode to change the mode
+
+h5. Application mode
+
+This is the normal mode, useful for most part of use cases. In this mode all translation created using the web UI will be saved to one file. In a english translation it would be *Rails.root/config/locales/en.yml*
+
+h5. Origin mode
+
+This mode came after the necessity in ubiquo development of translating it to new locales.
+In this case, each change would be saved to the original file it belongs.
+
+For example, if we have a english translation for *Article* model identified by the key *activerecord.models.article*
+This translation will be applied to the original file it was specified. In a ubiquo application, it would be applied on *Rails.root/config/locales/en/models.yml*
+
+If we have a translation that belongs to a plugin, it would also be applied to the plugin directory. A key *ubiquo.design.new_page* would be applied to the file *Rails.root/vendor/plugins/ubiquo_design/locales/en/ubiquo.yml*
+
+* Workflow proposed
+
+# Using *application* mode, some translations will be created at *Rails.root/config/locales/en.yml*
+# After some revisions
+#* Using *save_to_origin* rake task or
+#* Setting up the application in *origin* mode and using the web UI.
+The translations would be saved to the original files.
+# Now we can create a patch or submit changes to our revision control. We can create patchs for the plugin, submit them or create pull request to the plugin repository
+
+h4. Rake tasks
+
+You tasks have been created to deal with translate modes: "save_to_origin" and "save_to_application"
+
+h5. save_to_origin
+
+This task will be useful to dump translations created using application mode to the plugins. It configures temporarily the application to *origin* mode and dump those translations to the
+original file they belong.
+
+h5. save_to_appication
+
+This task dumps for each supported locale all its available translations to a dump file *Rails.root/config/locales/en.yml*
+It would be useful, for example, to send a complete list of translation to a specialized or externalized service.
+
+h4. Log files
+
+Each time you translate something (on each *Save translation* using the web interface or using save_to_origin task) a backup log file will be created as *Rails.root/tmp/locales/log/locale_code/*
+
+The original plugin mechanism throught Translate::Log has been moved to *Rails.root/tmp/locale/* 
+
+h4. I18n available_locales and supported_locales
+
+Now it is used the default *available_locales* I18n method instead of the custom method of the original plugin version: *I18n.valid_locales*
+
+supported_locales has been created as the analogous ubiquo setting to check the list of possible locale that you can translate to.
+
+h3. Implementation
+
+h4. Origin mode
+
+There is no convention associated to know where the YAML files are located.
+This mode was implemented with an extension to the default I18n simple backend which saves as metadata the filename where each translation was read. Therefore it will not mind
+if you have your plugins at *Rails.root/vendor/customized_plugin_directory* or your application's at *Rails.root/customized_dir_where_I_dump_files/* as long
+as the file are effectively tracked in I18n gem and you have permission to write to that files.
+
+One limitation of this approach is that if you have a translation duplicated in your application *Rails.root/config/locales/en/models.yml* and in a plugin *Rails.root/vendor/plugins/ubiquo_design/locales/en/ubiquo.yml*
+The system will only recognize the last it load, which would be the one in your application.
+
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Atranslate

@@ -1,0 +1,53 @@
+require File.dirname(__FILE__) + '/../../../test_helper'
+<% model_name = name.classify -%>
+
+class <%= model_name %>WidgetUbiquoTest < ActionController::TestCase
+  tests Ubiquo::WidgetsController
+
+  test "edit new form" do
+    login_as
+    widget, page = create_widget(:<%= name %>)
+    get :show, :page_id => page.id, :id => widget.id
+    assert_response :success
+  end
+
+  test "edit form" do
+    login_as
+    widget, page = create_widget(:<%= name %>)
+    get :show, :page_id => page.id, :id => widget.id
+    assert_response :success
+  end
+
+  test "form submit" do
+    login_as
+    widget, page = create_widget(:<%= name %>)
+    xhr :post, :update, :page_id => page.id,
+                        :id => widget.id,
+                        :widget => widget_attributes
+    assert_response :success
+  end
+
+  # Uncomment if it is a configurable widget, otherwise it should never return errors
+  #test "form submit with errors" do
+  #  login_as
+  #  widget, page = create_widget(:<%= name %>)
+  #  xhr :post, :update, :page_id => page.id,
+  #                      :id => widget.id,
+  #                      :widget => {}
+  #  assert_response :success
+  #  assert_select_rjs "error_messages"
+  #end
+
+  private
+
+  def widget_attributes
+    {
+      # attributes for widget here
+    }
+  end
+
+  def create_widget(type, options = {})
+    insert_widget_in_page(type, widget_attributes.merge(options))
+  end
+
+end

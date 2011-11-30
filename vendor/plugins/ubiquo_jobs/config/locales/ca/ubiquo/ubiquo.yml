@@ -1,0 +1,36 @@
+ca:
+  ubiquo:
+    "UbiquoJobs::Jobs::ActiveJob":
+      empty_list_title: "Tasques"
+      empty_list_message: "Aquí podràs veure la llista de tasques pendents d'executar. Actualment no hi han tasques pendents."
+    jobs:
+      tab_name: "Tasques"
+      tab_title: "Vés al llistat de tasques"
+      job_removed: "Tasca eliminada"
+      cant_remove: 'Hi ha hagut un error eliminant la tasca'
+      job_edited: "S'ha editat la tasca"
+      cant_edit: 'Hi ha hagut un error editant la tasca'
+      job_repeated: "S'ha planificat de nou la tasca"
+      jobs: "Tasques"
+      job_output: "Resposta del sistema"
+      job_error_channel: "Canal d'error"
+      job_list: "Llista de tasques"
+      job_history: "Històric de tasques"
+      creation_date: "data de creació"
+      text: "text"
+      state:
+        waiting: "En espera"
+        instantiated: "Assignat"
+        started: "Iniciat"
+        finished: "Finalitzat"
+        error: "Error"
+      priority:
+        high: "Alta prioritat"
+        medium: "Prioritat mitjana"
+        low: "Baixa prioritat"
+      repeat: "Repetir"
+      remove: "Eliminar"
+      read_output: "Veure la resposta del sistema"
+      remove_confirmation: "Esteu segur que voleu eliminar aquesta tasca?"
+      repeat_confirmation: "Esteu segur que voleu repetir aquesta tasca?"
+      close: "tancar"

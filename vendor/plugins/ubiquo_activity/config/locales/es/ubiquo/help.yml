@@ -1,0 +1,5 @@
+es:
+  ubiquo:
+    helpmsg:
+      activity_info:
+        index: "Aquí puedes ver una lista con el registro de la actividad generada en ubiquo. Puedes borrar los registro pero esto no tendrá ningun efecto sobre la acción o el objecto registrado."

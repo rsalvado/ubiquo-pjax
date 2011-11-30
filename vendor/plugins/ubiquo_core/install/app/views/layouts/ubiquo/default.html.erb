@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+  <head>
+    <title>Ubiquo: <%= Ubiquo::Config.get(:app_title) %></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="" />
+    <meta name="description" content="<%= Ubiquo::Config.get(:app_description) %>" />
+    <meta name="DC.creator" content="" />
+    <meta name="DC.subject" content="" />
+    <link rel="shortcut icon" type="image/ico" href="/images/ubiquo/favicon.ico" />
+    <%= yield :rss_meta %>
+    <%= ubiquo_stylesheet_link_tag :defaults %>
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
+    <%= yield :head %>
+  </head>
+  <body id="<%= yield(:body_id) || 'basic' %>">
+    <div id="wrapper">
+      <div id="header">
+        <div id="controls">
+          <%= render_navigation_links_section :configuration %>
+        </div>
+        <hr />
+        <div id="header_central">
+          <h1>
+            <%#= ubiquo_image_tag "app_logo.png" %>
+            <%= link_to Ubiquo::Config.get(:app_title), ubiquo_home_path %>
+          </h1>
+          <%= locale_selector if respond_to?(:locale_selector) %>
+        </div>
+        <hr />
+        <div id="tabs">
+          <% if superadmin_mode? %>
+            <%= render_navigation_tabs_section :superadmin %>
+          <% else %>
+            <%= render_navigation_tabs_section :main %>
+          <% end %>
+        </div>
+      </div>
+      <hr />
+      <div id="central">
+        <div id="content">
+          <div id="inner-content">
+            <%= yield -%>
+          </div>
+        </div>
+        <hr />
+        <div id="sidebar">
+          <%= yield :sidebar %>
+        </div>
+      </div>
+      <hr />
+      <div id="footer">
+        <div class="logo_ubiquo">
+          <%= link_to 'Ubiquo', 'http://www.ubiquo.me' %>
+        </div>
+        <div class="links_ubiquo">
+          <span class="copy">® <%= Time.now.year %> ubiquo</span> 
+          <%= link_to 'MIT license', 'http://www.opensource.org/licenses/mit-license.php' %>
+          <%= link_to 'ubiquo website', 'http://www.ubiquo.me' %>
+        </div>
+	  </div>
+      <iframe id='upload_frame' name="upload_frame" src="about:blank"></iframe>
+    </div>
+  </body>
+  <!-- Application Specific -->
+  <%= ubiquo_javascript_include_tag :defaults %>
+  <!-- TinyMCE -->
+  <%= include_tiny_mce_if_needed %>
+</html>

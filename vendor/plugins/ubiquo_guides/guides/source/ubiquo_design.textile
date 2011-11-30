@@ -1,0 +1,608 @@
+h2. Ubiquo Design
+
+The ubiquo_design plugin provides a complete solution for the public part of your
+website. It gives you the necessary tools to prepare public pages with
+a modular structure in a totally dynamic way, with some advanced capabilities like
+drag & drop widgets, different block configurations or page templates.
+
+The main features are:
+
+* Create pages with its own manager.
+* Create reusable widgets for your public site
+* Choose a specific template for each page with its own block structure.
+* Decide which widgets will be available for each page or block to fit your needs
+* Share blocks with other pages
+* Move, assign, delete widgets in pages easily
+* Get language-dependent widgets, using ubiquo_i18n by adding a few lines of code
+
+New features in this version:
+* Static pages
+* Integrated widget cache framework
+* Better sharing blocks system
+* Less migrations and fixtures with design structure
+* Widget grouping
+* Multiple levels of parent pages
+
+endprologue.
+
+h3. Creating Pages
+
+If you are designing a publicly accessible website, it will be necessary to create
+public pages to show the contents created inside the different Ubiquo scaffolds.
+
+To create a page in the public part you should create its corresponding Page instance on ubiquo.
+The Pages manager allows ubiquo users to create pages, design, and finally publish them.
+
+# Log in with your user on Ubiquo (  you must have the necessary permissions to use the Ubiquo Design sections, otherwise they will not be available ).
+# Go to the Design section ( click on "Design" tab or go to "+http://localhost:3000/ubiquo/pages+":http://localhost:3000/ubiquo/pages ).
+# Click on the "New Page" link.
+# Fill the form:
+#* **Name:** Descriptive name for a page in Ubiquo pages list.
+#* **Parent:** Determines the parent page. Useful to create pages with nested urls. Can be left blank.
+#* **URL name:** the url part that will be used to access to our page (only accepted valid URL characters). The page will be accessible as "mysite.com/page_url".
+#* **Page Template:** Choose the template for this page. Later we will see how to create new custom templates.
+#* **Metatags:** these fields will help you to add information of your page for search engines.
+#*# Title
+#*# Keywords
+#*# Description
+
+!images/ubiquo_design/new_page.png(Creating Pages)!
+
+CAUTION: Once you create a page, you cannot change its related page template from Ubiquo. It is necessary to delete and create page again or change it from the console.
+
+NOTE: When you do not have any previously created page, the parent selector only has the "none" option. The "none" option allows to create the page on the root path as "mysite.com/page_url". Otherwise you can determine the parent and create more complex urls like "mysite.com/parent/page_url" if you have created the parent page previously.
+
+INFO: The frontpage is a page with an empty string as url_name.
+
+h3. Designing a page
+
+After we have created a page, it's time to design the widgets it will have,
+and publish it to make them visible on the public part.
+
+By default, pages are created as drafts. When a page is published, it is cloned (along with its widgets, blocks and asset_relations). In that moment the changes start to be visible on the public website.
+
+We can design a page clicking in its "design" action link in the pages list.
+
+Inside the design editor we will find two important concepts:
+* *Blocks*: In the main frame, we can see the representation of the chosen template with the different blocks.
+Blocks are the rectangular areas that represent different structure parts
+of the page: top, column 1, column 2, footer ...
+The block composition is defined in the design_structure initializer (which we will review it later).
+
+* *Widgets*: In the sidebar we have a list of available widgets for the current page.
+These widgets are "drag & drop" items that can be assigned to the different page blocks.
+
+# In the pages list section, click on "design" action link in the corresponding page.
+# Inside the design editor, move widgets with the mouse (by clicking and dragging each one) and put them into the different blocks.
+Once dropped, some widgets will display an edit option link to configure them.
+If some required information is missing, the widget will appear in red. These items must be configured before the page can be published.
+# When you finish, you can preview or publish the page using the buttons on the top right.
+
+!(screenshot)images/ubiquo_design/designing.png(Template preview)!
+
+NOTE: Any block can be shared with the others pages. It's interesting for common sidebars for example.
+
+h3. Creating our own widgets 
+
+When we create the first page we only have available the default widgets (Free and Static).
+# The Free widget allows you to display any kind of HTML content in the page, such as an embed youtube video, an image or simply text.
+# The Static widget helps you to create static pages. By static pages we mean those pages with no dynamic elements, an "About us" or a "Terms of use" page for example.
+
+With just these two widgets you could already create a pretty complete site, but also you can create your own widgets to better fit your requirements.
+
+Let’s see an example of a widget that displays the last news. You'll be able to configure the number of news to show from ubiquo.
+The first step is to use the ubiquo_widget generator to build the skeleton:
+
+It will create the associated model, the widget controller, and the views for the widget. Each widget has two views: the public one, and the ubiquo design form (in case it's an editable widget). 
+
+<shell>
+  script/generate ubiquo_widget last_news news_to_show:integer
+</shell>
+
+h4. Widget files
+
+Once the generator is executed, you'll see how the needed files are automatically created.
+
+<shell>
+  create  app/models/widgets
+  exists  app/widgets
+  create  app/views/widgets/last_news/ubiquo
+  exists  test/unit/widgets
+  exists  test/functional/widgets/ubiquo
+  create  app/widgets/last_news_widget.rb
+  create  app/views/widgets/last_news/show.html.erb
+  create  app/views/widgets/last_news/ubiquo/edit.html.erb
+  create  app/models/widgets/last_news.rb
+  create  test/unit/widgets/last_news_test.rb
+  create  test/functional/widgets/last_news_test.rb
+  create  test/functional/widgets/ubiquo/last_news_test.rb
+  widget  last_news
+</shell>
+
+We can see a widget as a sum of
+ * A model (where the widget configuration data is stored)
+ * A widget behaviour file, the "controller" (the actions performed when rendering the widget)
+ * A view
+
+So, in essence a widget follows the MVC pattern
+
+h4. Widget behaviours
+
+Our freshly created last_news_widget.rb looks like this:
+
+<ruby>
+  Widget.behaviour :last_news do |widget|
+    ...
+  end
+</ruby>
+
+This is equivalent to a piece of a controller, and all the code you put in the block will be executed in the controller space.
+These files are placed in app/widgets with the name we have indicated + _widget.rb.
+
+h4. Creating the widget model
+
+A widget has an associated model (subclass of _Widget_), since we are always rendering an instance of a model.
+
+You can edit the associated model (+app/models/widgets/last_news.rb+) and use the class method _allowed_options_ to define the configurable attributes. We can also add validations over these fields:
+
+<ruby>
+  class LastNews < Widget
+    self.allowed_options = [:news_to_show]
+    validates_numericality_of :news_to_show
+
+    def last_news(number = nil)
+      News.all(:limit => number || news_to_show, :order => :publish_date)
+    end
+  end
+</ruby>
+
+TIP: The allowed_options are accessible from the widget instance. Inside the Widget behaviour you can call any defined allowed_options with widget.name_of_awolled_option.
+
+h4. Implementing the widget behaviour
+
+Edit +widgets/last_news_widget.rb+ to use the widget method we have just implemented:
+
+<ruby>
+  Widget.behaviour :last_news do |widget|
+    @news = widget.last_news(params[:max_news])
+  end
+</ruby>
+
+INFO: All the params that your widget needs can be accessed from the params structure, since the widget behaviour is executed in the controller scope
+
+h4. Widget Views
+
+The widgets have two views by default, the public view and the ubiquo form view.
+
+The public view is the part that will be shown on the public page. The file of the public view is stored on +app/views/widgets/name_of_the_widget/view.html.erb+.
+
+For our example we can write a very simple public view for our last_news widget:
+
+<erb>
+  <%# app/views/widgets/last_news/show.html.erb %>
+  <% @news.each do |news| %>
+    <p><%= news.body %></p>
+  <% end %>
+</erb>
+
+The ubiquo form view provides a form to change the allowed_options of the widget. The link to the ubiquo form will appear when you add the widget to a block in design view.
+
+As the widget is configurable (to set the default number of :news_to_show), we can prepare an ubiquo view, which could look like this:
+
+<erb>
+  <%# app/views/widgets/last_news/ubiquo/_form.html.erb %>
+  <%= widget_header widget %>
+  <% widget_form(page, widget) do |f| %>
+      <%= f.label :news_to_show, Widget.human_attribute_name :news_to_show %><br/>
+      <%= f.text_field :news_to_show %>
+      <%= widget_submit %>
+  <% end %>
+</erb>
+
+And that's it, you should now be able to insert the widget on your page, configure it, publish the page and see the results on the public page.
+
+h4. Previewable widgets and preview params
+
+To preview a page from the pages manager, in ubiquo, will require that
+all the widgets in the page are defined as previewable. By default, a
+widget is previewable. If you don't want it to be, you must add the
+widget model of the following:
+
+<ruby>
+  previewable :false
+</ruby>
+
+If the widget is previewable and needs specific parameters, you can
+define in the widget class (ex. NewsDetailWidget) the instance method
+"preview_params", that it must provide a hash with necessary param
+values. For example, a detail news widget expects that params[:url]
+contains the slug to load.
+
+<ruby>
+  class NewsDetail < Widget
+    ...
+    def preview_params
+      { :url => [self.class.first.try(:slug)] }
+    end
+  end
+</ruby>
+
+h4. Testing the widget
+
+The skeleton created the basic infrastructure to test the widget:
+
+* +unit/widgets/name_test.rb+: Test the associated model.
+* +functional/widgets/name_test.rb+: Test the widget and public views.
+* +functional/widgets/ubiquo/name_test.rb+: Test the ubiquo views.
+
+These files include examples and basic tests for the widgets. Take a look at them for more info.
+
+h4. Removing a widget
+
+If you wish to remove a widget, you can use the destroy action of the generator:
+
+<shell>
+  script/destroy ubiquo_widget last_news
+</shell>
+
+h4. Providing widgets from plugins
+
+If you develop an application plugin and its provides some ubiquo
+widget, you can do it having the same widget files structure in your
+plugin. Besides that, you just need to add the following lines to your
+plugin rails/init.rb file:
+
+<ruby>
+  custom_paths = Gem::Version.new(Rails.version) >= Gem::Version.new("2.3.9") ? :autoload_paths : :load_paths
+  ActiveSupport::Dependencies.send(custom_paths) << File.join(File.dirname(__FILE__),  "..", "app", "models", "widgets")
+  ActiveSupport::Dependencies.send(custom_paths) << File.join(File.dirname(__FILE__), "..", "app")
+</ruby>
+
+h3. Creating our own Page Template
+
+Probably the blocks disposition of the default page templates is not exactly what you desire. For this reason you can create your own page template following these steps.
+
+#Edit the design_structure.rb initializer and add a new template definition with their blocks
+<ruby>
+  # config/initializers/design_structure.rb
+  page_template :home do
+    block :ads, :cols => 4
+    block :featured, :cols => 4
+    block :main, :cols => 3
+    block :sidebar, :cols => 1
+  end
+</ruby>
+
+NOTE: as this file is a Rails initializer, you have to restart the server after any change to it.
+
+The name of the page template is indicated as the argument to "page_template", in this case :home. Inside the body of the page template definition we have to define the blocks.
+
+To define a block you only have to indicate a name, and optionally the number of columns. This :cols parameter is used to draw the visual representation of blocks when designing in Ubiquo. By default a page_template is 4 columns wide, but if you require a more precise template definition, you can change the base number of a page_template using the same :cols argument.
+
+<ruby>
+  page_template :home, :cols => 6 do
+</ruby>
+
+Another useful option is :layout, if the page_template does not use the default public layout (main.html.erb).
+<ruby>
+  page_template :minimal, :layout => 'no_header' do
+</ruby>
+
+# Create a new page template file in app/views/page_templates folder. In this case, app/views/page_templates/home.html.erb
+# Edit this new home.html.erb file to indicate the blocks distribution and any required html.
+
+<erb>
+  <div id="ads">
+    <%= @blocks[:ads] %>
+  </div>
+  <div id="header">
+    <h1 id="logo">
+      <a title="MyApp" href="http://my_ubiquo_app.org">MyApp</a>
+    </h1>					
+    <%= render :partial => "shared/menu" %>
+  </div>
+  <div id="featured">
+    <%= @blocks[:featured] %>
+  </div>
+  <div id="mainWrapper">
+    <div id="main">
+      <%= @blocks[:main] %>
+    </div>
+    <ul id="sidebar">
+      <%= @blocks[:sidebar] %>
+    </ul>
+  </div>
+</erb>
+
+h4. Create a new page with our new page template
+
+After all the steps we can create a new page in the pages manager, fill the fields and choose our new page template.
+In the design view of our new page, we will see the block structure we defined in design_structure. Now we can add some widgets to the page and publish our tailored page.
+
+h3. Design Structure
+
+The propose of the Design Structure is to create a document to specify Page Templates, Blocks and Widgets without any fixture or migration. Design Structure is the easiest way to create and manage the connections between the different page elements.
+
+<ruby>
+# config/initializers/design_structure.rb
+UbiquoDesign::Structure.define do
+  page_template :home do
+    block :publi_top, :cols => 4
+    block :featured, :cols => 4
+    block :main, :cols => 3
+    block :sidebar, :cols => 1
+  end
+  widget :free
+  widget :static_section
+end
+</ruby>
+
+h4. Widgets and blocks scope
+
+Design Structure can indicate if a block is accessible for all page templates or only for one. This means that a block could be shown for all pages or only for the pages with the correct page template. In the same way a widget can be available for all pages, only for specified page_templates or only for specified blocks.
+
+<ruby>
+UbiquoDesign::Structure.define do
+
+  block :publi_top, :cols => 4  # this block will be shown on all pages
+
+  page_template :home do
+    block :featured, :cols => 4 # this block will be shown only in pages with the :home page_template
+    block :main, :cols => 3
+    block :sidebar, :cols => 1 do 
+      widget :menu_sidebar      # this widget will be able to be dragged only to the :sidebar block
+    end
+    widget :image_gallery       # this widget is available only for pages with the :home page_template
+  end
+
+  widget :free                  # this widget is available for all pages and all blocks
+end
+</ruby>
+
+h4. Widget groups
+
+When we have to deal a small group of widgets you can have it ordered alphabetically and live with it, but if your number of widgets increases to a certain level you can find it useful to group the widgets using your own criteria.
+
+To do it you can define groups of widgets, which will be then used to display the widgets grouped in the ubiquo design view.
+
+<ruby>
+UbiquoDesign::Structure.define do
+  widget_group :lists do
+    widget :post_list, :news_list
+  end
+end
+</ruby>
+
+
+h3. Linking a page
+
+To create a link to a public page you can use the link_to_page helper:
+
+<ruby>
+  link_to_page("Public page", page)
+</ruby>
+
+If you only need the url for a public page:
+
+<ruby>
+  url_for_page(page)
+</ruby>
+
+In these examples, page can either be
+
+* A Page instance
+* A Page key
+
+Usually you will define the key attribute for the important pages that you will also need to link, for
+example the home page. Using a key ensures that you can change the page's url without having to change the link.
+
+<ruby>
+  link_to_page("Go to home", 'home')
+</ruby>
+
+
+h4. Routes
+
+The routes for ubiquo_design are defined like this
+
+<ruby>
+map.with_options :controller => 'pages' do |pages|
+  pages.connect "*url/page/:page", :action => 'show', :requirements => {:page => /\d*/}
+  pages.connect "*url", :action => 'show'
+end
+</ruby>
+
+In short, the route is a catch-all, so it should be placed at the bottom of your routes file.
+If you are using the from_plugin, make sure also that it's the last plugin included:
+
+<ruby>
+  ...
+  map.from_plugin :ubiquo_categories
+  map.from_plugin :ubiquo_menus
+  map.from_plugin :ubiquo_design
+</ruby>
+
+When treating with params, you will receive all your custom inside params[:url].
+
+h3. Plugin dependencies
+
+There are not special dependencies for this plugin, and it can be used with the minimal stack. However if you are interested in i18n capabilities to have multiple languages in your public part, you'll need ubiquo_i18n
+
+h3. Cache framework
+
+UbiquoDesign has its own cache framework, aimed to cache entire widgets with arbitrary policies defined by the programmer.
+
+h4. How it works
+
+The cache policies are defined in config/initializers/design_cache.rb.
+
+The policies that you have defined will be used both to generate keys for store/get widgets and to expire those widgets by some desired event. Such events often depend on a model, and store/get requests will appear only on controller's environment, so the same keys must be generated from two diferent environments: model and controller.
+
+h4. Cache syntax
+
+The file where we define our policies will look as follows
+<ruby>
+UbiquoDesign::CachePolicies.define do
+  #Here your policies ...
+end                                
+</ruby>
+
+Each policy will be a pair of key - value, where key is the widget affected by the policy, and value will be a structure defining key generation params.
+For example, the following widget called 'author_detail' will be cached with one dependency on model 'Author'
+
+<ruby>
+        :author_list => :Author
+</ruby>
+
+This means that on any change (create/delete/update) of an Author instance, the :author_list widgets will be expired
+
+You may want to cache "per instance", that is, only expire a certain widget if the instance that is being displayed is changed.
+
+<ruby>
+        :author_detail => [{:Author => {:id => :id} } ]
+</ruby>
+
+The meaning of this policy is: author_detail depends on Author instances, intentifying them by id (model attribute) equaling to id (parameter)
+
+The following list will explain the allowed cache syntax
+
+* Self: the :self symbol is the basic cache policy. Use it if you want to cache a widget which has no external dependencies with other models or url params. The widget will only be expired by changes in itself, when there is a change in its configuration or its page is published. Note that all the other policies include this one.
+<ruby>
+        :widget => :self
+</ruby>
+* Models: defined using a symbol. When used without any other argument, models define a basic expiration relationship on any action on an instance.
+<ruby>
+        :widget => :Model
+</ruby>
+You can specify as many model relationships as the widget has:
+<ruby>
+        :widget_multiple_models => [:Model1, :Model2]
+</ruby>
+* Identifiers: always defined by symbols, identifiers are inside a hash, where the key is the model attribute and the value the controller parameter
+<ruby>
+        :widget => [{:Model => {:attribute => :parameter} }]
+</ruby>
+For example let's say you have the following route
+
+<ruby>
+map.connect '/something/:slug'
+</ruby>
+
+And this maps to a model MyModel that has a "slugged_title" attribute. So inside the widget you'll be doing something like this
+
+<ruby>
+MyModel.find_by_slugged_title(params[:slug])
+</ruby>
+
+In this case, the cache policy would be
+<ruby>
+        :widget => [{:MyModel => {:slugged_title => :slug} }]
+</ruby>
+
+IMPORTANT: Note that both the attribute and the parameter must identify unequivocally what you need to distinguish to be cached (normally, a model instance). You have to think that for every different slug param, you will have a different cached widget representation. And to expire this cached fragment, the specified attribute will be used.
+
+As an example, if you have two instances of MyModel
+
+<plain>
+MyModel(id:1, slugged_title:one)
+MyModel(id:2, slugged_title:two)
+</plain>
+
+It will create different cache fragments when visiting
+
+<plain>
+/something/one
+/something/two
+</plain>
+
+To generate the fragment key, it will use the :slug parameter. This is why, whenever you update a model, the cache system needs to know the attribute that makes correspondence to the slug parameter.
+
+* Procs: this is the most versatile syntax in cache framework. Procs can be used whenever a symbol is used, and provide a mean to create complex and efficient caching rules.
+
+In the most basic use, they are evaluated to obtain a value. A cached fragment will have this value in its key, so can be used to differentiate in different situations, e.g.
+
+<ruby>
+        :widget => [lambda{current_locale}]
+</ruby>
+
+This code defines a policy where :widget will depend on the current_locale function (an ubiquo_i18n function)
+
+INFO: the lambda is evaluated in controller-space, and can take a parameter which is the widget that is being rendered.
+
+Procs can also be used as a part of model conditions, instead of symbols.
+
+<ruby>
+        :widget => [{:Model => {:locale => lambda{current_locale} } }]
+</ruby>
+
+This example will link the :widget expiration to Model, using :locale as the model attribute, and the lambda instead of the controller parameter.
+
+A lambda can also be used instead of the model attribute. Any combination of procs and symbols is possible inside the hash.
+
+
+h4. Common cache examples
+
+The following snippets of code will explain some of the common examples found in projects:
+
+h5. List of instances of a model
+
+* Widget: news_list
+* Dependencies: model Article
+<ruby>
+  UbiquoDesign::CachePolicies.define do
+    :news_list => :Article
+  end
+</ruby>
+
+When any instance of Article changes, all of the :news_list widgets will be expired.
+
+h5. Detail of a model
+
+* Widget: news_detail
+* Dependencies: model Article, identified in the controller as the last portion of params[:url], and mapped in the model as the :url_slug attribute
+<ruby>
+UbiquoDesign::CachePolicies.define do
+  :news_list => [ {:Article => {:url_slug => lambda{params[:url].last} } ]
+end 
+</ruby>
+When an instance of Article changes, the appropiate related cached fragments (those whose last part of the url is the same that the url_slug attribute of this instance) will be expired.
+
+h5. Free
+
+* Widget: free
+* Dependencies: none
+<ruby>
+UbiquoDesign::CachePolicies.define do
+  :free => :self
+end         
+</ruby>
+
+This widget will expire only when itself changes.
+
+h4. Final points
+
+* When specifying models as dependencies, the possible subclasses or superclasses are not considered.
+<ruby>
+# class A
+# class B < A
+# class C < B
+        :widget => :B
+</ruby>
+
+If an instance of class A or C is created/modified/destroyed, widgets of type :widget will NOT notice it and will NOT be expired. Only instances of class B will do it.
+
+* Internally, the cache framework implementation has two different parts:
+
+- Explicit expiration is used when a widget has dependencies per-instance for a model. This policy provides rich expresivity and allows user to constraint widgets fine grained; however, the expiration process is slower than the version approach.
+- Versioning is used when a widget has simpler policies, only generic model dependencies.
+
+It's important to note that a single widget can have different dependencies with different policies. Each one will work its way. For example:
+
+<ruby>
+:widget => [
+            :Model1,
+            {:Model2 => {:url_slug => :id}}
+           ]
+</ruby>
+
+:widget cache fragments will be explicitly expired on changes coming from Model2 instances. On the other hand, when an instance of Model1 changes, a version field on all :widget instances will be incremented, and because of this, all the keys generated by those widgets will be different from the previous ones, hence implicitly expirating the cache without incurring on the overhead of explicit expiration.

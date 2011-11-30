@@ -1,0 +1,6 @@
+en:
+  ubiquo:
+    helpmsg:
+      jobs:
+        index: "Here you can see a list of pending jobs."
+        history: "Here you can see a list of finished jobs."

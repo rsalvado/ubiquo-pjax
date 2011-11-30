@@ -1,0 +1,36 @@
+html {
+  overflow-x: hidden;
+}
+
+#navigation ul {
+  zoom: 1;
+}
+#navigation ul li {
+  float: left;
+  margin-right: 4px;
+}
+
+.horizontal {
+  padding: 0;
+  margin: 0;
+}
+.horizontal li {
+  display: inline;
+}
+
+#sidebar {
+  float: left;
+  zoom: 1;
+}
+
+#carousel-content .slide {
+  width: 100%;
+}
+#carousel-content .slide .carousel-detail .related a {
+  zoom: 1;
+}
+
+.highlighted-paginator {
+  padding-top: 1em;
+  padding-bottom: 2em;
+}

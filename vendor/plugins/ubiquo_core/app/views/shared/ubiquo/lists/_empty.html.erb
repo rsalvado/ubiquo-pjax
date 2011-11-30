@@ -1,0 +1,22 @@
+<% if model.count == 0 %>
+  <% content_for :body_id, "blank" %>
+  <div class="empty_list"> 
+    <div class="balloon_wrapper"> 
+      <div class="balloon_content"> 
+        <%= ubiquo_image_tag "example_list.jpg", :class => "list_example" %>
+        <div id="balloon_list"> 
+          <%= link_to_new %>
+          <h4><%= t("ubiquo.#{name}.empty_list_title") %></h4> 
+          <p><%= t("ubiquo.#{name}.empty_list_message") %></p> 
+        </div> 
+      </div> 
+    </div> 
+  </div> 
+<% else %>
+  <% content_for :sidebar do %>
+    <%= link_to_new %>
+  <% end %>
+  <p id="empty">
+    <%= t 'ubiquo.empty', :thing => model.human_name.downcase %>
+  </p>
+<% end %>

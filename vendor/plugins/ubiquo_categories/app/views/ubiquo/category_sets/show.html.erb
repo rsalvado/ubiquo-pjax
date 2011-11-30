@@ -1,0 +1,12 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+  <%= render :partial => "submenu" %>
+</h2>
+<%= render(:partial => "shared/ubiquo/feedback") %>
+
+<%= render :partial => 'category_set', :object => @category_set %>
+
+<p class="form_buttons">
+  <%= button_to_function t('ubiquo.edit'), "document.location.href='#{edit_ubiquo_category_set_path(@category_set)}'" %>
+  <%= button_to_function t('ubiquo.back_to_list'), "document.location.href='#{ubiquo_category_sets_path}'" %>
+</p>

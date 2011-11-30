@@ -1,0 +1,196 @@
+<%
+#returns javascript only once per request.
+if @is_media_included != true
+  @is_media_included = true
+%>
+  <script type="text/javascript">
+    var Media = Class.create({
+      initialize: function(){
+        this.unique_counter = 0;
+        this.fields = [];
+      },
+      //Returns a string that is unique between all fields.
+      generate_identifier: function(){
+        this.unique_counter++;
+        return ""+this.unique_counter;
+      },
+      // Limit = 0 -> no limit
+      add_field: function(counter, field, limit, name){
+        this.fields[counter] = {field: field, size: 0, max: limit, name: name};
+      },
+      //Adds a new element to a media field
+      add_element: function(field, relation_id, asset_id, name, counter, thumbnail_url, view_link, asset_name, options){
+        if (this.asset_added(counter, asset_id)) {
+          return;
+        }
+        options = options || {};
+        if (asset_name == undefined) asset_name = name;
+        var unique_id = (options && options.unique_id ) || this.generate_identifier();
+        // +id+ should only be sent when the relation already exists
+        var id_field_templ = "<input type='hidden' name='#{field_name}[#{field}_attributes][#{unique_id}][id]' value='#{rel_id}' />"
+        var templ = new Template(
+        "<li class='item element_#{unique_id}'>"+
+          (relation_id ? id_field_templ : '') +
+          "<input type='hidden' name='#{field_name}[#{field}_attributes][#{unique_id}][asset_id]' value='#{asset_id}' />"+
+          "<input type='hidden' class='position' name='#{field_name}[#{field}_attributes][#{unique_id}][position]' value='' />"+
+          "<a class='handle'>handle</a>"+
+          "<div class='img-wrapper'><img src='#{thumb}' alt='#{asset_name}'/></div>" +
+          "<div class='text-info'>"+
+          "<h4>#{asset_name}</h4>" +
+          "<p class='assigned'><em><%= t('ubiquo.media.assigned_text') %>:</em>"+
+          "<span class='name'> #{name}</span> "+
+          "<a class='bt-edit' href='#' onclick='media_fields.change_name(\"#{counter}\", \"#{unique_id}\");return false;'><%= t('ubiquo.media.change_text') %></a>"+
+          "<span class='field' style='display:none'>"+
+          "<input type='text' onkeypress='if(event.keyCode==13){media_fields.change_name(\"#{counter}\", \"#{unique_id}\");return false;}' name='#{field_name}[#{field}_attributes][#{unique_id}][name]' value='#{name}'/>"+
+          "<a class='change' href='#' onclick='media_fields.change_name(\"#{counter}\", \"#{unique_id}\");return false;'><%= t('ubiquo.media.save') %></a>"+
+          "</span>"+
+          "</div>"+
+          "<ul class='actions'>" +
+          "<li>#{view_link}</li>" +
+          "<li><a onclick='media_fields.delete_element(\"#{field}\",\"#{counter}\", #{unique_id}); return false;' href='#' class='bt-delete'><%= t('ubiquo.media.remove') %></a></li>" +
+          (options.advanced_form ? '<li><a href ="'+ options.advanced_form +'" '+
+            'target="_blank" '+
+            'id="#\{field}_#\{counter}_ubiquo_media_advanced_edit_#\{unique_id}" '+
+            'class="<%= advanced_edit_link_attributes[:class] %>" '+
+            'params="<%= advanced_edit_link_attributes[:params] %>" >' +
+<%= (h t('ubiquo.media.advanced')).to_json %> + "</a></li>" : "") +
+          "#{content}"+
+          "</li>")
+        var elem = templ.evaluate({
+          counter: counter,
+          field: field,
+          rel_id: relation_id,
+          asset_id: asset_id,
+          unique_id: unique_id,
+          view_link: view_link,
+          thumb: thumbnail_url,
+          name: name.gsub('"', "&quot;").gsub("'","&#39;"),
+          asset_name: asset_name,
+          field_name: this.fields[counter]['name']
+        });
+        var inserted = false;
+        if( options["position"] ){
+          //Insert the element in the position given
+          //Notice that position is always > 0
+          var elems = $('media_selector_'+ counter).select(".items-list .element");
+          if(elems.length > 0 && options.position > 0 && options.position < elems.length + 1){
+            elems[options.position-1].insert({before:elem});
+            inserted = true;
+          }
+        }
+
+        if( !inserted )
+          $('media_selector_'+ counter).select(".items-list").first().insert(elem);
+
+        var set_positions = function() {
+          $$('#media_selector_'+counter+' .selected-assets li.item').each(function(el, i) {
+            el.select('input[name*="][position]"]').first().value = i+1;
+          });
+        }
+        Sortable.create('relations_list_'+ counter, {
+          handle:'handle',
+          onChange:function(){
+            set_positions();
+          }
+        });
+
+        this.fields[counter]['size']++;
+        set_positions();
+        this.reload(field, counter);
+
+        if( options.advanced_form ){
+          var target = "" + field + "_"  + counter + "_ubiquo_media_advanced_edit_"+unique_id;
+          var advanced_link = $(target);
+          if( advanced_link.href.indexOf("?") < 0){
+            advanced_link.href += "?";
+          }
+          advanced_link.href += "target="+ target;
+          if( window["myLightWindow"] ){
+            myLightWindow._processLink( advanced_link );
+          }
+          //Set a global func to replace current element
+          window[ target +"_replace"] = function( params ){
+            var rel_id = media_fields.get_rel_id(counter, unique_id);
+            var name = media_fields.get_name(counter, unique_id);
+            var position = media_fields.delete_element(field, counter, unique_id);
+            params["options"] = params["options"] || {};
+            params.options.unique_id = params.options.unique_id || unique_id;
+            if( position > 0 ) params.options.position = position;
+            media_fields.add_element(field, rel_id, params["asset_id"], name, counter, params["thumbnail_url"], params["view_link"], params["asset_name"],params["options"]);
+          };
+          if( Object.isFunction( options["update_target_callback"] ) ){ options.update_target_callback( target ); }
+        }
+
+      },
+
+      get_name: function( counter, unique_id ) {
+        var wrapper = $( 'media_selector_' + counter ).select( '.element_' + unique_id ).first();
+        return wrapper.select( '.field input' ).first().value;
+      },
+
+      get_rel_id: function( counter, unique_id ) {
+        var id_field = $( 'media_selector_' + counter ).select( '.element_' + unique_id + " input[name$='[id]']" ).first();
+        return (id_field ? id_field.value : null);
+      },
+
+      // Returns false or null if this asset has not already been added to the selector
+      asset_added: function(counter, asset_id) {
+        return $( 'media_selector_' + counter ).select( "input[name$='[asset_id]'][value="+asset_id+"]"  ).first();
+      },
+
+      change_name: function(counter, unique_id){
+        var parent = $('media_selector_' + counter).select('.element_' + unique_id).first();
+        parent.select('span.name').first().innerHTML = this.get_name(counter, unique_id);
+        parent.select('.name').first().toggle();
+        parent.select('.field').first().toggle();
+        try{
+          /* Preventing Javascript Error in IE8 when try to focus to a hidden field */
+          parent.select('.field input').first().focus();
+        }
+        catch(e){
+          return false;
+        }
+      },
+
+      //Deletes a selected element from a media field
+      //and returns current position before removing it
+      delete_element: function(field, counter, unique_id){
+        var parent = $('media_selector_'+ counter).select(".element_"+unique_id).first();
+        var position = parent.select(".position").first().value;
+        parent.remove();
+        this.fields[counter]['size']--;
+        this.reload(field, counter);
+        return position;
+      },
+
+      //Hides or show 'add' and 'search' links (and inner content)
+      reload: function(field, counter){
+        var f = this.fields[counter];
+        var action = null;
+        if(f['max'] == 0 || f['size'] < f['max']){
+          action = function(s){s.show();}
+        } else {
+          action = function(s){s.hide();}
+        }
+        selector = $('media_selector_'+ counter)
+        selector.select('.handle').each(function(e){
+          if(f['size'] <= 1){
+            e.hide();
+          } else {
+            e.show();
+          }
+        });
+        var e = selector.select(".list_caption").first();
+        if(f['size'] == 0){
+          e.innerHTML="<input type='hidden' name='"+this.fields[counter]['name']+"["+field+"_attributes][][asset_id]' />";
+        } else if(f['size'] == 1){
+          e.innerHTML= <%= "<h4>#{t('ubiquo.media.selected_media_element')}:</h4><p>#{t('ubiquo.media.footer_text')}</p>".to_json %>;
+        } else{
+          e.innerHTML= <%= "<h4>#{t('ubiquo.media.selected_media_elements')}:</h4><p>#{t('ubiquo.media.footer_text')}</p>".to_json %>;
+        }
+        action(selector.select(".select-assets").first());
+      }
+    });
+    media_fields = new Media();
+  </script>
+<% end %>

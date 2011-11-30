@@ -1,0 +1,127 @@
+h2. Ubiquo authentication
+
+The ubiquo_authentication plugin provides a simple way to manage
+users that can go inside Ubiquo.
+
+In general it includes the following features:
+
+* Visual interface to view, create, edit and delete  users
+* Login/logout and session capabilities
+* User notifications/confirmations on creation
+* Reset form for forgotten passwords
+* "Superadmin mode" with a separate interface
+
+In this guide you will learn how to solve the most frequently problems
+related with ubiquo_authentication system
+
+endprologue.
+
+h3. Creating the superadmin user
+
+When created an empty ubiquo_template based project, there isn't any
+user in the database. To create the first one you can use a provided
+rake task named +ubiquo:create_user+.
+
+<shell>
+$ rake ubiquo:create_user
+</shell>
+
+When invoking that task some questions about the new user will be
+asked, like user login, name, surnames, e-mail, etc.
+
+<shell>
+$ rake ubiquo:create_user
+(in RAILS_ROOT)
+Enter user login: new_ubiquo_user
+Enter user password: ******
+Enter password again: ******
+Enter user e-mail: user@email.com
+Should this user be active? yes
+Should this user have admin privileges? yes
+Should this user have superadmin privileges? yes
+
+</shell>
+
+When the assistant finish to ask attributes values, it will try to
+create the expected user. If some errors getted, it will be shown to
+you in the defaul locale (+en_US+)
+
+If all goes well, you can to access with that user to the ubiquo
+section, normally
+"+http://localhost:3000/ubiquo+":http://localhost:3000/ubiquo in
+development environment.
+
+h3. Creating regular users
+
+Creating users is usefull for grant access to the ubiquo to new
+people. New people can't register into Ubiquo, only current users with
+user_management permissions can do that task.
+
+h4. Requirements
+
+For create new user you need a user with user_management permission or
+a "superadmin user":#creating-the-superadmin-user
+
+h4. Steps
+
+# Log in with your authenticated user on Ubiquo.
+# Go to the ubiquo_users list:
+  "+http://localhost:3000/ubiquo/ubiquo_users+":http://localhost:3000/ubiquo/ubiquo_users.
+# Click in the +New User+ link. It send you to
+  "+http://localhost:3000/ubiquo/ubiquo_users/new+":http://localhost:3000/ubiquo/ubiquo_users/new.
+# Complete the form with the data of the new user.
+# Click on the +Create+ button.
+
+h3. Creating new controllers that requires authentication
+
+All controllers inherited from UbiquoController have this
+functionality implicit, but sometimes is needed to specify this.
+
+h4. Prevent unauthenticated entrance to all actions
+
+If you need an authenticated user in every action of your controller
+simply add this line inside the controller class definition, in the
+first line.
+
+<ruby>
+before_filter :login_required
+</ruby>
+
+h4. Prevent unauthenticated entrance to specific actions
+
+If you need an authenticated user only in a specific group of actions,
+or simply one, simply add this line inside the controller class, in
+the first line.
+
+<ruby>
+before_filter :login_required, :only => [ :edit, :update ]
+</ruby>
+
+This will check authentication only in the specified actions +edit+
+and +update+.
+
+h4. Skip authentication validation to all action
+
+If you inherit authentication control(if you inherit from
+UbiquoController you have a validation in every action) you may
+want to disable that validation to all actions. To do that simply add
+this line inside the controller class, in the first line.
+
+<ruby>
+skip_before_filter :login_required
+</ruby>
+
+
+h4. Skip authentication validation to specific actions
+
+Like in last topic, you can disable authentication validation to
+specific actions (or only one). To do that simply add this line inside
+the controller class, in the first line.
+
+<ruby>
+skip_before_filter :login_required, :only => [:index]
+</ruby>
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_authentication

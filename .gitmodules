@@ -1,0 +1,54 @@
+[submodule "vendor/plugins/ubiquo_core"]
+	path = vendor/plugins/ubiquo_core
+	url = git@github.com:gnuine/ubiquo_core.git
+[submodule "vendor/plugins/ubiquo_authentication"]
+	path = vendor/plugins/ubiquo_authentication
+	url = git@github.com:gnuine/ubiquo_authentication.git
+[submodule "vendor/plugins/ubiquo_access_control"]
+	path = vendor/plugins/ubiquo_access_control
+	url = git@github.com:gnuine/ubiquo_access_control.git
+[submodule "vendor/plugins/ubiquo_scaffold"]
+	path = vendor/plugins/ubiquo_scaffold
+	url = git@github.com:gnuine/ubiquo_scaffold.git
+[submodule "vendor/plugins/ubiquo_media"]
+	path = vendor/plugins/ubiquo_media
+	url = git@github.com:gnuine/ubiquo_media.git
+[submodule "vendor/plugins/ubiquo_jobs"]
+	path = vendor/plugins/ubiquo_jobs
+	url = git@github.com:gnuine/ubiquo_jobs.git
+[submodule "vendor/plugins/ubiquo_i18n"]
+	path = vendor/plugins/ubiquo_i18n
+	url = git@github.com:gnuine/ubiquo_i18n.git
+[submodule "vendor/plugins/ubiquo_activity"]
+	path = vendor/plugins/ubiquo_activity
+	url = git@github.com:gnuine/ubiquo_activity.git
+[submodule "vendor/plugins/ubiquo_versions"]
+	path = vendor/plugins/ubiquo_versions
+	url = git@github.com:gnuine/ubiquo_versions.git
+[submodule "vendor/plugins/ubiquo_guides"]
+	path = vendor/plugins/ubiquo_guides
+	url = git@github.com:gnuine/ubiquo_guides.git
+[submodule "vendor/plugins/ubiquo_design"]
+	path = vendor/plugins/ubiquo_design
+	url = git@github.com:gnuine/ubiquo_design.git
+[submodule "vendor/plugins/translate"]
+	path = vendor/plugins/translate
+	url = git@github.com:gnuine/translate.git
+[submodule "vendor/plugins/calendar_date_select"]
+	path = vendor/plugins/calendar_date_select
+	url = git@github.com:gnuine/calendar_date_select.git
+[submodule "vendor/plugins/exception_notification"]
+	path = vendor/plugins/exception_notification
+	url = git@github.com:gnuine/exception_notification.git
+[submodule "vendor/plugins/responds_to_parent"]
+	path = vendor/plugins/responds_to_parent
+	url = git@github.com:gnuine/responds_to_parent.git
+[submodule "vendor/plugins/tiny_mce"]
+	path = vendor/plugins/tiny_mce
+	url = git@github.com:gnuine/tiny_mce.git
+[submodule "vendor/plugins/paperclip"]
+	path = vendor/plugins/paperclip
+	url = git@github.com:gnuine/paperclip.git
+[submodule "vendor/plugins/ubiquo_categories"]
+	path = vendor/plugins/ubiquo_categories
+	url = git@github.com:gnuine/ubiquo_categories.git

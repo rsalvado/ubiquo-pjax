@@ -1,0 +1,9 @@
+permission_1: 
+  name: Permission 1
+  key: permission_1
+permission_2: 
+  name: Permission 2
+  key: permission_2
+permission_3: 
+  name: Permission 3
+  key: permission_3

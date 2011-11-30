@@ -1,0 +1,9 @@
+# To maintain consistency with ubiquo standards
+en:
+  date:
+    formats:
+      default: "%Y/%m/%d"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+      verbose: "%a, %d %b %Y %H:%M:%S %z"

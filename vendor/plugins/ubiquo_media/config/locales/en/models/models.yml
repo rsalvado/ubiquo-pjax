@@ -1,0 +1,14 @@
+---
+en:
+  activerecord:
+    attributes:
+      asset:
+        asset_type_id: "Resource Type"
+        description: ""
+        name: ""
+        resource: ""
+    models:
+      asset: ""
+    errors:
+      messages:
+        not_enough_assets: has not enough assets

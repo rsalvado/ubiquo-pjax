@@ -1,0 +1,14 @@
+en:
+  activerecord:
+    models:
+      <%= singular_name %>: "<%= singular_name.capitalize %>"
+    attributes:
+      <%= singular_name %>:
+        <% for attribute in attributes -%>
+<%=        "#{attribute.name}:" %> <%- if field_translations[attribute.name] %> "<%= field_translations[attribute.name][:en] %>" <%- else %> "<%= attribute.name %>" <%- end %>
+        <% end -%>
+        <%- if options[:has_many] -%>
+          <%- for hm in options[:has_many] -%>
+<%=        "#{hm.pluralize}:" %> "<%= hm.pluralize %>"
+          <%- end -%>
+        <%- end -%>

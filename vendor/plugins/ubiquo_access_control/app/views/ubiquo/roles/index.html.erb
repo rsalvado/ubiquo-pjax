@@ -1,0 +1,31 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+	<%= render :partial => 'submenu' %>
+</h2>
+<%= render :partial => "shared/ubiquo/feedback" %>
+
+<%= render(:partial => "shared/ubiquo/lists/standard", :locals=>{
+      :name=>'role',
+      :headers=>[:name],
+      :rows=>@roles.collect{|role| 
+        {
+          :id=>role.id, 
+          :columns=>[
+						role.name,
+          ],
+          :actions=>[
+            link_to(t('ubiquo.edit'), [:edit, :ubiquo, role], :class => 'btn-edit'),
+            link_to(t('ubiquo.remove'), [:ubiquo, role], :confirm =>
+      t('ubiquo.auth.confirm_role_removal'), :method => :delete, :class => 'btn-delete')
+          ]
+        }
+      },
+      :pages=>@roles_pages,
+      :link_to_new => link_to(t('ubiquo.auth.role_new'), new_ubiquo_role_path, :class => "new")
+    }      
+) %>
+
+
+<% content_for :sidebar do %>
+  <%= help_block_sidebar(t("ubiquo.helpmsg.authentication.roles.index")) %>
+<% end %>

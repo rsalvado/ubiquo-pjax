@@ -1,0 +1,12 @@
+<p id="is_shared_<%= block.id %>" class="apply_default">
+  <%= check_box_tag 'is_shared', 
+                    'true',
+                    block.is_shared?,
+                    { :id => "is_shared_block_#{block.id}"} %>
+  <label for="is_shared_block_<%= block.id %>">
+    <%= t('ubiquo.design.is_shared_block') %>
+  </label>
+</p>
+<%= observe_field "is_shared_block_#{block.id}",
+                  :url => ubiquo_page_design_block_path(page, block),
+                  :with => "'is_shared='+$F('is_shared_block_#{block.id}')+'&_method=put&style_class=#{style_class}'" %>

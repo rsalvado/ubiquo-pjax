@@ -1,0 +1,296 @@
+/*--- Maquetació ---*/
+.column {
+  margin: 0 1.2% 1.5% 0;
+  float: left;
+  position: relative;
+  min-width: 15.5%;
+}
+#template {
+  clear: both;
+}
+#template .draggable_target {
+  background: #E9E9E9 url(../../../images/ubiquo/bg_dragdrop_en.jpg) no-repeat center center;
+  -moz-border-radius:0px 0px 10px 10px;
+ 	-webkit-border-radius:0px 0px 10px 10px;
+}
+#template .non_draggable_target {
+  background: #F7F7F7 url(../../../images/ubiquo/bg_no_dragdrop.jpg) no-repeat center center;
+  -moz-border-radius:0px 0px 10px 10px;
+ 	-webkit-border-radius:0px 0px 10px 10px;
+}
+.share_block_options {
+	background-color: #bbb;
+	width:100%;
+	height: 25px;
+	padding:5px 0px;
+  font-size: 11px;
+	position:relative;
+	-moz-border-radius:10px 10px 0px 0px;
+ 	-webkit-border-radius:10px 10px 0px 0px;
+}
+.share_block_options div{
+	margin: auto 0px;
+	padding:4px 10px;
+}
+.share_block_options div a{
+	line-height: 11px;
+}
+#select_shared_block {
+  padding:0px 10px;
+}
+#select_shared_block a {
+  margin-left: 5px;
+}
+ul.block_type_holder {
+  min-height: 15em;
+  padding: 1em;
+}
+.column_3 ul.block_type_holder, .column_2 ul.block_type_holder, .column_1 ul.block_type_holder {
+  min-height: 28em;
+}
+ul.block_type_holder li.error { /* ie6 no accepta li.widget.error */
+  background: url(../../../images/ubiquo/widget_error.jpg) no-repeat;
+}
+ul.block_type_holder li.inherited {
+  opacity: 0.4;
+  filter:alpha(opacity=60);
+  -moz-opacity:.60
+  z-index: 1;
+}
+#widgets {
+	background-color: #ccc;
+	margin: 10px 0px;
+	padding-bottom: 15px;
+	clear:both;
+	position: relative;
+	-moz-border-radius:10px;
+ 	-webkit-border-radius:10px;
+}
+#widgets .widget_categories{
+	background-color: #bbb;
+	margin-bottom: 15px;
+	padding: 5px;
+	font-size:12px;
+	text-align: center;
+}
+#widgets .widget_categories label{
+	padding-bottom: 5px;
+}
+#widgets .widget_categories select{
+	width: 125px;
+	height: 22px;
+	font-size:12px;
+}
+
+#widgets .sidebar_title{
+  background-color: #999;
+  padding: 6px 10px;
+  border-bottom: none!important;
+  -moz-border-radius:10px 10px 0px 0px;
+ 	-webkit-border-radius:10px 10px 0px 0px;
+}
+
+#widgets .sidebar_title h3{
+  background: url(../../../images/ubiquo/ico_widgets.png) no-repeat;
+  border-bottom: none!important;
+  margin:0;
+  padding: 2px 0px 0px 30px;
+}
+
+.available_widgets {
+  height: 290px;
+	margin: 10px;
+	overflow:hidden;
+}
+.available_widgets .scroll-track{
+ background:#999;
+ width:15px;
+ height:10px;
+ -moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+.available_widgets .scroll-handle{
+ width:15px;
+ height:10px;
+ background:#ddd;
+ border:none;
+ cursor:pointer;
+ -moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+.available_widgets .scroll-handle-container.selected{
+  background-color:transparent!important;
+}
+
+li.widget {
+  background: url(../../../images/ubiquo/widget.jpg) no-repeat;
+  width: 13.9em;
+  height: 5.2em;
+  padding: 4.2em 1em 0 .7em;
+  margin: 0 auto;
+  font-size: 1em;
+  position: relative;
+}
+li.widget a {
+  position: absolute;
+  top: .6em;
+}
+li.widget a.delete {
+  background: url(../../../images/ubiquo/trash_icon.jpg) no-repeat;
+  width: 14px;
+  height: 15px;
+  left: .6em;
+  text-indent: -5000px;
+}
+li.widget a.move {
+  background: url(../../../images/ubiquo/cross.gif) no-repeat;
+  width: 17px;
+  height: 17px;
+  right: .9em;
+  text-indent: -5000px;
+}
+li.widget form {
+  text-align: right;
+  font-size: 11px;
+  position: relative;
+  top: -12px;
+}
+li.widget a.editor_cancel {
+  margin-left: 5px;
+  position: static;
+}
+li.widget .editor_field {
+  min-width: 130px !important;
+  width: 130px;
+}
+#sidebar li.widget {
+  background-image: url(../../../images/ubiquo/long_widget.jpg);
+  width: 20em;
+  height: 4.3em;
+  padding: 1.6em 1em 0 .7em;
+}
+#sidebar li.widget a.move {
+  top: 1.6em;
+  left: .3em;
+}
+#sidebar li.widget h4{
+	width: 13em;
+	margin: 0 1em;
+	line-height: 1em;
+}
+#central li.widget a.edit {
+  right: 2.4em;
+  font-size: 1.2em;
+  text-decoration: none;
+}
+#central li.widget h4 {
+  color: #572F14;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: bold;
+  line-height: 1em;
+}
+#central li.widget form input {
+  display: inline;
+}
+
+/* SIDEBAR */
+
+#page_info .sidebar_title{
+  background-color: #999;
+  padding: 6px 10px;
+  border-bottom: none!important;
+  -moz-border-radius:10px 10px 0px 0px;
+ 	-webkit-border-radius:10px 10px 0px 0px;
+}
+
+#page_info .sidebar_title h3{
+  background: url(../../../images/ubiquo/ico_pageinfo.png) no-repeat;
+  border-bottom: none!important;
+  margin:0;
+  padding: 2px 0px 0px 30px;
+}
+
+#status {
+  background-color: #bbb;
+  margin: 0px 0px 20px 0px;
+  padding: 5px 20px 10px 20px;
+  position: relative;
+  clear:both;
+  -moz-border-radius:0px 0px 10px 10px;
+ 	-webkit-border-radius:0px 0px 10px 10px;
+}
+.status_indicator {
+  margin: 5px 0px 10px 0px;
+  padding: 12px;
+  font-size: 20px;
+  color: #fff;
+  position: relative;
+  -moz-border-radius:10px;
+ 	-webkit-border-radius:10px;
+}
+.status_indicator.published { background: #75c308 url(../../../images/ubiquo/bg_published.png) no-repeat 95%;}
+.status_indicator.pending { background: #e4b62c url(../../../images/ubiquo/bg_pending.png) no-repeat 95%;}
+.status_indicator.unpublished { background: #dd1919 url(../../../images/ubiquo/bg_unpublished.png) no-repeat 95%;}
+.status_info .page_name, .status_info .page_name a {
+	font-size:24px;
+	color:#000000;
+	text-align: left;
+  margin-bottom:0px!important;
+}
+.status_info .page_name a:hover {
+	text-decoration: underline;
+}
+.status_info .actions {
+	margin: 5px auto;
+	text-align:center;
+}
+
+.status_info .actions ul.buttons{
+	display: inline-block;
+}
+
+.status_info .actions ul.buttons li{
+	float:left;
+}
+.status_info .actions input {
+	width: 80px;
+	font-size: 14px;
+	margin: 0px 5px 0px 0px;
+	padding: 5px 15px;
+	color: #fff;
+	border: none;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	cursor: pointer;
+}
+.status_info input.publish {
+	background-color: #18ac00;
+}
+.status_info input.publish:hover{
+	background-color: #6be458;
+}
+.status_info input.preview {
+	background-color: #666;
+}
+.status_info input.preview:hover{
+	background-color: #999;
+}
+.status_info input.unpublish {
+background-color: #dd1919;
+}
+.status_info input.unpublish:hover{
+background-color: #f48c8c;
+}
+#shadow {
+	background-image:url(../../../images/ubiquo/shade1x1.png);
+	position:absolute; 
+	left:0; 
+	top:0; 
+	width:100%; 
+	z-index:100;
+}
+
+/*-------------- Clearfix --------------*/
+#status:after, .status_info .actions:after { content: "."; display: block; height: 0; clear: both; visibility: hidden;}

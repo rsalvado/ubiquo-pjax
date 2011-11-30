@@ -1,0 +1,304 @@
+/* Ubiquo Categories */
+
+/*--- Category Selector ---*/
+.category-group {
+    padding: 1em;
+    margin: 0 0 1em;
+    height: 12em;
+    background: #f3f6eb;
+    overflow: auto;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-column-width: 14em;
+    -moz-column-gap: 1em;
+    -webkit-column-width: 14em;
+    -webkit-column-gap: 1em;
+    column-width: 14em;
+    column-gap: 1em;
+}
+a.bt-add-category {
+    font-size: 1.3em;
+    padding-left: 1.1em;
+    background: url(../../../images/ubiquo/ico-add.png) no-repeat left .3em;
+}
+.relation-selector a.bt-add-category {
+    margin-left: 12em;
+}
+.add_new_category {
+    margin-top: .4em;
+}
+.add_new_category input {
+    margin: 0 .4em 0 11em;
+    display: block;
+    float: left;
+}
+.add_new_category a.bt-create-category {
+    display:block;
+    float:left;
+    margin-top: .4em;
+    padding: .3em .3em;
+    font-size: 0.9em;
+    color: #000;
+    text-transform: lowercase;
+    text-decoration: none;
+    background: #e9e9e9;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #666;
+    background: url(../../../images/ubiquo/bg-button.png) no-repeat left bottom;
+    cursor: pointer;
+}
+
+/* AutoComplete styles */
+  /* facebook style */
+ul.tag-token-input-list {
+    overflow: hidden;
+    height: auto !important;
+    height: 1%;
+    width: 40%;
+    cursor: text;
+    min-height: 1px;
+    z-index: 999;
+    margin: 4px 0 0 0;
+    list-style-type: none;
+    padding: .3em;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    -moz-box-shadow: inset 1px 1px 2px #DDD;
+    -webkit-box-shadow: inset 1px 1px 2px #DDD;
+    box-shadow: inset 1px 1px 2px #DDD;
+}
+
+.tag-token-input-input-token, div.tag-token-input-dropdown li{
+    margin-bottom: 0;
+}
+
+#content ul.tag-token-input-list li input {
+    border: none;
+    width: 100px;
+    padding: 3px 8px;
+    margin: 2px 0 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+li.tag-token-input-token {
+    overflow: hidden;
+    height: auto !important;
+    height: 1%;
+    margin: 3px;
+    padding: 3px 7px;
+    background-color: #eff2f7;
+    color: #000;
+    cursor: default;
+    border: 1px solid #ccd5e4;
+    font-size: 1em;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+}
+
+li.tag-token-input-token p {
+    display: inline;
+    padding: 0 !important;
+    margin: 0;
+}
+
+li.tag-token-input-token span {
+    color: #a6b3cf;
+    margin-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+li.tag-token-input-selected-token {
+    background-color: #5670a6;
+    border: 1px solid #3b5998;
+    color: #fff;
+}
+
+li.tag-token-input-input-token {
+    float: left;
+}
+
+div.tag-token-input-dropdown {
+    margin-left: 14em;
+    position: absolute;
+    width: 37%;
+    background-color: #fff;
+    overflow: hidden;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    cursor: default;
+    font-size: 11px;
+    z-index: 1;
+}
+
+div.tag-token-input-dropdown p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: #777;
+    font-size: 1.3em !important;
+}
+
+div.tag-token-input-dropdown ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.tag-token-input-dropdown ul li {
+    background-color: #fff;
+    padding: 3px;
+}
+
+div.tag-token-input-dropdown ul li.tag-token-input-dropdown-item {
+    background-color: #fff;
+}
+
+div.tag-token-input-dropdown ul li.tag-token-input-dropdown-item2 {
+    background-color: #fff;
+}
+
+div.tag-token-input-dropdown ul li em {
+    font-weight: bold;
+    font-style: none;
+}
+
+div.tag-token-input-dropdown ul li.tag-token-input-selected-dropdown-item {
+    background-color: #881B20;
+    color: #fff;
+}
+
+/* Example tokeninput style #1: Token vertical list*/
+ul.list-token-input-list {
+    overflow: hidden;
+    height: auto !important;
+    height: 1%;
+    width: 40%;
+    border: 1px solid #999;
+    cursor: text;
+    z-index: 999;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+ul.list-token-input-list li {
+    list-style-type: none;
+    margin: 0;
+    font-size: 1em;
+}
+
+ul.list-token-input-list li input {
+    border: 0;
+    width: 350px;
+    padding: 3px 8px;
+    background-color: white;
+}
+
+li.list-token-input-token {
+    overflow: hidden;
+    height: auto !important;
+    height: 1%;
+    margin: 3px !important;
+    padding: 3px 5px;
+    background-color: #EEE;
+    color: #000;
+    cursor: default;
+    display: block;
+}
+
+li.list-token-input-token p {
+    float: left;
+    padding: 0 !important;
+    margin: 0;
+}
+
+li.list-token-input-token span {
+    float: right;
+    color: #777;
+    cursor: pointer;
+}
+
+li.list-token-input-selected-token {
+    background-color: #B7383F;
+    color: #fff;
+}
+
+li.list-token-input-selected-token span {
+    color: #bbb;
+}
+
+div.list-token-input-dropdown {
+    margin-left: 11em;
+    position: absolute;
+    width: 36.2%;
+    background-color: #fff;
+    overflow: hidden;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    cursor: default;
+    font-size: 14px;
+    z-index: 1;
+}
+
+div.list-token-input-dropdown p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: #777;
+}
+
+div.list-token-input-dropdown ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.list-token-input-dropdown ul li {
+    background-color: #fff;
+    padding: 3px;
+    list-style-type: none;
+    margin: 0;
+}
+
+div.list-token-input-dropdown ul li.list-token-input-dropdown-item {
+    background-color: #fafafa;
+}
+
+div.list-token-input-dropdown ul li.list-token-input-dropdown-item2 {
+    background-color: #fff;
+}
+
+div.list-token-input-dropdown ul li em {
+    font-weight: bold;
+    font-style: normal;
+}
+
+div.list-token-input-dropdown ul li.list-token-input-selected-dropdown-item {
+    background-color: #881B20;
+    color: #fff;
+}
+
+fieldset ul.hierarchical_check_list {
+  clear: both;
+  padding: 2px
+}
+
+fieldset ul.children_check_list li {
+  padding: 5px
+}
+
+fieldset ul.children_check_list {
+  margin-left: 15px;
+}
+
+fieldset ul.children_check_list label {
+  font-weight: normal;
+}

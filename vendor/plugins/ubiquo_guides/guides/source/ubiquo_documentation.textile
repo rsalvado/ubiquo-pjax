@@ -1,0 +1,71 @@
+h2. Ubiquo to update ubiquo guides and rdocs
+
+The ubiquo project publishes 2 types of documentation for every plugin:
+
+ * guides. Provide motivation and intented usage description of the plugin.
+ * rdocs. Provide a reference for developers using ubiquo as their framework.
+
+We need to maintain and publish different versions for, at least, each
+minor version and the edge version. At the time of this writing:
+
+ * edge
+ * 0.7-stable
+
+endprologue.
+
+h3. Updating the guides
+
+First we need to select which version we want to update. Let's say we
+are updating the 0.7-stable version but the process to update edge
+would be similar.
+
+<shell>
+ubiquo --edge --complete myapp
+</shell>
+
+At this point we can do our changes in the ubiquo_guides plugin source if needed,
+but we are assuming modifications have already been commited and
+pushed over a time period and now we are just publishing the changes.
+
+And now, assuming you have the right privileges, we publish the guides
+to the server using the appropiate rake task:
+
+<shell>
+rake ubiquo:guides:publish_edge
+</shell>
+
+This task will generate the guides and upload them to the server.
+
+NOTE: The task would be ubiquo:guides:publish_07stable for the current stable version.
+
+h3. Updating the ubiquo plugin rdocs
+
+As with the guides we first create a fresh ubiquo project. Let's say
+we are updating rdocs for the 0.7-stable version:
+
+<shell>
+ubiquo --stable --complete myapp
+</shell>
+
+Since rdoc templates are generated using "hanna":http://github.com/mislav/hanna as a template we need
+to make sure we have the gem installed.
+
+<shell>
+rake ubiquo:rdocs
+</shell>
+
+Now we need to publish the generated ubiquo plugins rdocs to the
+server using a rake task:
+
+<shell>
+rake ubiquo:rdocs:publish_07stable
+</shell>
+
+NOTE: The task would be ubiquo:rdocs:publish_edge for the edge version.
+
+h3. Final words
+
+We should update documentation as soon as we commit changes, if
+appropiate, to avoid having outdated or innacurate information in the documentation.
+
+The process it's a bit tedious and cumbersome feel free to improve it.

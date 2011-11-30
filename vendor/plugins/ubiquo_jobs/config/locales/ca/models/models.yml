@@ -1,0 +1,19 @@
+ca:
+  activerecord:
+    models:
+     ubiquo_jobs/jobs/active_job: tasques
+    attributes:
+      ubiquo_jobs/jobs/active_job:
+        runner: "Procés"
+        command: "Ordre"
+        tries: "Intents"
+        priority: "Prioritat"
+        planified_at: "Planificat per"
+        started_at: "Iniciat"
+        ended_at: "Finalitzat"
+        state: "Estat"
+        name: "Nom"
+        type: "Tipus"
+        created_at: "Creat"
+        updated_at: "Actualitzat"
+        notify_to: "Notificar a"

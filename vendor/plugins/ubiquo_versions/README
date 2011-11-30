@@ -1,0 +1,25 @@
+UbiquoVersions
+==============
+
+This plugin adds versioning support to ubiquo
+
+This means the capability to record the state of an instance before any change in its attributes, 
+to be able to show a history or to revert to a previous version.
+
+Some of the main features of this versioning implementation are:
+
+    * Single table for model
+
+Instead of having another table to store the old versions for each model, we store all the required information in the same model table.
+This approach leads to bigger tables, but also provides the simplicity to treat every version as a model instance.
+
+    * Explicit versioning
+
+Since versioning it’s usually a feature that is used only in determinated circumstances (e.g. when restoring an old version of something), the system is built in a way that using versions is explicit, and if no versioning info is used e.g. in searches, we get the normal, unversioned behaviour.
+
+Example
+=======
+
+The easiest way to create a versionable model is to use the --versionable option when scaffolding. This will create an ubiquo scaffold with all the necessary changes the model and migration
+
+Copyright (c) 2009 International Product Design S.L. - gnuine (http://www.gnuine.com)

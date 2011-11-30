@@ -1,0 +1,28 @@
+es:
+  ubiquo:
+    activity_info:
+      activity_list: "Listado de actividades"
+      title: "Actividad"
+      controller: "Controlador"
+      action: "Acción"
+      date: "Fecha"
+      actions:
+        create: "Crear"
+        update: "Actualizar"
+        destroy: "Borrar"
+      status: "Estado"
+      statuses:
+        successful: "Correcto"
+        info: "Informativo"
+        error: "Con errores"
+      successful_create_message: "El usuario '%{user}' ha creado con éxito %{object_name}"
+      error_create_message: "Ha habido un error y el usuario '%{user}' no ha podido crear %{object_name}"
+      show_it: "Mostrar"
+      successful_update_message: "El usuario '%{user}' ha actualizado con éxito %{object_name}"
+      error_update_message: "Ha habido un error y el usuario '%{user}' no ha podido actualizar %{object_name}"
+      successful_destroy_message: "El usuario '%{user}' ha eliminado con éxito %{object_name}"
+      error_destroy_message: "Ha habido un error y el usuario '%{user}' no ha podido eliminar %{object_name}"
+      empty_list_title: "Registro de actividad"
+      empty_list_message: "Desde este apartado puedes ver una lista de todos las acciones que se realizan en Ubiquo. Puedes ver el detalle de la acción o borrar el registro."
+      confirm_removal: "¿Estás seguro de querer eliminar este registro de actividad?"
+      destroyed: "Registro de actividad eliminado con éxito"

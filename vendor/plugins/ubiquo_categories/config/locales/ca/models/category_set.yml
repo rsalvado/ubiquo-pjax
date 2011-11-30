@@ -1,0 +1,9 @@
+ca:
+  activerecord:
+    models:
+      category_set: "Conjunt de categories"
+    attributes:
+      category_set:
+        name:  "Nom" 
+        key:  "Clau"
+        

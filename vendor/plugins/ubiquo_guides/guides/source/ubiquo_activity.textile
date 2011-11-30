@@ -1,0 +1,95 @@
+h2. Ubiquo activity
+
+This plugin provides the capability to record information about actions executed in ubiquo.
+
+It stores default fields (controller, action, ubiquo_user...) and can store additional information too.
+
+By default, it's integrated with ubiquo_scaffold to work automatically for 'create', 'update' and 'destroy' actions. 
+
+endprologue.
+
+h3. Store activity
+
+
+h4. Normal use
+
+If you want to record information about a controller action and differentiate between successful action and failed action, you can do something like this:
+
+<ruby>
+  if @book.save
+    store_activity :successful, @book
+    ...
+  else
+    store_activity :error, @book
+    ...
+  end
+</ruby>
+
+
+h4. Personalized use
+
+You can store activity with additional information:
+
+<ruby>
+  if @book.save
+    store_activity :successful, @book, { :message => "Saved new book with title #{@book.title}" }
+    ...
+  else
+    store_activity :error, @book, { :message => "Error saving book: #{@book.errors}" }
+    ...
+  end
+</ruby>
+
+h3. Register Activity. Doing it more DRY (after filter)
+
+If you only have typical actions, you can use 'register_activity' statement that includes internally store_activity calls. 
+
+<ruby>
+  register_activity :create, :update, :destroy
+</ruby>
+
+This is equivalent to:
+
+<ruby>
+  def create
+    ...
+    if @book.save
+      store_activity :successful, @book
+      ...
+    else
+      store_activity :error, @book
+      ...
+    end
+    ...
+  end
+
+  def update
+    ...
+    if @book.update_attributes(params[:book]
+      store_activity :successful, @book
+      ...
+    else
+      store_activity :error, @book
+      ...
+    end
+    ...
+  end
+
+  def destroy
+    ...
+    if @book.destroy
+      store_activity :successful, @book
+      ...
+    else
+      store_activity :error, @book
+      ...
+    end
+    ...
+  end
+</ruby>
+
+WARNING: This statement must be called on the top of the controller
+
+h3. Changelog
+
+"Lighthouse tickets":http://ubiquo.lighthouseapp.com/projects/27683-ubiquo/tickets?q=tagged%3Aubiquo_activity

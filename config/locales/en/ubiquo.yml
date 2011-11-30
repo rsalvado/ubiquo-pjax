@@ -1,0 +1,22 @@
+--- 
+en: 
+  ubiquo: 
+    article: 
+      create_error: "Error creating article"
+      created: "Article created succesfully"
+      destroy_error: "Error removing article"
+      destroyed: "Article removed succesfully"
+      edit: 
+        help_message: "Here you can edit a new article"
+      edit_error: "Error updating article"
+      edited: "Article updated succesfully"
+      empty_list_message: "Here you can see all the records and create, edit or delete them."
+      empty_list_title: "Articles list"
+      index: 
+        confirm_removal: "Are you sure you want to remove this article?"
+        help_message: "Here you can see the articles list."
+        new: "New Article"
+        title: "Articles list"
+      new: 
+        help_message: "Here you can create a new article"
+      title: Articles

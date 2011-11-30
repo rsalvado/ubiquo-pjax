@@ -1,0 +1,10 @@
+UbiquoActivity
+==============
+
+This plugin provides the capability to record information about actions executed in ubiquo.
+
+It stores default fields (controller, action, ubiquo_user...) and can store additional information too.
+By default, it's integrated with ubiquo_scaffold to work automatically for 'create', 'update' and 'destroy' actions.
+
+
+Copyright (c) 2009 gnuine (http://www.gnuine.com), released under the MIT license

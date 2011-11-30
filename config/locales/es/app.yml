@@ -1,0 +1,5 @@
+es:
+  application:
+    welcome: "Bienvenido a %{name}"
+    home: "Inicio"
+    goto: "Ir a %{place}"

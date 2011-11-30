@@ -1,0 +1,54 @@
+<fieldset>
+  <%= uhook_form_top f %>
+  <legend><%= t('ubiquo.design.page_info') %></legend>
+  <div class="form-item">
+    <%= f.label :name, Page.human_attribute_name("name") %>
+    <%= f.text_field :name %>
+  </div>
+  <fieldset>
+    <legend><%= t('ubiquo.design.situation') %></legend>
+    <div class="form-item">
+      <%= f.label :parent_id, Page.human_attribute_name("parent_id") %>
+      <%= f.select :parent_id, parent_pages_for_select(@pages, @page.parent) %>
+    </div>
+    <div class="form-item">
+      <%= f.label :url_name, Page.human_attribute_name("url_name") %>
+      <%= f.text_field :url_name %>
+
+      <p class="description"><%= t("ubiquo.design.page_url_example") %>http://www.ubiquo.me/<%= @page.url_name %></p>
+    </div>
+  </fieldset>
+  </fieldset>
+  <% if f.object.new_record? %>
+    <fieldset>
+      <legend><%= t('ubiquo.design.page_template') %></legend>
+      <ul class="page_templates">
+        <% @page_templates.each do |template_key| %>
+          <li>
+            <%= f.radio_button(:page_template, template_key) %>
+            <%= f.label "page_template_#{template_key}", t("ubiquo.page_templates.#{template_key}") %>
+            <%= ubiquo_image_tag("page_templates/#{template_key}.png", {
+                 :id => "page_template_#{template_key}",
+                 :onclick => "$('page_' + this.id).click(); return false;"
+                })
+            %>
+          </li>
+        <% end %>
+      </ul>
+    </fieldset>
+  <% end %>
+  <fieldset>
+  <legend><%= t('ubiquo.design.metatags') %></legend>
+  <div class="form-item">
+    <%= f.label :meta_title, Page.human_attribute_name("meta_title") %>
+    <%= f.text_field :meta_title %>
+  </div>
+  <div class="form-item">
+    <%= f.label :meta_keywords, Page.human_attribute_name("meta_keywords") %>
+    <%= f.text_field :meta_keywords %>
+  </div>
+  <div class="form-item">
+    <%= f.label :meta_description, Page.human_attribute_name("meta_description") %>
+    <%= f.text_area :meta_description, :rows => 5 %>
+  </div>
+  </fieldset>

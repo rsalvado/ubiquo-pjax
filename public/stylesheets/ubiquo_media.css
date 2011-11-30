@@ -1,0 +1,55 @@
+ul#cropper_tabs{
+    display:block;
+    position:relative;
+    clear:both;
+}
+
+ul#cropper_tabs li{
+    float:left;
+    display:block;
+}
+
+#lightwindow_contents fieldset ul.tabs li a{
+    position:relative; /** To overcome a too hard CSS rule */
+}
+.cropper_tab_contents{
+    clear:both;
+}
+
+#content .crop_resize_form .original .wrapper{
+    width:640px;
+    height: 480px;
+    overflow: auto;
+}
+
+#content .crop_resize_form ul.tabs{
+    height:40px;
+    
+}
+
+#content .crop_resize_form ul.tabs li a{
+    display:block;
+    float:left;
+    padding:10px;
+    border:1px solid #666666;
+    margin:0px;
+    background-color:#EEEEEE;
+}
+
+#content .crop_resize_form ul.tabs li.active a:visited,
+#content .crop_resize_form ul.tabs li.active a{
+    border-bottom: 0;
+    text-decoration:none;
+    background-color:white;
+}
+
+#content #save_as_new_options input{
+    display:inline;
+}
+
+#content .crop_resize_form .image_details{
+    float:right;
+}
+#content .crop_resize_form .image_details .label{
+    font-weight:bold;
+}

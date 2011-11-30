@@ -1,0 +1,61 @@
+= UbiquoJobs
+
+This plugin provides a simple way to create jobs and workers that will execute them
+A _job_ is mainly a piece of work that usually require some time and is not suitable for synchronous execution, and that can be modeled and parameterized
+
+A _worker_ will look for planified jobs and execute them considering the priority. 
+
+== System setup
+To be able to run a worker, you need the following:
+* A Rails app with this plugin installed.
+* A system utility to monitor the worker (such as monit).
+
+This plugin uses a transparent backend to store job information. To configure the backend,
+set :job_manager_class in Ubiquo::Config to the class that will manage jobs.
+See rails/init.rb for the default configuration (which is using the app DB as the backend)
+
+=== Notifications
+If you want to use notifications, set the :job_notifier_class that you will be using 
+to Ubiquo::Config
+
+== Usage example
+
+First, let's create a Job class:
+
+	class MyJob < UbiquoJobs::Jobs::Base
+		def do_job_work
+			# asynchronous work is here
+		end
+	end
+
+Now, to run our MyJob:
+
+  MyJob.run_async(:options => options, :planified_at => Time.now.utc)
+
+Please note that all times in Jobs are interpreted as UTC.
+Now, start a worker. Every worker must have a unique id:
+
+  script/ubiquo_worker worker_id
+  
+That's all - The worker will find the job and execute it immediately, since the planification threshold has been overcame
+To stop all the running workers use:
+
+  script/ubiquo_worker --stop
+
+== Creating job types
+For every different kind of work that you want to be done you need to create a new job type (subclass of UbiquoJobs::Jobs::Base). You can then parameterize the options, perform validations, etc.
+Basicly you have to override the do_job_work function and place there the work that will be performed when the worker starts the job
+You can use virtual attributes to get parameters for do_job_work, but every thing that is not stored in the options hash will likely be lost at runtime, since only the options hash has the persistence guaranteed.
+See UbiquoJobs::Examples::ExampleJob for a very basic example of a job type subclass
+
+== Other features
+* Use ShellJob to easily wrap commands in jobs and store the result code and output in the DB
+* You can specify dependencies between jobs (X will not be run before Y and Z are done, etc)
+* If a worker is killed while running a job, restart it with the same id and the job will be planified again
+* A failing job command (with a result code != 0) will be automatically rerun for 3 times, not necessarily by the same worker, to circumvent potential environment or circumstantial issues.
+* Use UbiquoJobs::Jobs::Base::STATES to find the state of a job
+* Jobs will be executed using the priority order (priority => 1 > 2 > 3 etc) 
+* Jobs will not be executed until their planified_at time 
+
+
+Copyright (c) 2009 gnuine (http://www.gnuine.com), released under the MIT license

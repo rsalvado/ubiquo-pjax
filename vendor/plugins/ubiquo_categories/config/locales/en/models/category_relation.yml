@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    models:
+      category_relation: "Category_relation"
+    attributes:
+      category_relation:
+        category_id:  "category_id" 
+        related_object_id:  "related_object_id" 
+        related_object_type:  "related_object_type" 
+        

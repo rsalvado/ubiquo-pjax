@@ -1,0 +1,174 @@
+h2. Varnish
+
+ubiquo_design now provides Varnish support, with the following features:
+
+* Each Page has an independent, configurable expiration time
+* Automatic Varnish expiration when publishing changes in a Page
+* Widgets are rendered as Edge Side Includes (ESI)
+* Each widget can have its own expiration time and also hook on CRUD events for automatic expiration
+
+endprologue.
+
+h3. Widgets
+
+Widgets can be expired in a configured amount of time, but you can also
+define policies for automatic expiration when the data they are displaying changes.
+
+h4. Widget expiration time
+
+You can set the varnish expiration time for a type of widget inside the behaviour
+definition:
+
+<ruby>
+Widget.behaviour :highlighted do |widget|
+
+  varnish_expires_in 5.minutes
+
+  @widget = widget
+  ...
+end
+</ruby>
+
+This will set the X-VARNISH-TTL header to this value. You can also set the usual
+ expires_in method, that sets the Cache-Control header:
+
+<ruby>
+Widget.behaviour :highlighted do |widget|
+
+  expires_in 10.minutes
+  varnish_expires_in 5.minutes
+
+  @widget = widget
+end
+</ruby>
+
+INFO: If not defined, each of these headers will have a default value of 2 minutes
+
+Note that since you are in a specific widget, you can define the expiration time
+for that widget using your own rules:
+
+<ruby>
+  varnish_expires_in(widget.is_automatic? 10.minutes : 5.minutes)
+</ruby>
+
+h4. Cache expiration policies
+
+Here is a snapshot of an example file:
+
+<ruby>
+UbiquoDesign::CachePolicies.define(:varnish) do
+
+  expire_widget(:banner_item, :Banner) do |widget, banner|
+    widget.banner == banner
+  end
+
+  expire_widget(:news_list, :Article)
+
+  expire_widget(:node_detail, [:Article, :Image]) do |widget, node|
+    node.is_automatic?
+  end
+
+  expire_widget_set(Node::NODE_TYPES) do |node|
+    node.widgets
+  end
+
+end
+</ruby>
+
+let's explain it part by part:
+
+<ruby>
+UbiquoDesign::CachePolicies.define(:varnish) do
+...
+end
+</ruby>
+
+The policies are defined inside this block. You define them using this code
+anywhere it makes sense, by default in an application initializer
+(config/initializers/design_cache.rb), but sometimes
+it makes sense to load it later and place it for example in the lib folder.
+
+Going to the policies itself, this is the first example:
+
+<ruby>
+  expire_widget(:banner_item, :Banner) do |widget, banner|
+    widget.banner == banner
+  end
+</ruby>
+
+This code reads like this: expire the :banner_item widgets for any change
+(delete/update/creation) in a Banner instance which makes the block return true.
+
+In this case, this means to expire the widgets that have this precise banner
+ configured (widget.banner would come from a _belongs_to :banner_, for example)
+
+You can also use this method without a block
+
+<ruby>
+  expire_widget(:news_list, :Article)
+</ruby>
+
+In this case, it is read as unconditional expiration. Any CRUD change on an
+Article instance will trigger the expiration of :news_list widgets
+
+The second parameter of expire_widget can be in fact a list of model identifiers,
+so you can aggregate policies that affect more than one model
+
+<ruby>
+  expire_widget(:node_detail, [:Article, :Image]) do |widget, node|
+    node.is_public?
+  end
+</ruby>
+
+Finally you can also create more crafted rules by using _expire_widget_set_
+
+This method allows you to, given one (or a list) of model identifiers, define
+which widgets are affected by its CRUD actions and should be expired. For example,
+let's imagine that you have an intermediate table that relates Articles and in
+which widgets they appear in. You could use the following:
+
+<ruby>
+  expire_widget_set(:Article) do |article|
+    article.widgets
+  end
+</ruby>
+
+The return value of the block is expected to be the list of widgets to be expired.
+When an article changes, its associated widgets are returned, and thus expired.
+
+
+h3. Pages
+
+Pages have a builtin _expiration_ attribute that stores the times and related caching
+information of each instance. Currently, this attribute serializes two
+configurable attributes from the edit form:
+
+* client_expiration is the amount of times (in seconds) that the Cache-control header
+will include.
+
+* varnish_expiration is the TTL (in seconds) that the whole page will have once
+cached in Varnish. This is the value for the X-VARNISH-TTL header (which you have
+to properly read in your Varnish configuration)
+
+h4. Loading expiration times
+
+To mass-update expiration times, you can also use the ubiquo:load_expiration_times task.
+
+<shell>
+  rake ubiquo:load_expiration_times
+</shell>
+
+This file loads config/cache/varnish_pages.yml, which defines TTL times
+for each page, identified by its key. You can use ruby syntax to calculate the time,
+since the value is evaluated. The final result is interpreted as seconds. For example:
+
+<yaml>
+home: 1.hour + 10.minutes
+last_news: 60
+legal: 1.year
+</yaml>
+
+Why identifying pages by key? It has some advantages, for example urls can be changed
+by the user without crashing things, or that you can define custom routes or even custom
+controllers other than PagesController and everything will still work. Also, they are not
+environment dependent as ids can be, and are more human readable too.

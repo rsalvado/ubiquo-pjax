@@ -1,0 +1,34 @@
+<%= javascript_include_tag 'carousel' %>
+<%= stylesheet_link_tag 'generics' %>
+<% carousel_id = "carousel-wrapper-#{@widget.id}" %>
+
+<script type="text/javascript">
+  document.observe("dom:loaded", function() {
+    new Carousel(<%= carousel_id.to_json %> , $$('.carousel-content .slide'), $$('a.carousel-control'));
+  });
+</script>
+
+<div class="<%= @model.downcase %>-highlighted generic-highlighted">
+  <% unless @title.blank? %>
+    <h3 class="info-title"><%= @title %></h3>
+  <% end %>
+  <div class="carousel-container">
+    <div id="<%= carousel_id %>" class="carousel-wrapper">
+      <ul class="carousel-content">
+        <% @elements.each do |element| -%>
+          <li class="slide" id="element-<%= element.id %>">
+            <%= list_element_image(element) %>
+            <div class="carousel-detail">
+              <h4><%= list_element_title(element) %></h4>
+              <p><%= list_element_body(element) %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <ul class="horizontal highlighted-paginator">
+    <li class="prev"><a class="carousel-control" rel="prev">Previous</a></li>
+    <li class="next"><a class="carousel-control" rel="next">Next</a></li>
+  </ul>
+</div>

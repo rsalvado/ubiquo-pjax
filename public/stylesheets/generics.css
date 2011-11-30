@@ -1,0 +1,364 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9em;
+  font-family: Verdana, arial, sans-serif;
+}
+
+body {
+  color: #666666;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 4.35em;
+  color: #62c1ec;
+  margin: 0 0 0 0;
+  padding: 0.5em 0;
+}
+
+.site-description {
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+h2 {
+  text-indent: -3000px;
+  position: absolute;
+}
+
+h5, h6 {
+  font-size: 1.05em;
+}
+
+a {
+  color: #2cacd5;
+  text-decoration: none;
+}
+a:visited {
+  color: #0788c3;
+}
+
+.two-columns {
+  width: 74%;
+  padding: 0 1.2em 0 0;
+}
+
+.box {
+  clear: both;
+  margin-bottom: 4em;
+}
+.box .content {
+  padding: 1.5em 0 0;
+}
+.box .content p {
+  margin-top: 0;
+}
+.box h5, .box h4 {
+  margin-bottom: 0;
+}
+
+#container {
+  width: 910px;
+  margin: 0 auto;
+  line-height: 1.5em;
+}
+
+#main {
+  float: left;
+  margin: 0 0 20px 0;
+  padding-top: 0.5em;
+}
+
+#sidebar {
+  overflow: hidden;
+  padding-top: 0.5em;
+}
+#sidebar .generic-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #ebebeb;
+}
+#sidebar .generic-list li {
+  background: url("../images/dotted-lines.gif") repeat-x scroll left bottom transparent;
+  padding: 7px 5px;
+}
+#sidebar .generic-list li a {
+  display: block;
+  color: #5d95ca;
+  font-weight: bold;
+}
+#sidebar .generic-list li a:hover {
+  color: black;
+}
+#sidebar .generic-list li a span {
+  display: block;
+  color: #9f9f9f;
+  font-size: 0.75em;
+  font-weight: normal;
+  line-height: 1.3em;
+}
+#sidebar .generic-list img {
+  float: left;
+  border: none;
+  margin-top: 0.5em;
+  margin-right: 0.8em;
+}
+
+.generic-main-list ul, .generic-detail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.generic-main-list li, .generic-detail li {
+  padding: 0 0 4em 0;
+}
+.generic-main-list a:hover, .generic-detail a:hover {
+  border-bottom: 1px dotted #0788c3;
+}
+.generic-main-list h4 a:hover, .generic-detail h3 a:hover {
+  border: none;
+  text-decoration: none;
+}
+.generic-main-list .content, .generic-detail .content {
+  padding: 10px 0 0;
+  overflow: hidden;
+}
+.generic-main-list .content > img, .generic-detail .content > img {
+  width: 120px;
+  border: 1px solid #e4e4e4;
+  padding: 10px;
+  float: left;
+  margin: 1.2em 2em 1em 0;
+}
+.generic-main-list .related, .generic-detail .related {
+  font-size: 0.88em;
+  font-weight: bold;
+  list-style: none;
+  margin: 0;
+  padding: 3px 0;
+}
+.generic-main-list .related li, .generic-detail .related li {
+  display: inline;
+  padding: 0 0;
+}
+.generic-main-list .related a, .generic-detail related a {
+  border-bottom: 1px dotted #0788c3;
+}
+
+#footer {
+  font-size: 0.86em;
+  padding: 0.5em 0;
+  margin: 4em 0 2em;
+  clear: left;
+  clear-margin: 0;
+  clear-padding: 0;
+}
+#footer h3 {
+  text-indent: -3000px;
+  position: absolute;
+}
+#footer p {
+  padding: 0;
+  margin: 0;
+}
+#footer ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+#footer ul li {
+  float: left;
+}
+#footer ul li:first-child {
+  padding-right: 5em;
+}
+#footer ul li.last {
+  float: right;
+}
+
+.horizontal {
+  list-style: none;
+  padding: 0;
+}
+.horizontal li {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+#navigation ul {
+  font-size: 1.1em;
+  font-family: "Trebuchet MS", Arial, Sans-Serif;
+  font-weight: bold;
+  margin: 2em 0 3em;
+  padding: 0 0 0 0;
+}
+#navigation ul li {
+  display: inline-block;
+  margin-right: 1px;
+  text-transform: uppercase;
+}
+#navigation ul li a {
+  color: #7c7c7c;
+  display: block;
+  padding: 3px 8px;
+}
+#navigation ul li a:hover {
+  color: #373737;
+  text-decoration: none;
+}
+#navigation ul li.current a {
+  color: #2d2d2d;
+  border-bottom: 4px solid #62c1ec;
+}
+
+#container h3.info-title, #sidebar h4.info-title {
+  text-indent: -3000px;
+  position: absolute;
+}
+
+#main .generic-main-list h4, #sidebar h5, #container .generic-detail h3 {
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  font-size: 2.1em;
+  font-weight: normal;
+  color: #555555;
+  margin: 0;
+  padding: 0;
+}
+#main .generic-main-list h4 a, #sidebar h5 a, #container .generic-detail h3 a {
+  color: #555555;
+}
+#main .generic-main-list h4 a:hover, #sidebar h5 a:hover, .generic-detail h3 a:hover {
+  color: #555555;
+  text-decoration: underline;
+}
+
+.generic-highlighted {
+  position: relative;
+  width: 910px;
+  margin: 0 auto;
+}
+.generic-highlighted h3 {
+  text-indent: -3000px;
+  position: absolute;
+}
+
+.carousel-container {
+  background: #f8fafd;
+  padding: 10px;
+  border: 1px solid #dcf1fb;
+  position: relative;
+}
+.carousel-container .carousel-wrapper {
+  width: auto;
+  height: 310px;
+  overflow: hidden;
+}
+.carousel-container .carousel-content {
+  width: 2500px;
+}
+.carousel-container .carousel-content .slide {
+  float: left;
+  height: 300px;
+}
+.carousel-container .carousel-content .slide img {
+  border: 1px solid #dfeaf0;
+  width: 280px;
+  padding: 12px;
+  background: white;
+  float: left;
+  margin: 10px 0 0 15px;
+}
+.carousel-container .carousel-content .slide .carousel-detail {
+  float: left;
+  width: 500px;
+  height: 295px;
+  border-left: 1px solid #dcf1fb;
+  margin: 10px 25px 0 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.carousel-container .carousel-content .slide .carousel-detail h4 {
+  font-size: 3.4em;
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ebebeb;
+  padding: 22px 0;
+}
+.carousel-container .carousel-content .slide .carousel-detail h4 a {
+  color: #295177;
+}
+.carousel-container .carousel-content .slide .carousel-detail .related {
+  margin-top: 30px;
+}
+.carousel-container .carousel-content .slide .carousel-detail .related a {
+  color: white;
+  background: #b4db6f;
+  font-size: 0.75em;
+  font-weight: bold;
+  padding: 10px 10px 9px;
+  text-transform: uppercase;
+}
+.carousel-container .carousel-content .slide .carousel-detail .related a:hover {
+  background: #007de2;
+}
+.carousel-container ul.carousel-content {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.carousel-container .slide-list {
+  right: 2em;
+  top: 1.5em;
+  position: absolute;
+  list-style: none;
+  margin-top: 0;
+}
+.carousel-container .slide-list li {
+  margin-left: 15px;
+  float: left;
+}
+.carousel-container .slide-list a {
+  height: 14px;
+  width: 14px;
+  display: block;
+  outline: none;
+  text-indent: -3000px;
+  background: url(../images/highlighted-list-background.png) no-repeat scroll top center;
+  cursor: pointer;
+}
+.carousel-container .slide-list .current {
+  background-position: 0 -14px;
+}
+
+.highlighted-paginator {
+  margin-bottom: 2em;
+}
+.highlighted-paginator .prev, .highlighted-paginator .next {
+  position: absolute;
+  top: 150px;
+}
+.highlighted-paginator .prev a, .highlighted-paginator .next a {
+  text-indent: -3000px;
+  display: block;
+  width: 26px;
+  height: 47px;
+  outline: none;
+  cursor: pointer;
+}
+.highlighted-paginator .prev {
+  left: -31px;
+}
+.highlighted-paginator .prev a {
+  background: url("../images/paginator-prev.png") no-repeat scroll 0 0;
+}
+.highlighted-paginator .next {
+  right: -31px;
+}
+.highlighted-paginator .next a {
+  background: url("../images/paginator-next.png") no-repeat scroll 0 0;
+}

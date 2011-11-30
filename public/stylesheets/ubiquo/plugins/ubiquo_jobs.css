@@ -1,0 +1,50 @@
+/* Priority selector */
+
+.priority_list li {
+    display: inline;
+}
+.priority_list li a {
+    display: block;
+    float: left;
+    margin-right: 3px;
+    width: 26px;
+    height: 21px;
+    color: #FFF!important;
+    text-decoration: none!important;
+    text-align: center;
+    background-color: #FFF;
+}
+.priority_list li a.off:hover {
+    color: #FFF!important;
+}
+.priority_list li a.off {
+    color: #CCC!important;
+}
+.priority_list li.priority3 a, .priority_list li.priority3 a.off:hover {
+    background-color: #7dde00;
+}
+.priority_list li.priority2 a, .priority_list li.priority2 a.off:hover {
+    background-color: #ffe000;
+}
+/*.priority_list li.priority2 a, .priority_list li.priority2 a:hover {
+    background-color: #ff6000;
+}*/
+.priority_list li.priority1 a, .priority_list li.priority1 a.off:hover {
+    background-color: #e00000;
+}
+.priority_list li a.off {
+    background-color: #eee;
+}
+
+/* Job output window */
+#system_output {
+  width: 85%;
+}
+#system_output textarea {
+	border: 1px solid #848484;
+	padding: 3px;
+	width: 99%;
+	font-size: 13px;
+	font-family: "Trebuchet MS";
+	margin-right: 10px;
+}

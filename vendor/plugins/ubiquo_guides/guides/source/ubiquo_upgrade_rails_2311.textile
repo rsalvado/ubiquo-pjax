@@ -1,0 +1,64 @@
+h2. Upgrading ubiquo to Rails 2.3.11
+
+  This guide is intended for ubiquo edge based applications running on Rails versions previous to 2.3.11.
+
+  If this is your case you should upgrade as soon as possible because you may be affected by security vulnerabilities:
+
+* "http://weblog.rubyonrails.org/2011/2/8/csrf-protection-bypass-in-ruby-on-rails":http://weblog.rubyonrails.org/2011/2/8/csrf-protection-bypass-in-ruby-on-rails
+* "http://weblog.rubyonrails.org/2011/2/8/new-releases-2-3-11-and-3-0-4":http://weblog.rubyonrails.org/2011/2/8/new-releases-2-3-11-and-3-0-4
+
+endprologue.
+
+h3. Installing required gems
+
+Obviously we need to install the new rails gem
+
+<shell>
+sudo gem install rails -v 2.3.11 --no-ri --no-rdoc
+</shell>
+
+h3. Update environment.rb
+
+Once installed, we need to update our +config/environment.rb+ file and point it to use the Rails 2.3.11 version:
+
+<ruby>
+RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
+</ruby>
+
+h3. Apply the patch to your application
+
+Now that you have your application running 2.3.11, you have to apply the patch described in the Rails link above.
+
+This basically means 3 steps:
+
+* In your application controller, you have to delete any possible cookie you have set in case the request is not verified. For example you can use this code as a base
+
+<ruby>
+def handle_unverified_request
+  super
+  cookies.delete(:auth_token) # deletes ubiquo authentication
+  # now delete any possible public-part cookies
+  raise ActionController::InvalidAuthenticityToken # optional, if you want to hear about possible problems
+end
+</ruby>
+
+* In all your layouts you should send the csrf meta:
+
+<ruby>
+<%= javascript_include_tag :defaults %>
+<%= csrf_meta_tag %>
+</ruby>
+
+* Finally, to ensure that all the javascript requests include this meta, you should add the following snippet
+
+"http://weblog.rubyonrails.org/assets/2011/2/8/prototype-snippet.js":http://weblog.rubyonrails.org/assets/2011/2/8/prototype-snippet.js
+
+This should be present everywhere js requests are initiated. You can include it in a common javascript file, for example in ubiquo.js if you don't have a public site in your ubiquo app.
+
+h3. Upgrade the ubiquo gem
+
+Finally, you should also upgrade to the last ubiquo gem so new projects use the latest Rails version.
+
+<shell>
+sudo gem install ubiquo --no-ri --no-rdoc
+</shell>

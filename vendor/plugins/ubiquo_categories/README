@@ -1,0 +1,39 @@
+UbiquoCategories
+==============
+
+This plugin adds categorization and tagging support to ubiquo
+
+Example
+=======
+
+In your model:
+
+  categorized_with :city
+
+In your form:
+
+  <%= form.category_selector :city %>
+
+Create a dictionary:
+
+CategorySet.create(:key => 'cities', :categories => ['Barcelona', 'Tokyo'])
+
+The 'cities' dictionary will be displayed as a selector in your form with the categories you created.
+
+
+Searches
+========
+
+You can search directly using an automatically defined named scope:
+
+  class Example < ActiveRecord::Base
+    categorized_with :city
+  end
+
+  Example.with_cities_in 'list', 'of', 'cities'
+
+If you want to use the conditions hash directly you can also obtain it
+
+  Example.category_conditions_for :city, ['list', 'of', 'cities']
+
+Copyright (c) 2010 International Product Design S.L. - gnuine (http://www.gnuine.com)

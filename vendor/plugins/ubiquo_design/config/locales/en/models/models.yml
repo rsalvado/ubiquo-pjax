@@ -1,0 +1,25 @@
+en:
+  activerecord:
+    models:
+      page: Page
+      page_category: "Category"
+      "menu item": "Menu item"
+      banner_flash: "Flash banner"
+    attributes:
+      page:
+        name: "Name"
+        url_name: "URL"
+        page_template: "Template"
+        published_id: "Published status"
+      page_category:
+        name: "Name"
+        url_name: "URL"
+      menu_item:
+        caption: "Title"
+        is_linkable: "is linkable?"
+        url: "URL"
+        description: "Description"
+        is_active: "is active?"
+        menu_generator: "Menu generator"
+      banner_flash:
+        flash_file: "flash file"

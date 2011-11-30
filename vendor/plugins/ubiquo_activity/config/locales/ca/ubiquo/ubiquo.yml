@@ -1,0 +1,28 @@
+ca:
+  ubiquo:
+    activity_info:
+      activity_list: "Llistat d'activitats"
+      title: "Activitat"
+      controller: "Secció"
+      action: "Acció"
+      date: "Data"
+      actions:
+        create: "Crear"
+        update: "Actualitzar"
+        destroy: "Esborrar"
+      status: "Estat"
+      statuses:
+        successful: "Correcte"
+        info: "Informatiu"
+        error: "Amb errors"
+      successful_create_message: "L'usuari '%{user}' ha creat amb éxit %{object_name}"
+      error_create_message: "Ha hagut un error i l'usuari '%{user}' no ha pogut crear %{object_name}"
+      show_it: "Mostrar"
+      successful_update_message: "L'usuari '%{user}' ha actualitzat amb éxit %{object_name}"
+      error_update_message: "Ha hagut un error i l'usuari '%{user}' no ha pogut actualitzar %{object_name}"
+      successful_destroy_message: "L'usuari '%{user}' ha eliminat amb éxit %{object_name}"
+      error_destroy_message: "Ha hagut un error i l'usuari '%{user}' no ha pogut eliminar %{object_name}"
+      empty_list_title: "Registre d'activitat"
+      empty_list_message: "Des d'aquest apartat pots veure una llista amb totes les accions que s'han realitzat a l'Ubiquo. Pots veure el detall de l'acció o esborrar el registre."
+      confirm_removal: "Estas segur de voler eliminar aquest registre d'activitat?"
+      destroyed: "Registro d'activitat eliminat amb èxit"

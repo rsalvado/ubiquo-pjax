@@ -1,0 +1,37 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+asset_types_003: 
+  name: "V\xC3\xADdeo"
+  updated_at: 2008-04-14 08:49:15.568651
+  id: "1"
+  created_at: 2008-04-14 08:49:15.568651
+  key: video
+asset_types_005: 
+  name: Document
+  updated_at: 2008-04-14 08:49:25.190919
+  id: "3"
+  created_at: 2008-04-14 08:49:25.190919
+  key: doc
+asset_types_001: 
+  name: "\xC3\x80udio"
+  updated_at: 2008-04-14 08:49:42.712088
+  id: "4"
+  created_at: 2008-04-14 08:49:42.712088
+  key: audio
+asset_types_002: 
+  name: Altres
+  updated_at: 2008-04-14 08:49:53.855915
+  id: "5"
+  created_at: 2008-04-14 08:49:53.855915
+  key: other
+asset_types_004: 
+  name: Imatge
+  updated_at: 2008-04-14 08:49:21.318909
+  id: "2"
+  created_at: 2008-04-14 08:49:21.318909
+  key: image
+asset_types_006:
+  name: Flash
+  updated_at: 2008-04-14 08:49:21.318909
+  id: "6"
+  created_at: 2008-04-14 08:49:21.318909
+  key: flash

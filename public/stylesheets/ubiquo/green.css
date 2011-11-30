@@ -1,0 +1,35 @@
+a {
+	color: #881B20;
+}
+.sidebar_box a.on {
+	background-color: #881B20;
+}
+
+#header {
+	background-color: #4E8A10;
+}
+#tabs li {
+	background-color: #4FA601;
+}
+#tabs li.active a, #tabs li.active span {
+	color: #4E8A10;
+}
+#content h1 {
+	color: #4E8A10;
+	border-bottom: 1px solid #4E8A10;
+}
+.submenu li.active a, .submenu li.active span {
+	background-color: #4E8A10;
+}
+form h3 {
+	color: #4E8A10;
+}
+.form_buttons {
+    border-top-color: #4E8A10;
+}
+#lightwindow_contents h3 {
+	color: #4FA601;
+}
+#lightwindow_contents fieldset li h4 {
+	color: #4FA601;
+}

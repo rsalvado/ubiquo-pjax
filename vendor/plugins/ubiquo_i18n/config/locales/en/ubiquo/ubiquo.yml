@@ -1,0 +1,12 @@
+en:
+  ubiquo:
+    i18n:
+      translations: "Translations"
+      translations_title: "Go to translations management"
+      locale_uniqueness_per_entity: "The %{model} entity already has a %{object_locale} translation"
+      locales_help_message: "Here you can manage all available locales."      
+      locales_updated: "Locales updated"      
+      select_default_locale_error: "You must set the default locale as active."      
+    locale:
+      empty_list_title: "Locales list"
+      empty_list_message: "You can see available locales list. You can manage which will be available or which is a default locale."

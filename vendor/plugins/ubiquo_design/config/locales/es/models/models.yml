@@ -1,0 +1,18 @@
+es:
+  activerecord:
+    models:
+      page: "Página"
+      banner_flash: "Baner Flash"
+    attributes:
+      page:
+        name: "Nombre"
+        url_name: "URL"
+        page_template: "plantilla"
+        publish_status: "Estado"
+        published_id: "Estado de publicación"
+        parent_id: "Subpágina de"
+        meta_title: "Título"
+        meta_description: "Descripción"
+        meta_keywords: "Palabras clave"
+      banner_flash:
+        flash_file: "fichero flash"

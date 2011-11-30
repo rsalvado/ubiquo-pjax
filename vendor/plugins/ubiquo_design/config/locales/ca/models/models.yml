@@ -1,0 +1,18 @@
+ca:
+  activerecord:
+    models:
+      page: "Pàgina"
+      banner_flash: "Banner Flash"
+    attributes:
+      page:
+        name: "Nom"
+        url_name: "URL"
+        page_template: "plantilla"
+        publish_status: "Estat"
+        published_id: "Estat de publicació"
+        parent_id: "Subpàgina de"
+        meta_title: "Títol"
+        meta_description: "Descripció"
+        meta_keywords: "Paraules clau"
+      banner_flash:
+        flash_file: "fitxer flash"

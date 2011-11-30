@@ -1,0 +1,5 @@
+en:
+  ubiquo:
+    helpmsg:
+      activity_info:
+        index: "Here you can view a list with all activity generated in ubiquo. You can remove the logs but this doesn't affect stored action/object."

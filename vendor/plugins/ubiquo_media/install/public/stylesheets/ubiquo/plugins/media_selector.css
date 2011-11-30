@@ -1,0 +1,166 @@
+/* Media selector */
+.group-related-assets {}
+    .group-related-assets .selected-assets {
+      margin-bottom: 3em;
+    }
+      .group-related-assets .selected-assets fieldset {
+        padding: 0;
+        background: none;
+        border: none;
+        border-radius: 0;
+      }
+        .group-related-assets .selected-assets fieldset legend {
+          font-size: 1.2em;
+          padding: 0 0 .8em;
+        }
+      .group-related-assets .selected-assets .items-list {}
+        .group-related-assets .selected-assets .items-list li.item {
+          font-size: 1em;
+          padding: 1em 0;
+          border-bottom: 1px solid #d5d9c2;
+        }
+          .group-related-assets .selected-assets .items-list li.item div.img-wrapper {
+              height: 10em;
+              width: 10em;
+              float: left;
+              margin-right: 1em;
+              background-color: #F3F6EB;
+              overflow:hidden;
+              text-align: center;
+              line-height: 10em;
+            }
+          .group-related-assets .selected-assets .items-list li.item .text-info {
+            float: left;
+            margin-right: 1em;
+            width: 30em;
+          }
+            .group-related-assets .selected-assets .items-list li.item .text-info h4 {
+              margin: 0 0 .3em;
+              font-size: 1.6em;
+            }
+            .group-related-assets .selected-assets .items-list li.item .text-info .field {
+              margin-top: 0.5em;
+              display: block;
+            }
+            .group-related-assets .selected-assets .items-list li.item .text-info .field input {
+              margin-bottom: 2px;
+              width: 20em;
+            }
+            .group-related-assets .selected-assets .items-list li.item .text-info p.assigned {
+              font-size: 1.3em;
+              margin: 0;
+            }
+              .group-related-assets .selected-assets .items-list li.item .text-info p.assigned a.bt-edit {
+                text-decoration: underline;
+              }
+          .group-related-assets .selected-assets .items-list li.item .actions {
+            float: left;
+            padding-top: 1em;
+          }
+            .group-related-assets .selected-assets .items-list li.item .actions li {
+              display: inline;
+              margin-right: .3em;
+            }
+              .group-related-assets .selected-assets .items-list li.item .actions li a, .asset-upload-form-item .bt-upload, .select-assets .search-results .items-list li.item .actions li a {
+                padding: .3em .3em;
+        				font-size: 1.2em;
+        				color: #000;
+        				text-transform: lowercase;
+        				text-decoration: none;
+        				background: #e9e9e9;
+        				-moz-border-radius: 6px;
+        				-webkit-border-radius: 6px;
+        				border-radius: 6px;
+        				border: 1px solid #666;
+        				background: url(../../../images/ubiquo/bg-button.png) no-repeat left bottom;
+        				cursor: pointer;
+              }
+
+    .group-related-assets .select-assets {}
+      .asset-upload-form-item {}
+        .asset-upload-form-item .bt-upload {
+          font-size: .9em;
+          float: left;
+        }
+
+      /* search block */
+      .search-block {
+        margin: 0 0 1em;
+        padding: 1em 1em 1em 4em;
+        background: #f3f6eb url(../../../images/ubiquo/media/ico-search-block.png) no-repeat 1.5em center;
+        -moz-border-radius: 6px;
+				-webkit-border-radius: 6px;
+				border-radius: 6px;
+      }
+        #content .search-block .form-item {
+          float: left;
+          margin: 0 0 .3em;
+          padding-left: 3em;
+        }
+          #content .search-block .form-item label, #content .search-block .form-item input, #content .search-block .form-item select {
+            display: inline;
+            float: none;
+          }
+          #content .search-block .form-item input, #content .search-block .form-item select {
+            width: 15em;
+          }
+          .search-block .form-item-submit {
+            display: none;
+          }
+      /* ------------ */
+      .select-assets .assets_paginator {
+        font-size: 1.3em;
+        text-align: right;
+      }
+      .select-assets .search-results {}
+        .select-assets .search-results h3 {
+          color: #000;
+        }
+        .select-assets .spinner {
+          margin-left: 0.8em;
+        }
+        .select-assets .search-results .items-list {}
+          .select-assets .search-results .items-list li.item {
+            float: left;
+            padding: 0 1em;
+            margin-bottom: 1.5em;
+            font-size: 1em;
+            border-right: 1px solid #d5d9c2;
+            width: 12em;
+          }
+            .select-assets .search-results .items-list li.item h4 {
+              font-size: 1.3em;
+              margin: 0;
+            }
+            .select-assets .search-results .items-list li.item div {
+              height: 10em;
+              background-color: #F3F6EB;
+              overflow:hidden;
+              text-align: center;
+              line-height: 10em;
+            }
+            .group-related-assets .selected-assets .items-list li.item div.img-wrapper img,
+            .select-assets .search-results .items-list li.item img {
+              display: inline;
+              vertical-align: middle;
+              cursor: pointer;
+            }
+            .select-assets .search-results .items-list li.item .actions {
+              text-align: center;
+              padding: .9em 0 0;
+              margin-top: 5px;
+            }
+              .select-assets .search-results .items-list li.item .actions li {
+                font-size: 1em;
+                margin: 0;
+                display: inline;
+              }
+                .select-assets .search-results .items-list li.item .actions li a {
+                }
+/* clearfix */
+.group-related-assets .selected-assets .items-list li.item:after,
+.search-block:after,
+.select-assets .search-results .items-list:after
+{
+	content: "."; display: block; height: 0; clear: both; visibility: hidden;
+}

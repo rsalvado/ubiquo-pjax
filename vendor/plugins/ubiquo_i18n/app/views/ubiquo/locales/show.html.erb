@@ -1,0 +1,38 @@
+        <h1><%= t('ubiquo.i18n.translations') %></h1>
+<%= render :partial => "shared/ubiquo/feedback" %>
+
+<% form_for(ubiquo_locales_path, :html => {:method => :put}) do |form| %>
+  <%= default_locale = Locale.default;
+      render(:partial => "shared/ubiquo/lists/standard", :locals => {
+          :name => 'locale',
+          :headers => [:native_name, :english_name, :is_active, :is_default],
+          :rows => @locales.collect do |locale|
+            {
+              :id => locale.id,
+              :columns => [
+                locale.native_name,
+                locale.english_name,
+                check_box_tag("selected_locales[]", locale.id, locale.is_active?),
+                radio_button_tag("default_locale", locale.id, default_locale == locale.iso_code)
+              ]
+            }
+          end,
+          :pages => nil,
+          :hide_actions => true,
+          :link_to_new => "",
+        }) %>
+  <div class="form-item-submit">
+    <%= form.submit t('ubiquo.save'), :class => "bt-submit" %>
+  </div>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="sidebar_box help-box">
+	<div class="header">
+  	  <h3><%= t("ubiquo.help") %></h3>
+    </div>
+	<div class="content">
+  	  <p><%= t("ubiquo.i18n.locales_help_message") %></p>
+    </div>
+  </div>
+<% end %>

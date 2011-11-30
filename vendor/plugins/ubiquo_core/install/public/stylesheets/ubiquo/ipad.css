@@ -1,0 +1,9 @@
+/* 
+    Stylesheet to override general rules that MUST be avoided in iPad/iPhone
+    Mainly the rule -webkit-box-shadow
+    Otherways the Safari's of mobile devices will be really slow
+*/
+#tabs li ,
+#header {
+  -webkit-box-shadow: none;
+}

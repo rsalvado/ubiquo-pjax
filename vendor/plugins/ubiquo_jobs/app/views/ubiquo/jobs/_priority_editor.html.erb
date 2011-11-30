@@ -1,0 +1,8 @@
+<ul id="job_status_<%= job.id %>" class="priority_list">
+  <% (1..3).to_a.map do |i| %>
+    <% current = (10**i == (job.priority.to_i)) %>
+    <li class="priority<%= i %>">
+      <%= link_to_remote "", :url => ubiquo_job_path(job, :job => {:priority => (10**i)}), :method => :put, :html => {:title => priority_name(i), :class => ('off' unless current)} %>
+    </li>
+  <% end %>
+</ul>

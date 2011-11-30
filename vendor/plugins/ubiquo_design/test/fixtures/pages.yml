@@ -1,0 +1,103 @@
+one:
+  id: 10000
+  name: Start page
+  url_name: ""
+  page_template: "static"
+  published_id:
+  key: one
+  is_static: true
+  is_modified: false
+  meta_title: "Static example page"
+  meta_description: "Meta description text"
+  meta_keywords: "static,test,start"
+
+two:
+  id: 10001
+  name: Article page
+  url_name: "article"
+  page_template: "interior"
+  published_id:
+  is_modified: false
+
+only_menu:
+  id: 10002
+  name: Menu page
+  url_name: "menu_page"
+  page_template: "extra"
+  published_id:
+
+one_design:
+  id: 10003
+  name: Start page
+  url_name: ""
+  page_template: "static"
+  is_modified: false
+  published_id: 10000
+  key: one
+  is_static: true
+  meta_title: "Static example page"
+  meta_description: "Meta description text"
+  meta_keywords: "static,test,start"
+
+two_design:
+  id: 10004
+  name: Article page
+  url_name: "article"
+  page_template: "interior"
+  is_modified: false
+  published_id: 10001
+
+only_menu_design:
+  id: 10005
+  name: Menu page
+  url_name: "menu_page"
+  page_template: "extra"
+  is_modified: false
+  published_id: 10002
+  is_modified: false
+
+test_page:
+  name: TestPage
+  updated_at: 2008-06-03 09:19:32.529112
+  id: 10006
+  page_template: "static"
+  url_name: test_page
+  created_at: 2008-06-03 09:06:35.571694
+  published_id:
+  is_static: true
+  is_modified: false
+
+long_url:
+  name: LongUrl
+  updated_at: 2008-06-03 09:19:32.529112
+  id: 10007
+  page_template: "static"
+  url_name: long/url
+  created_at: 2008-06-03 09:06:35.571694
+  published_id: 10008
+  is_static: true
+  is_modified: false
+
+long_url_published:
+  name: LongUrl
+  updated_at: 2008-06-03 09:19:32.529112
+  id: 10008
+  page_template: "static"
+  url_name: long/url
+  is_modified: false
+  created_at: 2008-06-03 09:06:35.571694
+  published_id:
+  is_static: true
+  is_modified: false
+
+unpublished:
+  name: Unpublished
+  updated_at: 2008-06-03 09:19:32.529112
+  id: 10009
+  page_template: "static"
+  url_name: unpublished
+  key: unpublished
+  created_at: 2008-06-03 09:06:35.571694
+  published_id:
+  is_static: true
+  is_modified: true

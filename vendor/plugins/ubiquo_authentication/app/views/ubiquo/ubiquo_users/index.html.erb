@@ -1,0 +1,30 @@
+<h1><%= render :partial => 'title' %></h1>
+<h2>
+	<%= render :partial => 'submenu' %>
+</h2>
+<%= render :partial => "shared/ubiquo/feedback" %>
+
+<%= show_filter_info %>
+
+<% ubiquo_user_list(@ubiquo_users, @ubiquo_users_pages) do |user| %>
+  <div class="user-icon">
+    <% if user.photo.original_filename %>
+      <%= image_tag(url_for_file_attachment(user, :photo, :thumb)) %>
+    <% else %>
+      <%= image_tag('ubiquo/ico-user.png') %>
+    <% end %>
+  </div>
+  <h3>
+    <%= user.full_name %>
+    <span class="user-status status-<%= t("ubiquo.auth.is_active.#{user.is_active}", :locale => 'en') %>">
+      [<%= t("ubiquo.auth.is_active.#{user.is_active}") %>]
+    </span>
+  </h3>
+  <p class="user-role"><%= user.roles.map(&:name).join(', ') %></p>
+  <p class="user-mail"><%= user.email %></p>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= show_filters %>
+  <%= help_block_sidebar(t("ubiquo.helpmsg.authentication.ubiquousers.index")) %>
+<% end %>

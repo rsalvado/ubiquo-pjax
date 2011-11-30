@@ -1,0 +1,8 @@
+ca:
+  ubiquo:
+    categories:
+      categories: "Categories"
+      categories_title: "Anar a categories"
+    category_selector:
+      new_element: "Nou element"
+      add_element: "Afegir"

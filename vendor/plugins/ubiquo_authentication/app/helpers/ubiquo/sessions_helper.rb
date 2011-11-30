@@ -1,0 +1,2 @@
+module Ubiquo::SessionsHelper
+end

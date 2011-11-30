@@ -1,0 +1,19 @@
+en:
+  activerecord:
+    models:
+     ubiquo_jobs/jobs/active_job: jobs
+    attributes:
+      ubiquo_jobs/jobs/active_job:
+        runner: Runner
+        command: Command
+        tries: Tries
+        priority: Priority
+        planified_at: Planified at
+        started_at: Started at
+        ended_at: Ended at
+        state: State
+        name: Name
+        type: Type
+        created_at: Created at
+        updated_at: Updated at
+        notify_to: Notify to

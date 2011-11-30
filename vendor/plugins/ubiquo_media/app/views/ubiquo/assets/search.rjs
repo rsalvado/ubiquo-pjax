@@ -1,0 +1,15 @@
+paginator_url = {
+  :previous => (search_ubiquo_assets_path(:text => @search_text, :page => @assets_pages[:previous]) if @assets_pages[:previous]),
+  :next => (search_ubiquo_assets_path(:text => @search_text, :page => @assets_pages[:next]) if @assets_pages[:next]),
+}
+
+page.replace_html("asset_search_results_#{@counter}", 
+  :partial => 'search_results', 
+  :locals => {
+    :field => @field, 
+    :search_text => @search_text, 
+    :assets => @assets, 
+    :page => @page,
+    :counter => @counter,
+    :paginator_url => paginator_url
+   })

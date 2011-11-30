@@ -1,0 +1,10 @@
+<%%= widget_header widget %>
+<%% widget_form(page, widget) do |f| %>
+<% attributes.each do |attribute| -%>
+  <p>
+    <%%= f.label :<%= attribute.name %>, <%= class_name %>.human_attribute_name('<%= attribute.name.to_s %>') %><br />
+    <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>
+  </p>
+<% end -%>
+  <%%= widget_submit %>
+<%% end %>

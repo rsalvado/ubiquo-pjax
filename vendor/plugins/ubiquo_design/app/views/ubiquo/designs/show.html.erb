@@ -1,0 +1,49 @@
+<% content_for :head do %>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0;"/>
+<% end %>
+
+<div id='shadow' style="display:none"></div>
+<h1><%= render :partial => 'title' %></h1>
+<h2><%= render :partial => 'submenu' %></h2>
+<%= render :partial => "shared/ubiquo/feedback" %>
+<div id="template"><%= @template_content %></div>
+
+<% content_for :sidebar do %>
+<div id="slide_wrapper">
+  <div class="sidebar_box">
+    <div id="page_info">
+      <%= render :partial => 'pageinfo_sidebar',
+                 :locals => { :page => @page, :page_type => 'page' } %>
+    </div>
+  </div>
+  <div class="sidebar_box">
+    <div id="widgets">
+      <div class="sidebar_title">
+        <h3><%= t('ubiquo.design.available_widgets') %></h3>
+      </div>
+      <div class="widget_categories">
+        <label for="widget_categories_select"><%= t('ubiquo.design.widget_categories') %>:</label>
+        <%= select_tag "widget_categories_select", options_for_select([[t('ubiquo.design.all_widgets') , "without_group" ]] +
+              widget_tabs.keys.map{|key| [t("ubiquo.widget_groups.#{key}"), key.to_s] }), :onchange => "toggleWidgetGroups(this)" %>
+      </div>
+      <ul class="available_widgets makeScroll" id="widgets_without_group">
+        <%= render :partial => "widget_sidebar", :collection => @page.available_widgets, :locals => {:group_name => "without_group"} %>
+      </ul>
+
+      <% widget_tabs.each_pair do |widget_group_key, widget_keys| %>
+        <ul class="available_widgets makeScroll" id="<%= "widgets_#{widget_group_key}" %>" style="display:none">
+          <%= render :partial => "widget_sidebar", :collection => widget_keys, :locals => {:group_name => widget_group_key.to_s}  %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<% javascript_tag do %>
+  document.observe("dom:loaded", function() {
+  <% @page.available_widgets_per_block.each_pair do |block, widgets| -%>
+    BlockStructure.add(<%= block.to_json %>, <%= widgets.to_json %>);
+  <% end -%>
+  });
+<% end %>

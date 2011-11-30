@@ -1,0 +1,9 @@
+ca:
+  activerecord:
+    models:
+      category: "Category"
+    attributes:
+      category:
+        locale: "Idioma"
+        name:  "Nom" 
+        description:  "Descripció"

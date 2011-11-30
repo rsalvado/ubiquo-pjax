@@ -1,0 +1,7 @@
+es:
+  ubiquo:
+    helpmsg:
+      media:
+        assets:
+          index: "Aquí puede ver una lista de todos los recursos existentes. Puede crear, editar y borrarlos."
+          form: "Aquí puede establecer los atributos del recurso multimedia."
