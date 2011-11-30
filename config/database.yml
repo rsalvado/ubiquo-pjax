@@ -1,0 +1,21 @@
+base_config: &base_config
+  encoding: unicode
+  adapter:  sqlite3
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *base_config
+  database: db/pjax_development.db
+
+test:
+  <<: *base_config
+  database: db/pjax_test.db
+
+preproduction:
+  <<: *base_config
+  database: db/pjax_preproduction.db
+
+production:
+  <<: *base_config
+  database: db/pjax_production.db
